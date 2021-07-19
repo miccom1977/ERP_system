@@ -21,5 +21,10 @@ return [
     'register' => 'Rejestracja',
     'dashboard' => 'Pulpit',
     'logout' => 'Wyloguj',
+    'name' =>'login',
+    'email' => 'email',
+    'password' => 'hasło',
+    'confirm_password' => 'powtórz hasło',
+    'already_register' => 'masz już konto',
 
 ];

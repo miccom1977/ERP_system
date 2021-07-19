@@ -1,0 +1,7 @@
+Product -> tektura w sztukach
+Order -> zlecenie
+Employee -> pracownik
+
+Relacje:
+
+Product -> Order jest w relacji jeden do wielu czyli zlecenie może mieć tylko jedną tekturę, ale tektura może zostać przyporządkowana do wielu zleceń
