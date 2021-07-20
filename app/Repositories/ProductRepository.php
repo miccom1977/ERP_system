@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Product;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
+
 //use Your Model
 
 /**
@@ -16,6 +18,10 @@ class ProductRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Product::class;
+    }
+
+    public function getAll(){
+        return $clients = Product::all();
     }
 }
