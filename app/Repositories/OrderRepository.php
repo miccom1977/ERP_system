@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Order;
 use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
 //use Your Model
 
@@ -16,6 +17,10 @@ class OrderRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Order::class;
+    }
+
+    public function getAll(){
+        return $clients = Order::with('product')->get();
     }
 }
