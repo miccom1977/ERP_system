@@ -14,10 +14,7 @@ class AddRelationshipToClients extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('order_id')->references('id')->on('orders');
-            $table->foreign('user_id')->references('id')->on('users');
+            //
         });
     }
 
@@ -34,3 +31,4 @@ class AddRelationshipToClients extends Migration
         });
     }
 }
+
