@@ -2,10 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Repositories\OrderRepository;
+use App\Repositories\ClientRepository;
+use App\Repositories\ProductRepository;
 
 class OrderController extends Controller
 {
+    private $clientRepository;
+
+    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository ){
+        $this->clientRepository = $clientRepository;
+        $this->productRepository = $productRepository;
+        $this->orderRepository = $orderRepository;
+
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +28,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return view('createCirculateDoc',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orders' => $this->orderRepository->getAll() ] );
     }
 
     /**
@@ -23,7 +38,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('createCirculateDoc',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll() ] );
     }
 
     /**
@@ -34,7 +49,30 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
+        //die;
+
+        $this->validate($request, [
+            'quantity' => 'required',
+            'l_elem' => 'required',
+            'q_elem' => 'required',
+            'h_elem' => 'required'
+         ]);
+
+        //  Store data in database
+        $order = new Order;
+        $order->description = 'description';
+        $order->quantity = $request->quantity;
+        $order->l_elem = $request->l_elem;
+        $order->q_elem = $request->q_elem;
+        $order->h_elem = $request->h_elem;
+        $order->product_id = $request->product_id;
+        $order->client_id = $request->client_id;
+
+        $order->save();
+
         //
+        return back()->with('success', 'Zlecenie dodane.');
     }
 
     /**
