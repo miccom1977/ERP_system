@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use JasonGuru\LaravelMakeRepository\Repository\BaseRepository;
+use App\Models\Client;
 //use Your Model
 
 /**
  * Class ClientRepository.
  */
-class ClientRepository extends BaseRepository
+class ClientRepository
 {
     /**
      * @return string
@@ -16,6 +16,10 @@ class ClientRepository extends BaseRepository
      */
     public function model()
     {
-        //return YourModel::class;
+        return Client::class;
+    }
+
+    public function getAll(){
+        return $clients = Client::all();
     }
 }
