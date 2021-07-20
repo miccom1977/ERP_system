@@ -15,13 +15,14 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
             $table->integer('status');
-            $table->integer('weight')->nullable();
-            $table->integer('quantity')->nullable();
-            $table->integer('l_elem')->nullable();
-            $table->integer('q_elem')->nullable();
-            $table->integer('h_elem')->nullable();
+            $table->integer('quantity')->default(0);
+            $table->integer('l_elem')->default(0);
+            $table->integer('q_elem')->default(0);
+            $table->integer('h_elem')->default(0);
+            $table->integer('flaps_a')->default(0);
+            $table->integer('flaps_b')->default(0);
+
             $table->timestamps();
 
             // dodać relację z Material_id

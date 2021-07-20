@@ -15,12 +15,12 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('ean_code');
+            $table->integer('ean_code')->default(0);
             $table->text('description');
-            $table->integer('width');
-            $table->integer('weight');
-            $table->integer('grammage');
-            $table->integer('type_of_cardboard');
+            $table->integer('width')->default(0);
+            $table->integer('weight')->default(0);
+            $table->integer('grammage')->default(0);
+            $table->integer('type_of_cardboard')->default(0);
             $table->timestamps();
         });
     }
