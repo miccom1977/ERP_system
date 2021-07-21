@@ -17,7 +17,7 @@
                         @endif
                         <form action="" method="post" action="{{ route('order.store') }}">
                             @csrf
-                            <table border="1px">
+                            <table width="100%">
                                 <tr>
                                     <td>
                                         <label>Klient</label>
@@ -35,7 +35,10 @@
                                         <label>Wysokość</label>
                                     </td>
                                     <td>
-                                        <label>Pole A / B</label>
+                                        <label>Data dostawy</label>
+                                    </td>
+                                    <td>
+                                        <label>Data wysyłki</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -71,8 +74,15 @@
                                         </datalist>
                                     </td>
                                     <td>
-                                        <input type="text" class="w-24" name="flaps_a" id="flaps_a">
-                                        <input type="text" class="w-24" name="flaps_b" id="flaps_b">
+                                        <input type="date" class="w-18" id="date_addmission" name="date_addmission" value="{{ now() }}" >
+                                    </td>
+                                    <td>
+                                        <input type="date" class="w-18" id="date_production" name="date_production" value="{{ now() }}" >
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <hr>
                                     </td>
                                 </tr>
                                 <tr>
@@ -80,15 +90,21 @@
                                         <label>Tektura</label>
                                     </td>
                                     <td>
-                                        <label>Data dostawy</label>
+                                        <label>Długi el. L</label>
                                     </td>
                                     <td>
-                                        <label>Data wysyłki</label>
+                                        <label>Krótki el. Q</label>
+                                    </td>
+                                    <td>
+                                        <label>Pole A</label>
+                                    </td>
+                                    <td>
+                                        <label>Pole B</label>
                                     </td>
                                     <td>
                                         <label>Data rozpoczęcia produkcji</label>
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                         <label>Opcje</label>
                                     </td>
                                 </tr>
@@ -101,19 +117,29 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="date" class="w-30" id="date_addmission" name="date_addmission" value="{{ now() }}" >
+                                        <input type="number" class="w-24" name="l_elem_pieces" id="l_elem_pieces">
                                     </td>
                                     <td>
-                                        <input type="date" class="w-30" id="date_production" name="date_production" value="{{ now() }}" >
+                                        <input type="number" class="w-24" name="q_elem_pieces" id="q_elem_pieces">
                                     </td>
                                     <td>
-                                        <input type="date" class="w-30" id="date_delivery" name="date_delivery" value="{{ now() }}" >
+                                        <input type="text" class="w-24" name="flaps_a" id="flaps_a">
                                     </td>
-                                    <td colspan="2">
-                                        <input type="submit" name="send" value="Dodaj" class="btn btn-dark btn-block">
+                                    <td>
+                                        <input type="text" class="w-24" name="flaps_b" id="flaps_b">
+                                    </td>
+                                    <td>
+                                        <input type="date" class="w-18" id="date_delivery" name="date_delivery" value="{{ now() }}" >
+                                    </td>
+                                    <td>
+                                        <input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block">
                                     </td>
                                 </tr>
-                            <!-- CROSS Site Request Forgery Protection -->
+                                <tr>
+                                    <td colspan="7">
+                                        <hr>
+                                    </td>
+                                </tr>
                         </form>
                         </table>
                     </div>
