@@ -21,6 +21,15 @@ class OrderRepository extends BaseRepository
     }
 
     public function getAll(){
-        return $clients = Order::with('product')->get();
+        return $orders = Order::with('product')->get();
+    }
+
+    /**
+    * @param $id
+    * @return Model
+    */
+    public function find($id): ?Order
+    {
+        return $this->model->find($id);
     }
 }

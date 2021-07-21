@@ -22,7 +22,10 @@ class CreateOrdersTable extends Migration
             $table->integer('h_elem')->default(0);
             $table->integer('flaps_a')->default(0);
             $table->integer('flaps_b')->default(0);
-
+            $table->date('date_addmission');
+            $table->date('date_production');
+            $table->date('date_delivery');
+            $table->integer('client_id')->default(0);
             $table->timestamps();
 
             // dodać relację z Material_id

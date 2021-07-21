@@ -12,6 +12,8 @@ use App\Repositories\ProductRepository;
 class OrderController extends Controller
 {
     private $clientRepository;
+    private $productRepository;
+    private $orderRepository;
 
     public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository ){
         $this->clientRepository = $clientRepository;
@@ -28,7 +30,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('createCirculateDoc',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orders' => $this->orderRepository->getAll() ] );
+        return view('createOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orders' => $this->orderRepository->getAll() ] );
     }
 
     /**
@@ -38,7 +40,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('createCirculateDoc',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll() ] );
+        return view('createOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll() ] );
     }
 
     /**
@@ -61,13 +63,17 @@ class OrderController extends Controller
 
         //  Store data in database
         $order = new Order;
-        $order->description = 'description';
         $order->quantity = $request->quantity;
         $order->l_elem = $request->l_elem;
         $order->q_elem = $request->q_elem;
         $order->h_elem = $request->h_elem;
+        $order->flaps_a = $request->flaps_a;
+        $order->flaps_b = $request->flaps_b;
         $order->product_id = $request->product_id;
         $order->client_id = $request->client_id;
+        $order->date_addmission = $request->date_addmission;
+        $order->date_production = $request->date_production;
+        $order->date_delivery = $request->date_delivery;
 
         $order->save();
 
@@ -83,7 +89,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('showOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $this->orderRepository->find($id) ] );
     }
 
     /**

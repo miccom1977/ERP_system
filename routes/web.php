@@ -3,6 +3,8 @@
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,18 +26,7 @@ Route::get('/dashboard', function () {
     return view('dashboard', ['orders' => $orders ]);
 })->middleware(['auth'])->name('dashboard');
 
-
-
-//Route::put('/createCirculateDoc', [AddNewOrderController::class, 'createOrder'])->name('addNewOrder.store');
-
-Route::get('/addClient', function () {
-    return view('addClient');
-})->middleware(['auth'])->name('addClient');
-
-Route::get('/addProduct', function () {
-    return view('addProduct');
-})->middleware(['auth'])->name('addProduct');
-
+Route::resource('/order', OrderController::class)->name('index','order');
+Route::resource('/product', ProductController::class)->name('index','product');
+Route::resource('/client', ClientController::class)->name('index','client');
 require __DIR__.'/auth.php';
-
-Route::resource('/createCirculateDoc', OrderController::class)->name('index','createCirculateDoc');

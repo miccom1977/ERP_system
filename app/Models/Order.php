@@ -13,5 +13,9 @@ class Order extends Model
     public function product(){
         return $this->belongsTo('App\Models\Product');
     }
+
+    public function client(){
+        return $this->belongsTo('App\Models\Client');
+    }
 }
 

@@ -15,13 +15,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('text.dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('createCirculateDoc')" :active="request()->routeIs('createCirculateDoc')">
+                    <x-nav-link :href="route('order')" :active="request()->routeIs('order')">
                         {{ __('text.create_circulate_doc') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('addClient')" :active="request()->routeIs('addClient')">
+                    <x-nav-link :href="route('client')" :active="request()->routeIs('client')">
                         {{ __('text.add_new_client') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('addProduct')" :active="request()->routeIs('addProduct')">
+                    <x-nav-link :href="route('product')" :active="request()->routeIs('product')">
                         {{ __('text.add_new_product') }}
                     </x-nav-link>
                 </div>

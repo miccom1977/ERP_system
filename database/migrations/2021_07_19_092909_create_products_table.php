@@ -17,9 +17,9 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->integer('ean_code')->default(0);
             $table->text('description');
-            $table->integer('width')->default(0);
-            $table->integer('weight')->default(0);
+            $table->integer('roll_width')->default(0);
             $table->integer('grammage')->default(0);
+            $table->integer('cardboard_producer')->default(0);
             $table->integer('type_of_cardboard')->default(0);
             $table->timestamps();
         });

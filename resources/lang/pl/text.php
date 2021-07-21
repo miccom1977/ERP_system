@@ -28,7 +28,7 @@ return [
     'already_register' => 'masz już konto',
     'create_circulate_doc' => 'Nowe zlecenie',
     'add_new_client' => 'Nowy klient',
-    'add_new_product' => 'Dodaj Produkt',
+    'add_new_product' => 'Nowa tektura',
     'add_new_order' => 'dodawanie nowego zlecenia'
 
 ];

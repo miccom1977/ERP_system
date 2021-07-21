@@ -2,10 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Repositories\OrderRepository;
+use App\Repositories\ClientRepository;
+use App\Repositories\ProductRepository;
 
 class ClientController extends Controller
 {
+    private $clientRepository;
+    private $productRepository;
+    private $orderRepository;
+
+    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository ){
+        $this->clientRepository = $clientRepository;
+        $this->productRepository = $productRepository;
+        $this->orderRepository = $orderRepository;
+
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +29,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        return view('createClient',['clients' => $this->clientRepository->getAll() ] );
     }
 
     /**
@@ -23,7 +39,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('createClient',['clients' => $this->clientRepository->getAll() ] );
     }
 
     /**
@@ -34,7 +50,26 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        //die;
+
+        $this->validate($request, [
+            'description' => 'required',
+            'city' => 'required',
+            'post_code' => 'required',
+            'country' => 'required'
+        ]);
+
+        //  Store data in database
+        $client = new Client;
+        $client->description = $request->description;
+        $client->city = $request->city;
+        $client->post_code = $request->post_code;
+        $client->country = $request->country;
+
+        $client->save();
+
+        return back()->with('success', 'Klient dodany.');
     }
 
     /**

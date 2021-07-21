@@ -6,3 +6,8 @@ input[type=submit] {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
+
+table, th, td {
+    border-collapse: collapse;
+    text-align:center;
+  }
