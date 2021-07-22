@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Client;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use App\Repositories\OrderRepository;
 use App\Repositories\ClientRepository;
@@ -123,6 +124,17 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = order::find($id);
+        $order->delete();
+        return redirect('/dashboard')->with('success', 'Zlecenie usunięte.');
+    }
+
+    public function createPDF($id) {
+        $order = Order::with('product')->get()->find($id);
+        view()->share('order',$order);
+        $pdf = PDF::loadView('pdf.circulation', $order);
+
+        // download PDF file with download method
+        return $pdf->download('karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
     }
 }

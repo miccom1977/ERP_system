@@ -57,7 +57,7 @@ class ProductController extends Controller
             'description' => 'required',
             'roll_width' => 'required',
             'grammage' => 'required',
-            'type_of_cardboard' => 'required'
+            'designation' => 'required'
          ]);
 
         //  Store data in database
@@ -65,22 +65,8 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->roll_width = $request->roll_width;
         $product->grammage = $request->grammage;
-
-        $typeOfCard = match (true) {
-            $request->type_of_cardboard == 'PP' => 1,
-            $request->type_of_cardboard == 'GK/MGK' => 2,
-            $request->type_of_cardboard == 'PET' => 3,
-            $request->type_of_cardboard == 'FOOD' => 4,
-            default => 'GK/MGK',
-        };
-
-        $cardboardProducer = match (true) {
-            $request->cardboard_producer == 'Jade-Pack' => 1,
-            $request->cardboard_producer == 'Maro-Pack' => 2,
-            default => 'Jade-Pack',
-        };
-        $product->type_of_cardboard = $typeOfCard;
-        $product->cardboard_producer = $cardboardProducer;
+        $product->cardboard_producer = $request->cardboard_producer;
+        $product->designation = $request->designation;
         $product->save();
 
         //

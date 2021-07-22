@@ -29,4 +29,5 @@ Route::get('/dashboard', function () {
 Route::resource('/order', OrderController::class)->name('index','order');
 Route::resource('/product', ProductController::class)->name('index','product');
 Route::resource('/client', ClientController::class)->name('index','client');
+Route::get('/print/{id}', [OrderController::class, 'createPDF']);
 require __DIR__.'/auth.php';

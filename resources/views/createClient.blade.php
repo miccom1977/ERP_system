@@ -75,7 +75,7 @@
                                 </td>
                             </tr>
                             @foreach ( $clients as $client )
-                                <tr><td>{{ $client->description }}</td><td>{{ $client->city }}</td><td>{{ $client->post_code }}</td><td>{{ $client->country }}</td><td><button>edytuj</button><button>usuń</button></td></tr>
+                                <tr><td>{{ $client->description }}</td><td>{{ $client->city }}</td><td>{{ $client->post_code }}</td><td>{{ $client->country }}</td><td><a href="/client/{{$client->id}}/edit"><button>edytuj</button></a><button class="danger">usuń</button></td></tr>
                             @endforeach
                         </table>
                     </div>

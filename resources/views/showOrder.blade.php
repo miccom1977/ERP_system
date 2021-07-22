@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }}
+            {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{$order->id}}"><button>Drukuj dokumenty</button></a>
         </h2>
     </x-slot>
 
@@ -71,7 +71,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    {{  $order->product->description }}
+                                    {{ $order->product->description }} {{ $order->product->designation }} {{ $order->product->grammage }} g/m <br>{{ $order->product->cardboard_producer }}, szer. {{ $order->product->roll_width }} mm
                                 </td>
                                 <td>
                                     {{  $order->date_addmission }}
@@ -81,6 +81,18 @@
                                 </td>
                                 <td>
                                     {{  $order->date_delivery }}
+                                </td>
+                                <td>
+                                    <a href="/order/{{$order->id}}/edit"><button>edytuj</button></a>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/order/{{$order->id}}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <div class="form-group">
+                                            <input type="submit" class="danger" value="usuń">
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         </table>

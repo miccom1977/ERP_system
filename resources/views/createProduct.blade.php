@@ -63,7 +63,7 @@
                                         </datalist>
                                     </td>
                                     <td>
-                                        <input type="text" name="type_of_cardboard" id="type_of_cardboard" list="defaultNumbersL">
+                                        <input type="text" name="designation" id="designation" list="defaultNumbersL">
                                         <datalist id="defaultNumbersL">
                                             <option value="PP">
                                             <option value="GK/MGK">
@@ -72,7 +72,7 @@
                                         </datalist>
                                     </td>
                                     <td>
-                                        <input type="text" name="cardboard producer" id="cardboard producer" list="defaultNumbersProducer">
+                                        <input type="text" name="cardboard_producer" id="cardboard_producer" list="defaultNumbersProducer">
                                         <datalist id="defaultNumbersProducer">
                                             <option value="Maro-Pack">
                                             <option value="Jade-Pack">
@@ -109,7 +109,7 @@
                                 </td>
                             </tr>
                             @foreach ( $products as $product )
-                                <tr><td>{{ $product->description }}</td><td>{{ $product->roll_width }}</td><td>{{ $product->grammage }}</td><td>{{ $product->type_of_cardboard }}</td><td>{{ $product->cardboard_producer }}</td><td><button>edytuj</button><button>usuń</button></td></tr>
+                                <tr><td>{{ $product->description }}</td><td>{{ $product->roll_width }} mm</td><td>{{ $product->grammage }} g/m</td><td>{{ $product->designation }}</td><td>{{ $product->cardboard_producer }}</td><td><a href="/product/{{$product->id}}/edit"><button>edytuj</button></a><button class="danger">usuń</button></td></tr>
                             @endforeach
                         </table>
                     </div>

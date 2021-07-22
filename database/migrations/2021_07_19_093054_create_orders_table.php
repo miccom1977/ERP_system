@@ -27,9 +27,6 @@ class CreateOrdersTable extends Migration
             $table->date('date_delivery');
             $table->integer('client_id')->default(0);
             $table->timestamps();
-
-            // dodać relację z Material_id
-            // dodać relację z Client_id
         });
     }
 

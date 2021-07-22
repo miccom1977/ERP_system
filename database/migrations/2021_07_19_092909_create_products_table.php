@@ -19,8 +19,8 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->integer('roll_width')->default(0);
             $table->integer('grammage')->default(0);
-            $table->integer('cardboard_producer')->default(0);
-            $table->integer('type_of_cardboard')->default(0);
+            $table->text('cardboard_producer');
+            $table->text('designation');
             $table->timestamps();
         });
     }

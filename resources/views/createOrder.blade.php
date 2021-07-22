@@ -112,7 +112,7 @@
                                     <td>
                                         <select name="product_id" id="product_id">
                                             @foreach ( $products as $product )
-                                                    <option value="{{ $product->id }}">{{ $product->description }} {{ $product->grammage }}</option>
+                                                    <option value="{{ $product->id }}">{{ $product->description }} {{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -173,7 +173,7 @@
                                 </td>
                             </tr>
                             @foreach ( $orders as $order )
-                                <tr><td><a href="/order/{{ $order->id }}">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</a></td><td>{{ $order->client->description }}</td><td>{{ $order->quantity }}</td><td>{{ $order->product->description }} {{ $order->product->grammage }}</td><td>{{ $order->date_addmission }}</td><td>{{ $order->date_production }}</td><td>{{ $order->date_delivery }}</td><td><button>edytuj</button><button>usuń</button></td></tr>
+                                <tr><td><a href="/order/{{ $order->id }}">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</a></td><td>{{ $order->client->description }}</td><td>{{ $order->quantity }}</td><td>{{ $order->product->description }} {{ $order->product->designation }} {{ $order->product->grammage }} g/m <br>{{ $order->product->cardboard_producer }}, szer. {{ $order->product->roll_width }} mm</td><td>{{ $order->date_addmission }}</td><td>{{ $order->date_production }}</td><td>{{ $order->date_delivery }}</td><td><button>edytuj</button><button class="danger">usuń</button></td></tr>
                             @endforeach
                         </table>
                     </div>
