@@ -26,19 +26,16 @@
                                         <label>Sztuki</label>
                                     </td>
                                     <td>
-                                        <label>Wymiar L</label>
+                                        <label>Numer zamówienia</label>
                                     </td>
                                     <td>
-                                        <label>Wymiar Q</label>
+                                        <label>Nr. artykułu</label>
                                     </td>
                                     <td>
-                                        <label>Wysokość</label>
+                                        <label>Długi el. L szt.</label>
                                     </td>
                                     <td>
-                                        <label>Data dostawy</label>
-                                    </td>
-                                    <td>
-                                        <label>Data wysyłki</label>
+                                        <label>Krótki el. Q szt.</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -50,7 +47,50 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" class="w-24" name="quantity" id="quantity">
+                                        <input type="number" class="w-28" name="quantity" id="quantity">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="w-28" name="client_order_numer" id="client_order_numer">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="w-28" name="article_number" id="article_number">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="w-24" name="l_elem_pieces" id="l_elem_pieces">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="w-24" name="q_elem_pieces" id="q_elem_pieces">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Tektura</label>
+                                    </td>
+                                    <td>
+                                        <label>Wymiar L</label>
+                                    </td>
+                                    <td>
+                                        <label>Wymiar Q</label>
+                                    </td>
+                                    <td>
+                                        <label>Wysokość</label>
+                                    </td>
+                                    <td colspan="2">
+                                        <label>Pole</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <select name="product_id" id="product_id">
+                                            @foreach ( $products as $product )
+                                                    <option value="{{ $product->id }}">{{ $product->description }} {{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                         <input type="number" class="w-24" name="l_elem" id="l_elem" list="defaultNumbersL">
@@ -73,73 +113,73 @@
                                             <option value="591">
                                         </datalist>
                                     </td>
+                                    <td colspan="2">
+                                        <input type="text" class="w-14" name="flaps_a" id="flaps_a"> x <input type="text" class="w-14" name="flaps_b" id="flaps_b">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Data dostawy do klienta</label>
+                                    </td>
+                                    <td>
+                                        <label>Data wysyłki</label>
+                                    </td>
+                                    <td>
+                                        <label>Data rozpoczęcia produkcji</label>
+                                    </td>
+                                    <td colspan="3">
+                                        <label>Podział pól<br></label>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <input type="date" class="w-18" id="date_addmission" name="date_addmission" value="{{ now() }}" >
                                     </td>
                                     <td>
                                         <input type="date" class="w-18" id="date_production" name="date_production" value="{{ now() }}" >
                                     </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="7">
-                                        <hr>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label>Tektura</label>
-                                    </td>
-                                    <td>
-                                        <label>Długi el. L</label>
-                                    </td>
-                                    <td>
-                                        <label>Krótki el. Q</label>
-                                    </td>
-                                    <td>
-                                        <label>Pole A</label>
-                                    </td>
-                                    <td>
-                                        <label>Pole B</label>
-                                    </td>
-                                    <td>
-                                        <label>Data rozpoczęcia produkcji</label>
-                                    </td>
-                                    <td>
-                                        <label>Opcje</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select name="product_id" id="product_id">
-                                            @foreach ( $products as $product )
-                                                    <option value="{{ $product->id }}">{{ $product->description }} {{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="number" class="w-24" name="l_elem_pieces" id="l_elem_pieces">
-                                    </td>
-                                    <td>
-                                        <input type="number" class="w-24" name="q_elem_pieces" id="q_elem_pieces">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="w-24" name="flaps_a" id="flaps_a">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="w-24" name="flaps_b" id="flaps_b">
-                                    </td>
                                     <td>
                                         <input type="date" class="w-18" id="date_delivery" name="date_delivery" value="{{ now() }}" >
                                     </td>
-                                    <td>
-                                        <input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block">
+                                    <td  colspan="3">
+                                        L:<input type="text" class="w-30" name="division_flapsL" id="division_flapsL"><br>
+                                        Q:<input type="text" class="w-30" name="division_flapsQ" id="division_flapsQ">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="6">
                                         <hr>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <label>Rodzaj palet</label>
+                                    </td>
+                                    <td>
+                                        <label>Wiązać po:</label>
+                                    </td>
+                                    <td colspan="4">
+                                        opcje
+                                    </td>
+                                </tr>
+                                <td>
+                                    <select name="pallets" id="pallets">
+                                        <option value="1">ZWYKŁE</option>
+                                        <option value="2">EURO</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="w-30" name="tying" id="tying"> szt.
+                                </td>
+                                <td colspan="5">
+                                    <input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block">
+                                </td>
+                            </tr>
                         </form>
                         </table>
                     </div>

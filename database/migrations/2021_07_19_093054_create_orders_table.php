@@ -20,8 +20,15 @@ class CreateOrdersTable extends Migration
             $table->integer('l_elem')->default(0);
             $table->integer('q_elem')->default(0);
             $table->integer('h_elem')->default(0);
+            $table->text('client_order_number');
+            $table->integer('article_number')->default(0);
             $table->integer('flaps_a')->default(0);
             $table->integer('flaps_b')->default(0);
+            $table->text('division_flapsL');
+            $table->text('division_flapsQ');
+            $table->text('pallets');
+            $table->text('article_number');
+            $table->integer('packaging');
             $table->date('date_addmission');
             $table->date('date_production');
             $table->date('date_delivery');
