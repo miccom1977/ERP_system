@@ -50,7 +50,7 @@
                                         <input type="number" class="w-28" name="quantity" id="quantity">
                                     </td>
                                     <td>
-                                        <input type="text" class="w-28" name="client_order_numer" id="client_order_numer">
+                                        <input type="text" class="w-28" name="client_order_number" id="client_order_number">
                                     </td>
                                     <td>
                                         <input type="text" class="w-28" name="article_number" id="article_number">
@@ -174,7 +174,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" class="w-30" name="tying" id="tying"> szt.
+                                    <input type="text" class="w-30" name="packaging" id="packaging"> szt.
                                 </td>
                                 <td colspan="5">
                                     <input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block">

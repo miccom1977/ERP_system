@@ -43,8 +43,8 @@
         </tr>
         <tr>
             <td>
-                Element podłużny L: <strong>{{ $order->l_elem }}</strong> szt.  {{ ( $order->l_elem*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
-                Element poprzeczny Q: <strong>{{ $order->q_elem }}</strong> szt.    {{ ( $order->q_elem*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
+                Element podłużny L: <strong>{{ $order->l_elem_pieces }}</strong> szt.  {{ ( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
+                Element poprzeczny Q: <strong>{{ $order->q_elem_pieces }}</strong> szt.    {{ ( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
             </td>
         </tr>
         <tr>
@@ -56,8 +56,8 @@
         </tr>
         <tr>
             <td>
-                ILOŚĆ SŁUPKÓW na 1000 <strong> L: {{ ( $order->l_elem * 6 ) }}</strong>, Q: {{ ( $order->q_elem * 6 ) }}<br>
-                ILOŚĆ SŁUPKÓW na 500 <strong> L: {{ ( ( $order->l_elem * 6 )/2 ) }}</strong>, Q: {{ ( ( $order->q_elem * 6 )/2 ) }}<br>
+                ILOŚĆ SŁUPKÓW na 1000  L: <strong> {{ ( $order->l_elem_pieces * 6 ) }}</strong>, Q: <strong>{{ ( $order->q_elem_pieces * 6 ) }}</strong><br>
+                ILOŚĆ SŁUPKÓW na 500 L: <strong> {{ ( ( $order->l_elem_pieces * 6 )/2 ) }}</strong>, Q: <strong>{{ ( ( $order->q_elem_pieces * 6 )/2 ) }}</strong><br>
             </td>
         </tr>
         <tr>
@@ -70,7 +70,7 @@
                     </tr>
                     @foreach ( $order->dataCardboard as $detail )
                         <tr>
-                            <td>{{ $detail['detail'] }}</td><td>{{ $order->product->description }}</td><td>{{ $order->product->grammage }}</td><td>{{ $detail['rolle_width'] }}</td><td>{{ $detail['task_to_do'] }}</td>
+                            <td>{{ $detail['detail'] }}</td><td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['task_to_do'] }}</td>
                         </tr>
                     @endforeach
                 </table>

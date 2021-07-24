@@ -139,15 +139,103 @@ class OrderController extends Controller
 
     public function createPDF($id) {
         $order = Order::with('product')->get()->find($id);
-        $dataCardboard = $this->calculateCardboard( $order->l_elem, $order->q_elem, $order->product->grammage, $order->product->designation, $order->product->cardboard_producer );
-        $order->dataCardboard = $dataCardboard;
-        view()->share('order', $order);
-        $pdf = PDF::loadView('pdf.circulation', $order);
+        $dataCardboard = $this->calculateCardboard( $order->l_elem, $order->q_elem, $order->h_elem, $order->product->grammage, $order->product->designation, $order->product->cardboard_producer,( $order->quantity+$order->quantity*0.05 ),$order->l_elem_pieces, $order->q_elem_pieces );
+        //$order->dataCardboard = $dataCardboard;
+        //view()->share('order', $order);
+        //$pdf = PDF::loadView('pdf.circulation', $order);
         // download PDF file with download method
-        return $pdf->download('karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
+        //return $pdf->download('karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
     }
 
-    public function calculateCardboard( $widthA, $widthB, $grammage, $designation, $cardboard_producer ){
+    public function calculateCardboard( $widthA, $widthB, $height, $grammage, $designation, $cardboard_producer, $quantity, $piecesA, $piecesB )
+    {
+        /*
+             Założenia
+                wyszukaj kombinację papieru i elementów przynoszacą najmniej straty
+
+                długi z krótkim
+                długi z długim + krótki z krótkim
+                długi z krótkim
+                długi z krótkim + krótki
+
+                szukam papieru z najmniejszą możliwą kombinacją i liczę, ile będzie straty
+        */
+        // wyciągam wszystkie rolki papieru o zgodnych parametrach i obliczam dla nich odpad
+
+        $productData = Product::where([
+            ['grammage', '=', $grammage],
+            ['designation', '=', $designation],
+            ['cardboard_producer', '=', $cardboard_producer]
+        ])->get();
+        $odpady = [];
+        $i = 0;
+        foreach ( $productData as $product ) {
+            $combinationType = match(true){
+                $widthA < $product->roll_width => ( $product->roll_width - $widthA ),
+                $widthA + $widthB < $product->roll_width => ( $product->roll_width - ( $widthA + $widthB ) ),
+                $widthA + $widthA < $product->roll_width => ( $product->roll_width - ( $widthA * 2 ) ),
+                default => 0,
+            };
+            if( $combinationType != 0 ){
+                $odpady[$i] = [
+                    'cardboard_id'  => $product->id,
+                    'odpad'        => $combinationType,
+                    'width'        => $widthA
+                ];
+            }
+            $i++;
+        }
+
+        // kombinacja druga
+
+        foreach ( $productData as $product ) {
+            $combinationType = match(true){
+                $widthB * 2 < $product->roll_width => ( $product->roll_width - ( $widthB * 2 ) ),
+                $widthB < $product->roll_width => ( $product->roll_width - $widthB ),
+                default => 0,
+            };
+            if( $combinationType != 0 ){
+                $odpady[$i] = [
+                    'cardboard_id'  => $product->id,
+                    'odpad'        => $combinationType,
+                    'width'        => $widthB
+                ];
+                $i++;
+            }
+        }
+
+        $id = 0;
+        $odpad = 500;
+        $odpad2 = 500;
+
+        $szerokoscA = $widthA;
+        $szerokoscB = $widthB;
+       $columns = array_column($odpady, 'odpad');
+       array_multisort($columns, SORT_ASC, $odpady);
+        foreach ( $odpady as $tab ) {
+            if( $tab['odpad'] < $odpad AND $tab['width'] == $szerokoscA ){
+                $odpad     = $tab['odpad'];
+                $arrayA = [
+                    'odpad' => $tab['odpad'],
+                    'cardboard_id' => $tab['cardboard_id'],
+                    'width' => $tab['width']
+                ];
+            }
+            if($tab['odpad'] < $odpad2 AND $tab['width'] == $szerokoscB ){
+                $odpad2     = $tab['odpad'];
+                $arrayB = [
+                    'odpad' => $tab['odpad'],
+                    'cardboard_id' => $tab['cardboard_id'],
+                    'width' => $tab['width']
+                ];
+            }
+            $id++;
+        }
+
+        print_r($arrayA);
+        print_r($arrayB);
+        //die;
+       /*
         $distributionElements = [];
         $productData = Product::where([
             ['roll_width', '>', ( $widthA+$widthB )],
@@ -155,11 +243,52 @@ class OrderController extends Controller
             ['designation', '=', $designation],
             ['cardboard_producer', '=', $cardboard_producer]
         ])->orderBy('roll_width', 'ASC')->first();
-        if($productData){
+        if( $productData ){
             $distributionElements[0]['detail'] = '1 DŁ + 1 KR';
             $distributionElements[0]['rolle_width'] = $productData->roll_width;
             $distributionElements[0]['rolle_id'] = $productData->id;
-            $distributionElements[0]['task_to_do'] = 'Produkuj element Długi i Krótki';
+            // obliczamy ile uderzeń maszyny należy wykonać
+            $toDo = match(true){
+                ( $quantity * $piecesA ) > ( $quantity * $piecesB ) => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesB ) .' uderzeń a następnie ',
+                ( $quantity * $piecesA ) < ( $quantity * $piecesB ) => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesA ) .' uderzeń a następnie produkuj długie '. ( ( $piecesA - $piecesB )* $quantity ) .' uderzeń',
+                ( $quantity * $piecesA ) == ( $quantity * $piecesB ) => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesA ) .' uderzeń',
+            };
+            $doK = 0;
+            $doD = 0;
+            if( ( 2*$widthB ) < $productData->roll_width AND $piecesA > $piecesB){
+                $toDoPlus = 'zmień sztancę i produkuj 2 x krótkie przez '. ( ( ( $piecesA-$piecesB ) * $quantity )/2 ) .'  uderzeń';
+                $doK = 1;
+            }
+            if( ( 2*$widthA ) < $productData->roll_width AND $piecesA > $piecesB){
+                $toDoPlus = 'zmień sztancę i produkuj 2 x długie przez '. ( ( ( $piecesA-$piecesB ) * $quantity )/2 ) .'  uderzeń';
+                $doD = 1;
+            }
+            if($doK == 0 ){
+                //zmieniamy papier na taki, którym będzie mozna trzaskać dwa krókie
+                $productDataKK = Product::where([
+                    ['roll_width', '>', ( $widthB*2 )],
+                    ['grammage', '=', $grammage],
+                    ['designation', '=', $designation],
+                    ['cardboard_producer', '=', $cardboard_producer]
+                ])->orderBy('roll_width', 'ASC')->first();
+                if( $productDataKK ){
+                    $toDoPlus = 'zmień rolkę na rolkę o szerokości '. $productDataKK->roll_width .' i produkuj 2 x krótkie przez '. ( ( ( $piecesA - $piecesB ) * $quantity )/2 ) .' uderzeń';
+                }
+                $distributionElements[0]['task_to_do'] = $toDo.$toDoPlus;
+            }
+            if($doD == 0 ){
+                //zmieniamy papier na taki, którym będzie mozna trzaskać dwa krókie
+                $productDataKK = Product::where([
+                    ['roll_width', '>', ( $widthA*2 )],
+                    ['grammage', '=', $grammage],
+                    ['designation', '=', $designation],
+                    ['cardboard_producer', '=', $cardboard_producer]
+                ])->orderBy('roll_width', 'ASC')->first();
+                if( $productDataKK ){
+                    $toDoPlus = 'zmień rolkę na rolkę o szerokości '. $productDataKK->roll_width .' i produkuj 2 x długie przez '. ( ( ( $piecesA - $piecesB ) * $quantity )/2 ) .' uderzeń';
+                }
+                $distributionElements[0]['task_to_do'] = $toDo.$toDoPlus;
+            }
         }else{
             //echo 'szukamy rolki na której wybijemy długi';
                 $productDataD = Product::where([
@@ -174,7 +303,7 @@ class OrderController extends Controller
                     $distributionElements[0]['detail'] = '1 DŁ';
                     $distributionElements[0]['rolle_width'] = $productDataD->roll_width;
                     $distributionElements[0]['rolle_id'] = $productDataD->id;
-                    $distributionElements[0]['task_to_do'] = 'produkuj element Długi';
+                    $distributionElements[0]['task_to_do'] = 'produkuj element Długi przez '. (  $piecesA * $quantity ) .' uderzeń';
                 }else{
                     //echo 'nie mamy rolki na której wybijemy długi!';
                 }
@@ -190,7 +319,7 @@ class OrderController extends Controller
                 $distributionElements[1][detail] = '1 KR + 1 KR';
                 $distributionElements[1]['rolle_width'] = $productDataKK->roll_width;
                 $distributionElements[1]['rolle_id'] = $productDataKK->id;
-                $distributionElements[1]['task_to_do'] = 'Produkuj dwa elementy Krótkie';
+                $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. (  ($piecesB * $quantity ) /2 ) .' uderzeń';
             }else{
                // echo 'Szukamy rolki, która wytnie nam krótki';
                 $productDataK = Product::where([
@@ -205,10 +334,11 @@ class OrderController extends Controller
                     $distributionElements[1]['detail'] = '1 KR';
                     $distributionElements[1]['rolle_width'] = $productDataK->roll_width;
                     $distributionElements[1]['rolle_id'] = $productDataK->id;
-                    $distributionElements[1]['task_to_do'] = 'Produkuj element Krótki';
+                    $distributionElements[1]['task_to_do'] = 'Produkuj element Krótki na rolce o szerokości '. $productDataK->roll_width .' przez '. ( $piecesB * $quantity ) .' uderzeń';
                 }
             }
         }
-        return $distributionElements;
+         */
+       // return $distributionElements;
     }
 }
