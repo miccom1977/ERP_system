@@ -171,16 +171,19 @@ class OrderController extends Controller
         $i = 0;
         foreach ( $productData as $product ) {
             $combinationType = match(true){
-                $widthA < $product->roll_width => ( $product->roll_width - $widthA ),
-                $widthA + $widthB < $product->roll_width => ( $product->roll_width - ( $widthA + $widthB ) ),
-                $widthA + $widthA < $product->roll_width => ( $product->roll_width - ( $widthA * 2 ) ),
+                $widthA < $product->roll_width => [( $product->roll_width - $widthA ), 1, ( $height * $quantity * $piecesA ) ],
+                $widthA + $widthB < $product->roll_width => [( $product->roll_width - ( $widthA + $widthB ) ), 2, ( ( $height * $quantity * $piecesA )+( $height * $quantity * $piecesB ) ) ],
+                $widthA + $widthA < $product->roll_width => [( $product->roll_width - ( $widthA * 2 ) ), 3, ( ( $height * $quantity * $piecesA )/2 ) ],
                 default => 0,
             };
             if( $combinationType != 0 ){
                 $odpady[$i] = [
-                    'cardboard_id'  => $product->id,
-                    'odpad'        => $combinationType,
-                    'width'        => $widthA
+                    'cardboard_id'     => $product->id,
+                    'odpad'            => $combinationType[0],
+                    'width'            => $widthA,
+                    'combinationType'  => $combinationType[1],
+                    'roll_width'       => $product->roll_width,
+                    'roll_consumption' => $combinationType[2]
                 ];
             }
             $i++;
@@ -190,15 +193,18 @@ class OrderController extends Controller
 
         foreach ( $productData as $product ) {
             $combinationType = match(true){
-                $widthB * 2 < $product->roll_width => ( $product->roll_width - ( $widthB * 2 ) ),
-                $widthB < $product->roll_width => ( $product->roll_width - $widthB ),
+                $widthB * 2 < $product->roll_width => [( $product->roll_width - ( $widthB * 2 ) ),4, ( ( $height * $quantity * $piecesB )/2 ) ],
+                $widthB < $product->roll_width => [( $product->roll_width - $widthB ),5, ( $height * $quantity * $piecesB )],
                 default => 0,
             };
             if( $combinationType != 0 ){
                 $odpady[$i] = [
-                    'cardboard_id'  => $product->id,
-                    'odpad'        => $combinationType,
-                    'width'        => $widthB
+                    'cardboard_id'    => $product->id,
+                    'odpad'           => $combinationType[0],
+                    'width'           => $widthB,
+                    'combinationType' => $combinationType[1],
+                    'roll_width'      => $product->roll_width,
+                    'roll_consumption' => $combinationType[2]
                 ];
                 $i++;
             }
@@ -215,25 +221,37 @@ class OrderController extends Controller
         foreach ( $odpady as $tab ) {
             if( $tab['odpad'] < $odpad AND $tab['width'] == $szerokoscA ){
                 $odpad     = $tab['odpad'];
-                $arrayA = [
+                $arrayA[$id] = [
                     'odpad' => $tab['odpad'],
                     'cardboard_id' => $tab['cardboard_id'],
-                    'width' => $tab['width']
+                    'width' => $tab['width'],
+                    'combinationType' => $tab['combinationType'],
+                    'roll_width'      => $tab['roll_width'],
+                    'roll_consumption' => $tab['roll_consumption'],
+                    'odpad_sum'        => ( $tab['roll_consumption']*$tab['odpad'] )/1000
                 ];
             }
             if($tab['odpad'] < $odpad2 AND $tab['width'] == $szerokoscB ){
                 $odpad2     = $tab['odpad'];
-                $arrayB = [
+                $arrayB[$id] = [
                     'odpad' => $tab['odpad'],
                     'cardboard_id' => $tab['cardboard_id'],
-                    'width' => $tab['width']
+                    'width' => $tab['width'],
+                    'combinationType'  => $tab['combinationType'],
+                    'roll_width'       => $tab['roll_width'],
+                    'roll_consumption' => $tab['roll_consumption'],
+                    'odpad_sum'        => ( $tab['roll_consumption']*$tab['odpad'] )/1000
+
                 ];
             }
             $id++;
         }
 
-        print_r($arrayA);
-        print_r($arrayB);
+        $newArr = array_merge($arrayA, $arrayB);
+        echo '<pre>';
+        print_r($newArr);
+        echo '</pre>';
+
         //die;
        /*
         $distributionElements = [];
