@@ -166,11 +166,11 @@ class OrderController extends Controller
         $dataCardboard = $this->calculateCardboard( $order->l_elem, $order->q_elem, $order->h_elem, $order->product->grammage, $order->product->designation, $order->product->cardboard_producer,( $order->quantity+$order->quantity*0.05 ),$order->l_elem_pieces, $order->q_elem_pieces );
         $order->dataCardboard = $dataCardboard;
         //return view('pdf.circulation',['order' => $order ] );
-
         view()->share('order', $order);
         $pdf = PDF::loadView('pdf.circulation', $order);
         //download PDF file with download method
         return $pdf->download('karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
+
     }
 
     public function calculateCardboard( $widthA, $widthB, $height, $grammage, $designation, $cardboard_producer, $quantity, $piecesA, $piecesB )
@@ -194,14 +194,14 @@ class OrderController extends Controller
             // obliczamy ile uderzeń maszyny należy wykonać
             $toDo = match(true){
                 $mustHaveL > $mustHaveQ  => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesA ) .' uderzeń a następnie<br>',
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesA ) .' uderzeń a następnie ',
                     'prodL' => $quantity * $piecesA,
                     'prodQ' => $quantity * $piecesA,
                     'consumptionA' => $quantity * $piecesA * $height,
 
                 ],
                 $mustHaveL < $mustHaveQ => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesB ) .' uderzeń a następnie<br>',
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesB ) .' uderzeń a następnie ',
                     'prodL' => $quantity * $piecesB,
                     'prodQ' => $quantity * $piecesB,
                     'consumptionA' => $quantity * $piecesB * $height,

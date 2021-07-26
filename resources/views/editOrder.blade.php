@@ -15,9 +15,9 @@
                                 {{Session::get('success')}}
                             </div>
                         @endif
-                        <form action="" method="post" action="{{ route('order.update') }}">
+                        <form method="post" action="{{ route('order.update', $order->id ) }}">
+                            @method('PUT')
                             @csrf
-                            {{ method_field('PUT') }}
                             <table width="100%">
                                 <tr>
                                     <td>
@@ -89,7 +89,7 @@
                                     <td>
                                         <select name="product_id" id="product_id">
                                             @foreach ( $products as $product )
-                                                    <option value="{{ $product->id }}">{{ $product->description }} {{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }}</option>
+                                                    <option value="{{ $product->id }}">{{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -178,7 +178,7 @@
                                     <input type="text" class="w-30" name="packaging" id="packaging" value="{{ $order->packaging }}"> szt.
                                 </td>
                                 <td colspan="5">
-                                    <input type="submit" name="send" value="Zapisz zamówienie" class="btn btn-dark btn-block">
+                                    <input type="submit" name="send" value="Zapisz zmiany" class="btn btn-dark btn-block">
                                 </td>
                             </tr>
                         </form>

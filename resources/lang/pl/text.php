@@ -30,6 +30,7 @@ return [
     'add_new_client' => 'Nowy klient',
     'add_new_product' => 'Nowa tektura',
     'add_new_order' => 'Dodawanie nowego zlecenia',
-    'save_new_order' => 'Edytowanie zlecenia'
+    'save_new_order' => 'Edycja zlecenia',
+    'edit_client' => 'Edycja klienta'
 
 ];

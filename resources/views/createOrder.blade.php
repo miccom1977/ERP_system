@@ -88,7 +88,7 @@
                                     <td>
                                         <select name="product_id" id="product_id">
                                             @foreach ( $products as $product )
-                                                    <option value="{{ $product->id }}">{{ $product->description }} {{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }}</option>
+                                                    <option value="{{ $product->id }}"> {{ $product->designation }}  {{ $product->grammage }} g/m {{ $product->roll_width }} mm / {{ $product->cardboard_producer }}</option>
                                             @endforeach
                                         </select>
                                     </td>

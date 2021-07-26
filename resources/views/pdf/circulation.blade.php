@@ -15,14 +15,21 @@
         .center{
             text-align: center;
         }
-        #titleBox{
+        .titleBox{
             position: absolute;
-            right: 20px;
+            right: 1px;
             padding:10px;
             top:5px;
             height:40px;
             width:150px;
             border:1px solid black;
+        }
+        .bgLogo{
+            position: fixed;
+            left: 20px;
+            top:5px;
+            width:70px;
+            height:61px;
         }
         .yellow{
             background:yellow;
@@ -39,10 +46,11 @@
     <table width="100%" border="1"  cellspacing="0" cellpadding="0" >
         <tr>
             <td class="center" colspan="2">
+                <div class="bgLogo"><img src="https://www.maro-pack.pl/assets/images/maro-packLogo.jpg"/></div>
                 <h4>
                     <span>KARTA OBIEGOWA- PRODUKCJA</span>
                 </h4>
-                <div id="titleBox" class="yellow"> {{ $order->client->description }}<br> {{ $order->article_number }}</div>
+                <div class="titleBox yellow"> {{ $order->client->description }}<br> {{ $order->article_number }}</div>
             </td>
         </tr>
         <tr>
@@ -174,10 +182,11 @@
     <table width="100%" border="1"  cellspacing="0" cellpadding="0" >
         <tr>
             <td class="center" colspan="2">
+                <div class="bgLogo"><img src="https://www.maro-pack.pl/assets/images/maro-packLogo.jpg"/></div>
                 <h4>
                     <span>KARTA OBIEGOWA- MAGAZYN</span>
                 </h4>
-                <div id="titleBox" class="yellow"> {{ $order->client->description }}<br> {{ $order->article_number }}</div>
+                <div class="titleBox yellow"> {{ $order->client->description }}<br> {{ $order->article_number }}</div>
             </td>
         </tr>
         <tr>

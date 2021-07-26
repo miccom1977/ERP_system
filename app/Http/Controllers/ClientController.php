@@ -91,7 +91,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('editClient',['client' => $this->clientRepository->find($id) ] );
     }
 
     /**
@@ -103,7 +103,14 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $client =$this->clientRepository->find($id);
+        $client->description = $request->description;
+        $client->city = $request->city;
+        $client->post_code = $request->post_code;
+        $client->country = $request->country;
+        $client->save();
         //
+        return back()->with('success', 'Zmiany zapisane.');
     }
 
     /**
