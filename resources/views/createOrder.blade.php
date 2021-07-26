@@ -138,13 +138,13 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="date" class="w-18" id="date_addmission" name="date_addmission" value="{{ now() }}" >
+                                        <input type="date" class="w-18" id="date_delivery" name="date_delivery" value="{{ now() }}" >
+                                    </td>
+                                    <td>
+                                        <input type="date" class="w-18" id="date_shipment" name="date_shipment" value="{{ now() }}" >
                                     </td>
                                     <td>
                                         <input type="date" class="w-18" id="date_production" name="date_production" value="{{ now() }}" >
-                                    </td>
-                                    <td>
-                                        <input type="date" class="w-18" id="date_delivery" name="date_delivery" value="{{ now() }}" >
                                     </td>
                                     <td  colspan="3">
                                         L:<input type="text" class="w-30" name="division_flapsL" id="division_flapsL"><br>
