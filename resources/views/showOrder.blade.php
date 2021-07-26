@@ -74,13 +74,13 @@
                                     {{ $order->product->description }} {{ $order->product->designation }} {{ $order->product->grammage }} g/m <br>{{ $order->product->cardboard_producer }}, szer. {{ $order->product->roll_width }} mm
                                 </td>
                                 <td>
-                                    {{  $order->date_addmission }}
+                                    {{  $order->date_delivery }}
+                                </td>
+                                <td>
+                                    {{  $order->date_shipment }}
                                 </td>
                                 <td>
                                     {{  $order->date_production }}
-                                </td>
-                                <td>
-                                    {{  $order->date_delivery }}
                                 </td>
                                 <td>
                                     <a href="/order/{{$order->id}}/edit"><button>edytuj</button></a>

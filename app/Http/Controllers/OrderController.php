@@ -109,7 +109,8 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('editOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $this->orderRepository->find($id) ] );
+
     }
 
     /**
@@ -121,7 +122,30 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $order =$this->orderRepository->find($id);
+        $order->quantity = $request->quantity;
+        $order->l_elem = $request->l_elem;
+        $order->q_elem = $request->q_elem;
+        $order->h_elem = $request->h_elem;
+        $order->client_order_number = $request->client_order_number;
+        $order->article_number = $request->article_number;
+        $order->flaps_a = $request->flaps_a;
+        $order->flaps_b = $request->flaps_b;
+        $order->division_flapsL = $request->division_flapsL;
+        $order->division_flapsQ = $request->division_flapsQ;
+        $order->l_elem_pieces = $request->l_elem_pieces;
+        $order->q_elem_pieces = $request->q_elem_pieces;
+        $order->packaging = $request->packaging;
+        $order->product_id = $request->product_id;
+        $order->client_id = $request->client_id;
+        $order->pallets = $request->pallets;
+        $order->date_shipment = $request->date_shipment;
+        $order->date_production = $request->date_production;
+        $order->date_delivery = $request->date_delivery;
+
+        $order->save();
         //
+        return back()->with('success', 'Zmiany zapisane.');
     }
 
     /**
