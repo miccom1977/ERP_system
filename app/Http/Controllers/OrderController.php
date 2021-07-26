@@ -156,7 +156,7 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = order::find($id);
+        $order = $this->orderRepository->find($id);
         $order->delete();
         return redirect('/dashboard')->with('success', 'Zlecenie usunięte.');
     }

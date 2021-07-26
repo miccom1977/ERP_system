@@ -121,6 +121,8 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = $this->clientRepository->find($id);
+        $client->delete();
+        return redirect('/dashboard')->with('success', 'Klient został usunięty.');
     }
 }

@@ -15,7 +15,7 @@
                                 {{Session::get('success')}}
                             </div>
                         @endif
-                        <form action="" method="post" action="{{ route('client.store') }}">
+                        <form method="post" action="{{ route('client.store') }}">
                             @csrf
                             <table>
                                 <tr>
