@@ -17,5 +17,13 @@ class Order extends Model
     public function client(){
         return $this->belongsTo('App\Models\Client');
     }
+
+    public function cost(){
+        return $this->belongsTo('App\Models\CostHomeWorker');
+    }
+
+    public function file(){
+        return $this->belongsTo('App\Models\File');
+    }
 }
 

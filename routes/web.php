@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\FileUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,5 @@ Route::resource('/order', OrderController::class)->name('index','order');
 Route::resource('/product', ProductController::class)->name('index','product');
 Route::resource('/client', ClientController::class)->name('index','client');
 Route::get('/print/{id}', [OrderController::class, 'createPDF']);
+Route::post('store/file', [FileUploadController::class, 'store']);
 require __DIR__.'/auth.php';

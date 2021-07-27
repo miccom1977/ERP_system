@@ -133,7 +133,7 @@
                 KLIENT/FIRMA: {{ $order->client->description }}
             </td>
             <td   style=" padding:15px;">
-                TRMIN WYSYŁKI: <strong>{{ $order->date_shipment }}</strong>
+                TERMIN WYSYŁKI: <strong>{{ $order->date_shipment }}</strong>
             </td>
         </tr>
         <tr>
@@ -260,7 +260,7 @@
                 KLIENT/FIRMA: {{ $order->client->description }}
             </td>
             <td   style=" padding:15px;">
-                TRMIN WYSYŁKI: <strong>{{ $order->date_shipment }}</strong>
+                TERMIN WYSYŁKI: <strong>{{ $order->date_shipment }}</strong>
             </td>
         </tr>
         <tr>
@@ -305,5 +305,92 @@
             </td>
         </tr>
     </table>
+
+
+    <div class="page-break"></div>
+
+    <table  cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;">
+        <tr>
+            <td  style=" padding:15px;" colspan="3">
+                ODBIORCA:
+            </td>
+            <td   style=" padding:15px;"  colspan="4">
+                <strong> {{ $order->client->description }}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td  style=" padding:15px;"  colspan="3">
+                ILOŚĆ ELEMENTÓW:
+            </td>
+            <td   style=" padding:15px;"  colspan="4">
+                <strong> {{ ( $order->q_elem_pieces + $order->l_elem_pieces) }}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td  style=" padding:15px;"  colspan="3">
+                CENA ZA 1000 szt. :
+            </td>
+            <td   style=" padding:15px;"  colspan="4">
+                <strong> {{ $order->cost_data->cost }} złotych</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Odbiorca
+            </td>
+            <td>
+                Ilość pobrana
+            </td>
+            <td>
+                Imię i Nazwisko
+            </td>
+            <td>
+                Ilość zwrócona
+            </td>
+            <td>
+                Data zwrotu
+            </td>
+            <td>
+                Wydał
+            </td>
+            <td>
+                Odebrał
+            </td>
+        </tr>
+        @for ($i = 1; $i < 25; $i++)
+        <tr>
+            <td  style="height:30px;">
+
+            </td>
+            <td style="height:30px;">
+
+            </td>
+            <td style="height:30px;">
+
+            </td>
+            <td style="height:30px;">
+
+            </td>
+            <td style="height:30px;">
+
+            </td>
+            <td style="height:30px;">
+
+            </td>
+            <td style="height:30px;">
+
+            </td>
+        </tr>
+        @endfor
+    </table>
+
+
+    <div class="page-break"></div>
+    <img src="C://xampp/htdocs/public/files/{{ $order->file->path }}" style="width:100%"/>
+    C://xampp/htdocs/public/files/{{ $order->file->path }}
+
+
+
+
 </body>
 </html>

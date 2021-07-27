@@ -15,7 +15,7 @@
                                 {{Session::get('success')}}
                             </div>
                         @endif
-                        <form method="post" action="{{ route('order.update', $order->id ) }}">
+                        <form method="post" enctype="multipart/form-data" action="{{ route('order.update', $order->id ) }}">
                             @method('PUT')
                             @csrf
                             <table width="100%">
@@ -177,8 +177,27 @@
                                 <td>
                                     <input type="text" class="w-30" name="packaging" id="packaging" value="{{ $order->packaging }}"> szt.
                                 </td>
-                                <td colspan="5">
+                                <td colspan="2">
                                     <input type="submit" name="send" value="Zapisz zmiany" class="btn btn-dark btn-block">
+                                </td>
+                                <td colspan="3">
+                                    <form method="POST" enctype="multipart/form-data" id="upload-file" action="{{ url('store', $order->id ) }}" >
+                                        @csrf
+                                        @method('POST')
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="file" name="file" placeholder="Choose file" id="file">
+                                                     @error('file')
+                                                      <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                                      @enderror
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <button type="submit" class="btn btn-primary" id="submit" formaction="{{ url('store/file') }}" value="file">Zapisz zdjęcie</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         </form>

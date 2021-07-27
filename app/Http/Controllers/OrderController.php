@@ -2,25 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\Order;
 use App\Models\Client;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Repositories\FileRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\CostHomeWorkerRepository;
+
 
 class OrderController extends Controller
 {
     private $clientRepository;
     private $productRepository;
     private $orderRepository;
+    private $costHomeWorkerRepository;
+    private $fileRepository;
 
-    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository ){
+    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository, CostHomeWorkerRepository  $costHomeWorkerRepository, FileRepository $fileRepository ){
         $this->clientRepository = $clientRepository;
         $this->productRepository = $productRepository;
         $this->orderRepository = $orderRepository;
+        $this->costHomeWorkerRepository = $costHomeWorkerRepository;
+        $this->fileRepository = $fileRepository;
     }
 
 
@@ -83,9 +91,7 @@ class OrderController extends Controller
         $order->date_shipment = $request->date_shipment;
         $order->date_production = $request->date_production;
         $order->date_delivery = $request->date_delivery;
-
         $order->save();
-
         //
         return back()->with('success', 'Zlecenie dodane.');
     }
@@ -165,10 +171,21 @@ class OrderController extends Controller
         $order = Order::with('product')->get()->find($id);
         $dataCardboard = $this->calculateCardboard( $order->l_elem, $order->q_elem, $order->h_elem, $order->product->grammage, $order->product->designation, $order->product->cardboard_producer,( $order->quantity+$order->quantity*0.05 ),$order->l_elem_pieces, $order->q_elem_pieces );
         $order->dataCardboard = $dataCardboard;
+        $order->cost_data = $this->costHomeWorkerRepository->findCost( ( $order->l_elem_pieces+$order->q_elem_pieces) );
+        $order->file = $this->fileRepository->find($id);
         //return view('pdf.circulation',['order' => $order ] );
         view()->share('order', $order);
         $pdf = PDF::loadView('pdf.circulation', $order);
+        //$html = file_get_contents('C://xampp/htdocs/public/files/'.$order->file->path);
+        //$pdf->loadHtml($html);
+        //$pdf->render();
         //download PDF file with download method
+        //
+        $pdf->save('C://xampp/htdocs/public/files/uploaded/karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
+        //$pdf = new \LynX39\LaraPdfMerger\PdfManage;
+        //$pdf->addPDF(public_path('C://xampp/htdocs/public/files/uploaded/karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf'), 'all');
+        //$pdf->addPDF(public_path($order->file->path, 'all');
+        //$pdf->merge('file', public_path('/upload/created.pdf'), 'P');
         return $pdf->download('karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
 
     }
