@@ -176,18 +176,8 @@ class OrderController extends Controller
         //return view('pdf.circulation',['order' => $order ] );
         view()->share('order', $order);
         $pdf = PDF::loadView('pdf.circulation', $order);
-        //$html = file_get_contents('C://xampp/htdocs/public/files/'.$order->file->path);
-        //$pdf->loadHtml($html);
-        //$pdf->render();
-        //download PDF file with download method
-        //
         $pdf->save('C://xampp/htdocs/public/files/uploaded/karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
-        //$pdf = new \LynX39\LaraPdfMerger\PdfManage;
-        //$pdf->addPDF(public_path('C://xampp/htdocs/public/files/uploaded/karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf'), 'all');
-        //$pdf->addPDF(public_path($order->file->path, 'all');
-        //$pdf->merge('file', public_path('/upload/created.pdf'), 'P');
         return $pdf->download('karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
-
     }
 
     public function calculateCardboard( $widthA, $widthB, $height, $grammage, $designation, $cardboard_producer, $quantity, $piecesA, $piecesB )

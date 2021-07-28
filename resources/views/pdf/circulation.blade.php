@@ -315,7 +315,9 @@
                 ODBIORCA:
             </td>
             <td   style=" padding:15px;"  colspan="4">
-                <strong> {{ $order->client->description }}</strong>
+                <strong>{{ $order->client->description }}<br>
+                    {{ $order->client_order_number }}
+                </strong>
             </td>
         </tr>
         <tr>
@@ -357,7 +359,7 @@
                 Odebrał
             </td>
         </tr>
-        @for ($i = 1; $i < 25; $i++)
+        @for ($i = 1; $i < 26; $i++)
         <tr>
             <td  style="height:30px;">
 
@@ -383,14 +385,5 @@
         </tr>
         @endfor
     </table>
-
-
-    <div class="page-break"></div>
-    <img src="C://xampp/htdocs/public/files/{{ $order->file->path }}" style="width:100%"/>
-    C://xampp/htdocs/public/files/{{ $order->file->path }}
-
-
-
-
 </body>
 </html>

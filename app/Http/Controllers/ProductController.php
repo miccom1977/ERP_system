@@ -67,6 +67,7 @@ class ProductController extends Controller
         $product->grammage = $request->grammage;
         $product->cardboard_producer = $request->cardboard_producer;
         $product->designation = $request->designation;
+        $product->count = $request->count;
         $product->save();
 
         //
@@ -92,7 +93,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('editProduct',['clients' => $this->clientRepository->getAll(), 'product' => $this->productRepository->find($id) ] );
     }
 
     /**
@@ -104,7 +105,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product =$this->productRepository->find($id);
+        $product->description = $request->description;
+        $product->roll_width = $request->roll_width;
+        $product->grammage = $request->grammage;
+        $product->cardboard_producer = $request->cardboard_producer;
+        $product->designation = $request->designation;
+        $product->count = $request->count;
+        $product->save();
+        return back()->with('success', 'Zmiany zapisane.');
     }
 
     /**
@@ -115,6 +124,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = $this->productRepository->find($id);
+        $product->delete();
+        return redirect('/dashboard')->with('success', 'Produkt usunięty.');
     }
 }

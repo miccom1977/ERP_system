@@ -31,6 +31,8 @@ return [
     'add_new_product' => 'Nowa tektura',
     'add_new_order' => 'Dodawanie nowego zlecenia',
     'save_new_order' => 'Edycja zlecenia',
-    'edit_client' => 'Edycja klienta'
+    'edit_client' => 'Edycja klienta',
+    'add_new_product' => 'Tektury',
+    'edit_product' => 'Edycja produktu',
 
 ];

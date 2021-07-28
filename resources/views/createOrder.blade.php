@@ -15,6 +15,7 @@
                                 {{Session::get('success')}}
                             </div>
                         @endif
+                        @if (Auth::user()->role->id ==  1 )
                         <form method="post" action="{{ route('order.store') }}">
                             @csrf
                             <table width="100%">
@@ -182,40 +183,7 @@
                             </tr>
                         </form>
                         </table>
-                    </div>
-
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <table width="100%">
-                            <tr>
-                                <td>
-                                    Numer zamówienia
-                                </td>
-                                <td>
-                                    Klient
-                                </td>
-                                <td>
-                                    Ilość sztuk
-                                </td>
-                                <td>
-                                    Tektura
-                                </td>
-                                <td>
-                                    Data przyjęcia
-                                </td>
-                                <td>
-                                    Data produkcji
-                                </td>
-                                <td>
-                                    Data wysyłki
-                                </td>
-                                <td>
-                                    Opcje
-                                </td>
-                            </tr>
-                            @foreach ( $orders as $order )
-                                <tr><td><a href="/order/{{ $order->id }}">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</a></td><td>{{ $order->client->description }}</td><td>{{ $order->quantity }}</td><td>{{ $order->product->description }} {{ $order->product->designation }} {{ $order->product->grammage }} g/m <br>{{ $order->product->cardboard_producer }}, szer. {{ $order->product->roll_width }} mm</td><td>{{ $order->date_addmission }}</td><td>{{ $order->date_production }}</td><td>{{ $order->date_delivery }}</td><td><button>edytuj</button><button class="danger">usuń</button></td></tr>
-                            @endforeach
-                        </table>
+                        @endif
                     </div>
                 </div>
         </div>

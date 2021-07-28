@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->integer('grammage')->default(0);
             $table->text('cardboard_producer');
             $table->text('designation');
+            $table->text('count');
             $table->timestamps();
         });
     }

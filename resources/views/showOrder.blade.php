@@ -82,6 +82,8 @@
                                 <td>
                                     {{  $order->date_production }}
                                 </td>
+
+                                @if (Auth::user()->role->id ==  1 )
                                 <td>
                                     <a href="/order/{{$order->id}}/edit"><button>edytuj</button></a>
                                 </td>
@@ -94,6 +96,13 @@
                                         </div>
                                     </form>
                                 </td>
+                                @else
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                @endif
+
                             </tr>
                         </table>
                     </div>

@@ -24,4 +24,12 @@ class ProductRepository extends BaseRepository
     public function getAll(){
         return $clients = Product::all();
     }
+    /**
+    * @param $id
+    * @return Model
+    */
+    public function find($id): ?Product
+    {
+        return $this->model->find($id);
+    }
 }
