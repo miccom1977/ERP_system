@@ -33,6 +33,6 @@ return [
     'save_new_order' => 'Edycja zlecenia',
     'edit_client' => 'Edycja klienta',
     'add_new_product' => 'Tektury',
-    'edit_product' => 'Edycja produktu',
+    'edit_product' => 'Edycja produktu ',
 
 ];
