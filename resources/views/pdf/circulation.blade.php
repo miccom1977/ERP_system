@@ -74,7 +74,7 @@
                 Wymiar:
             </td>
             <td style="padding-left:10px;">
-                {{ $order->l_elem }} x {{ $order->q_elem }} x {{ $order->h_elem }}</strong> POLA: <strong> {{ $order->flaps_a }}x{{ $order->flaps_b }}</strong>
+                <strong>{{ $order->l_elem }}</strong> x <strong>{{ $order->q_elem }}</strong> x <strong>{{ $order->h_elem }}</strong><div style="float:right; text-align:right;">POLA: <strong> {{ $order->flaps_a }}x{{ $order->flaps_b }}</strong></div>
             </td>
         </tr>
         <tr>
@@ -361,25 +361,25 @@
         </tr>
         @for ($i = 1; $i < 26; $i++)
         <tr>
-            <td  style="height:30px;">
+            <td  style="height:28px;">
 
             </td>
-            <td style="height:30px;">
+            <td style="height:28px;">
 
             </td>
-            <td style="height:30px;">
+            <td style="height:28px;">
 
             </td>
-            <td style="height:30px;">
+            <td style="height:28px;">
 
             </td>
-            <td style="height:30px;">
+            <td style="height:28px;">
 
             </td>
-            <td style="height:30px;">
+            <td style="height:28px;">
 
             </td>
-            <td style="height:30px;">
+            <td style="height:28px;">
 
             </td>
         </tr>

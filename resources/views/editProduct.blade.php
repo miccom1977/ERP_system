@@ -48,27 +48,13 @@
                                         <input type="text" name="description" id="description" value="{{ $product->description }}">
                                     </td>
                                     <td>
-                                        <input type="number" class="w-20" name="grammage" id="grammage" list="defaultNumbersGramme">
-                                        <datalist id="defaultNumbersGramme">
-                                            <option value="600">
-                                            <option value="685">
-                                            <option value="700">
-                                            <option value="790">
-                                            <option value="800">
-                                        </datalist>
+                                        <input type="number" class="w-20" name="grammage" id="grammage" value="{{ $product->grammage }}">
                                     </td>
                                     <td>
-                                        <input type="number" class="w-20" name="roll_width" id="roll_width" list="defaultNumbersWidth">
-                                        <datalist id="defaultNumbersWidth">
-                                            <option value="600">
-                                            <option value="685">
-                                            <option value="700">
-                                            <option value="790">
-                                            <option value="800">
-                                        </datalist>
+                                        <input type="number" class="w-20" name="roll_width" id="roll_width" value="{{ $product->roll_width }}">
                                     </td>
                                     <td>
-                                        <select name="designation" class="w-20" id="designation">
+                                        <select name="designation" class="w-22" id="designation">
                                             <option value="PP" {{ $product->designation == "PP" ? 'selected' : '' }}>PP</option>
                                             <option value="GK/MGK" {{ $product->designation == "GK/MGK" ? 'selected' : '' }}>GK/MGK</option>
                                             <option value="PET" {{ $product->designation == "PET" ? 'selected' : '' }}>PET</option>

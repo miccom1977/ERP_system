@@ -40,7 +40,7 @@
                             </td>
                         </tr>
                         @foreach ( $orders as $order )
-                            <tr><td><a href="/order/{{ $order->id }}}}">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</a></td><td>{{ $order->client->description }}</td><td>{{ $order->quantity }}</td><td>{{ $order->product->description }} {{ $order->product->grammage }}</td><td>{{ date_format($order->created_at, 'Y-m-d') }}</td><td>{{ $order->date_production }}</td><td>{{ $order->date_delivery }}</td></tr>
+                            <tr><td><a href="/order/{{ $order->id }}}}">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</a></td><td>{{ $order->client->description }}</td><td>{{ $order->quantity }}</td><td>{{ $order->product->designation }} {{ $order->product->grammage }} g/m x {{ $order->product->roll_width }} mm</td><td>{{ date_format($order->created_at, 'Y-m-d') }}</td><td>{{ $order->date_production }}</td><td>{{ $order->date_delivery }}</td></tr>
                         @endforeach
                     </table>
                 </div>

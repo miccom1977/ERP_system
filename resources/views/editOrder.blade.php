@@ -44,7 +44,7 @@
                                     <td>
                                         <select name="client_id" id="client_id">
                                             @foreach ( $clients as $client )
-                                                    <option value="{{ $client->id }}" >{{ $client->description }}</option>
+                                                    <option value="{{ $client->id }}" {{ $order->client_id == $client->id ? 'selected' : '' }}>{{ $client->description }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -90,7 +90,7 @@
                                     <td>
                                         <select name="product_id" id="product_id">
                                             @foreach ( $products as $product )
-                                                    <option value="{{ $product->id }}">{{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }}</option>
+                                                    <option value="{{ $product->id }}" {{ $order->product->id == $product->id ? 'selected' : '' }}>{{ $product->grammage }} {{ $product->designation }} / {{ $product->cardboard_producer }} </option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -171,8 +171,8 @@
                                 </tr>
                                 <td>
                                     <select name="pallets" id="pallets">
-                                        <option value="1">ZWYKŁE</option>
-                                        <option value="2">EURO</option>
+                                        <option value="1" {{ $order->pallets == 1 ? 'selected' : '' }}>ZWYKŁE</option>
+                                        <option value="2" {{ $order->pallets == 2 ? 'selected' : '' }}>EURO</option>
                                     </select>
                                 </td>
                                 <td>
@@ -182,23 +182,26 @@
                                     <input type="submit" name="send" value="Zapisz zmiany" class="btn btn-dark btn-block">
                                 </td>
                                 <td colspan="3">
-                                    <form method="POST" enctype="multipart/form-data" id="upload-file" action="{{ url('store', $order->id ) }}" >
-                                        @csrf
-                                        @method('POST')
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <input type="file" name="file" placeholder="Choose file" id="file">
-                                                     @error('file')
-                                                      <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                                      @enderror
+                                    @if ( !$order->file->path )
+                                        <form method="POST" enctype="multipart/form-data" id="upload-file" action="{{ url('store', $order->id ) }}" >
+                                            @csrf
+                                            @method('POST')
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input type="file" name="file" placeholder="Choose file" id="file">
+                                                        <input type="hidden" name="order_id" value="{{ $order->id }}">
+                                                        @error('file')
+                                                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <button type="submit" class="btn btn-primary" id="submit" formaction="{{ url('store/file') }}" value="file">Zapisz zdjęcie</button>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <button type="submit" class="btn btn-primary" id="submit" formaction="{{ url('store/file') }}" value="file">Zapisz zdjęcie</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         </form>

@@ -2,6 +2,11 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{$order->id}}"><button>Drukuj dokumenty</button></a>
+            @if ( isset($order->file->path) )
+                <a href="c://xampp/htdocs/public/{{$order->file->path}}" downolad ><button>pobierz rysunek</button></a>
+
+            @endif
+
         </h2>
     </x-slot>
 
@@ -71,7 +76,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    {{ $order->product->description }} {{ $order->product->designation }} {{ $order->product->grammage }} g/m <br>{{ $order->product->cardboard_producer }}, szer. {{ $order->product->roll_width }} mm
+                                    {{ $order->product->description }} {{ $order->product->designation }} <br> {{ $order->product->grammage }} g/m  {{ $order->product->cardboard_producer }}
                                 </td>
                                 <td>
                                     {{  $order->date_delivery }}

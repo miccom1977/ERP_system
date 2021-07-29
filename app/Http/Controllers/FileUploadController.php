@@ -17,9 +17,9 @@ class FileUploadController extends Controller
             if($request->file()) {
                 $fileName = $request->file->getClientOriginalName();
                 $filePath = $request->file('file')->store('uploaded', ['disk' => 'files']);
-
                 $fileModel->name = $request->file->getClientOriginalName();
                 $fileModel->path = $filePath;
+                $fileModel->order_id = $request->order_id;
                 $fileModel->save();
 
                 return back()

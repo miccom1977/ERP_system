@@ -107,6 +107,9 @@
                                     Producent
                                 </td>
                                 <td>
+                                   Stan magazynowy
+                                </td>
+                                <td>
                                     Opcje
                                 </td>
                             </tr>
@@ -117,6 +120,7 @@
                                     <td>{{ $product->grammage }} g/m</td>
                                     <td>{{ $product->designation }}</td>
                                     <td>{{ $product->cardboard_producer }}</td>
+                                    <td>{{ $product->count }}</td>
                                     <td>
                                         @if (Auth::user()->role->id <3 )
                                             <a href="/product/{{$product->id}}/edit"><button>edytuj</button></a>
