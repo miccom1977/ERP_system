@@ -19,7 +19,7 @@
                         <form method="post" enctype="multipart/form-data" action="{{ route('order.update', $order->id ) }}">
                             @method('PUT')
                             @csrf
-                            <table width="100%">
+                            <table width="100%" style="border:none;">
                                 <tr>
                                     <td>
                                         <label>Klient</label>

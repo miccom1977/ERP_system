@@ -40,6 +40,19 @@
         .page-break {
             page-break-after: always;
         }
+        .red{
+            color:red;
+            font-family: "DejaVu Sans";
+            font-size:16px;
+        }
+        .bigD{
+            color:red;
+            font-family: "DejaVu Sans";
+            font-size:80px;
+            position:absolute;
+            top:300px;
+            right:30px;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +71,7 @@
                 Zlecenie:
             </td>
             <td style="padding-left:10px;">
-                <strong>{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</strong>
+                <strong class="red">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</strong>
             </td>
         </tr>
         <tr>
@@ -66,7 +79,7 @@
                 Wykonać:
             </td>
             <td style="padding-left:10px;">
-                <strong>{{ ( $order->quantity+($order->quantity*0.05) ) }} sztuk</strong>
+                <strong  class="red">{{ ( $order->quantity+($order->quantity*0.05) ) }} sztuk</strong>
             </td>
         </tr>
         <tr>
@@ -74,7 +87,7 @@
                 Wymiar:
             </td>
             <td style="padding-left:10px;">
-                <strong>{{ $order->l_elem }}</strong> x <strong>{{ $order->q_elem }}</strong> x <strong>{{ $order->h_elem }}</strong><div style="float:right; text-align:right;">POLA: <strong> {{ $order->flaps_a }}x{{ $order->flaps_b }}</strong></div>
+                <strong class="red">{{ $order->l_elem }}</strong> x <strong  class="red">{{ $order->q_elem }}</strong> x <strong  class="red">{{ $order->h_elem }}</strong><div style="float:right; text-align:right;">POLA: <strong> {{ $order->flaps_a }}x{{ $order->flaps_b }}</strong></div>
             </td>
         </tr>
         <tr>
@@ -84,8 +97,8 @@
             </td>
             <td style="padding-left:10px;">
 
-                <strong>{{ $order->l_elem_pieces }}</strong> szt. {{ ( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
-                <strong>{{ $order->q_elem_pieces }}</strong> szt. {{ ( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów
+                <strong  class="red">{{ $order->l_elem_pieces }}</strong> szt.     {{ ( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
+                <strong  class="red">{{ $order->q_elem_pieces }}</strong> szt.     {{ ( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów
             </td>
         </tr>
         <tr>
@@ -96,8 +109,8 @@
             </td>
             <td style="padding-left:10px;">
                 <br>
-                <strong>{{ $order->division_flapsL }}</strong><br>
-               <strong>{{ $order->division_flapsL }}</strong><br>
+                <strong class="red">{{ $order->division_flapsL }}</strong><br>
+               <strong class="red">{{ $order->division_flapsL }}</strong><br>
             </td>
         </tr>
         <tr>
@@ -112,7 +125,7 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
-                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:20px;text-align:center;margin-top:30px;">MATERIAŁ <strong>{{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><br>
+                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:20px;text-align:center;margin-top:30px;"><strong class="red">MATERIAŁ {{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><div class="bigD">{{ $order->product->designation }}</div><br>
                 ROZKŁAD ELEMENTÓW<br>
                 <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center; padding:10px;">
                     <tr class="yellow">
@@ -126,29 +139,27 @@
                 </table>
             </td>
         </tr>
-    </table>
-    <table  cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;">
         <tr>
-            <td  style=" padding:15px;">
+            <td style="padding:15px;">
                 KLIENT/FIRMA: {{ $order->client->description }}
             </td>
-            <td   style=" padding:15px;">
-                TERMIN WYSYŁKI: <strong>{{ $order->date_shipment }}</strong>
+            <td style="padding:15px;">
+                TERMIN WYSYŁKI: <strong  class="red">{{ $order->date_shipment }}</strong>
             </td>
         </tr>
         <tr>
-            <td   style=" padding:15px;">
+            <td style="padding:15px;">
                 NR. ZAMÓWIENIA: {{ $order->client_order_number }}
             </td>
-            <td   style=" padding:15px;">
-                 WIĄZAĆ PO <strong>{{ $order->packaging }}</strong> sztuk
+            <td style="padding:15px;">
+                 WIĄZAĆ PO <strong  class="red">{{ $order->packaging }}</strong> sztuk
             </td>
         </tr>
         <tr>
-            <td   style=" padding:15px;">
-                TERMIN WYKONANIA: <strong>{{ $order->date_production }}</strong>
+            <td style="padding:15px;">
+                TERMIN WYKONANIA: <strong  class="red">{{ $order->date_production }}</strong>
             </td>
-            <td>
+            <td style="padding:15px;">
                 Pakować na PALETY
                 @if($order->pallets == 1)
                     ZWYKŁE
@@ -159,7 +170,7 @@
         </tr>
         <tr>
             <td colspan="2"   style=" padding:5px;">
-                <div class="green" style="border-style: dashed;width:250px;margin:0 auto; position:relative;padding:20px;">ZAMÓWIENIE NA  <strong>{{ $order->date_delivery }} !</strong></div>
+                <div class="green" style="border-style: dashed;width:400px;margin:0 auto; position:relative;padding:20px;"><strong  class="red">ZAMÓWIENIE NA {{ $order->date_delivery }} !</strong></div>
             </td>
         </tr>
         <tr style="width:100px; text-align:left;">
@@ -194,7 +205,7 @@
                 Zlecenie:
             </td>
             <td style="padding-left:10px;">
-                <strong>{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</strong>
+                <strong class="red">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</strong>
             </td>
         </tr>
         <tr>
@@ -202,7 +213,7 @@
                 Wykonać:
             </td>
             <td style="padding-left:10px;">
-                <strong>{{ ( $order->quantity+($order->quantity*0.05) ) }} sztuk</strong>
+                <strong  class="red">{{ ( $order->quantity+($order->quantity*0.05) ) }} sztuk</strong>
             </td>
         </tr>
         <tr>
@@ -210,7 +221,7 @@
                 Wymiar:
             </td>
             <td style="padding-left:10px;">
-                {{ $order->l_elem }} x {{ $order->q_elem }} x {{ $order->h_elem }}</strong> POLA: <strong> {{ $order->flaps_a }}x{{ $order->flaps_b }}</strong>
+                <strong class="red">{{ $order->l_elem }}</strong> x  <strong class="red">{{ $order->q_elem }}</strong> x  <strong class="red">{{ $order->h_elem }}</strong><div style="float:right; text-align:right;">POLA: <strong> {{ $order->flaps_a }}x{{ $order->flaps_b }}</strong></div>
             </td>
         </tr>
         <tr>
@@ -232,15 +243,25 @@
             </td>
             <td style="padding-left:10px;">
                 <br>
-                <strong>{{ $order->division_flapsL }}</strong><br>
-               <strong>{{ $order->division_flapsL }}</strong><br>
+                <strong class="red">{{ $order->division_flapsL }}</strong><br>
+               <strong class="red">{{ $order->division_flapsL }}</strong><br>
+            </td>
+        </tr>
+        <tr style="width:100px; text-align:left;">
+            <td style="text-align:right;padding-right:10px;">
+                ILOŚĆ SŁUPKÓW na 1000:<br>
+                ILOŚĆ SŁUPKÓW na 500:<br>
+            </td>
+            <td style="padding-left:10px;">
+                L: <strong>{{ ( $order->l_elem_pieces * 6 ) }}</strong>, Q: <strong>{{ ( $order->q_elem_pieces * 6 ) }}</strong><br>
+                L: <strong>{{ ( ( $order->l_elem_pieces * 6 )/2 ) }}</strong>, Q: <strong>{{ ( ( $order->q_elem_pieces * 6 )/2 ) }}</strong><br>
             </td>
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
-                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:20px;text-align:center;margin-top:30px;">MATERIAŁ <strong>{{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><br>
+                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:20px;text-align:center;margin-top:30px;"><strong  class="red">MATERIAŁ {{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><div class="bigD">{{ $order->product->designation }}</div><br>
                 ZUŻYCIE TEKTURY:<br>
-                <table  cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center; padding:10px;">
+                <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center; padding:10px;">
                     <tr class="yellow" style="padding:5px">
                         <td>Rodzaj</td><td>gramatura</td><td>szerokość rolki</td><td>zużycie</td>
                     </tr>
@@ -253,29 +274,27 @@
 
             </td>
         </tr>
-    </table>
-    <table  cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;">
         <tr>
-            <td  style=" padding:15px;">
+            <td style="padding:15px;">
                 KLIENT/FIRMA: {{ $order->client->description }}
             </td>
-            <td   style=" padding:15px;">
-                TERMIN WYSYŁKI: <strong>{{ $order->date_shipment }}</strong>
+            <td style="padding:15px;">
+                TERMIN WYSYŁKI: <strong  class="red">{{ $order->date_shipment }}</strong>
             </td>
         </tr>
         <tr>
-            <td   style=" padding:15px;">
+            <td style="padding:15px;">
                 NR. ZAMÓWIENIA: {{ $order->client_order_number }}
             </td>
-            <td   style=" padding:15px;">
-                 WIĄZAĆ PO <strong>{{ $order->packaging }}</strong> sztuk
+            <td style="padding:15px;">
+                 WIĄZAĆ PO <strong  class="red">{{ $order->packaging }}</strong> sztuk
             </td>
         </tr>
         <tr>
-            <td   style=" padding:15px;">
-                TERMIN WYKONANIA: <strong>{{ $order->date_production }}</strong>
+            <td style="padding:15px;">
+                TERMIN WYKONANIA: <strong  class="red">{{ $order->date_production }}</strong>
             </td>
-            <td>
+            <td  style=" padding:15px;">
                 <strong>Pakować na PALETY
                 @if($order->pallets == 1)
                     ZWYKŁE
@@ -286,22 +305,8 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"   style=" padding:5px;">
-                <div class="green" style="border-style: dashed;width:250px;margin:0 auto; position:relative;padding:20px;">ZAMÓWIENIE NA  <strong>{{ $order->date_delivery }} !</strong></div>
-            </td>
-        </tr>
-        <tr style="width:100px; text-align:left;">
-                    <td style="text-align:right;padding-right:10px;">
-                        <span class="red">WYDAWANIE:</span><br>
-                        ILOŚĆ SŁUPKÓW na 1000:<br>
-                        ILOŚĆ SŁUPKÓW na 500:<br>
-                    </td>
-                    <td style="padding-left:10px;">
-                        <br>
-                        L: <strong>{{ ( $order->l_elem_pieces * 6 ) }}</strong>, Q: <strong>{{ ( $order->q_elem_pieces * 6 ) }}</strong><br>
-                        L: <strong>{{ ( ( $order->l_elem_pieces * 6 )/2 ) }}</strong>, Q: <strong>{{ ( ( $order->q_elem_pieces * 6 )/2 ) }}</strong><br>
-                    </td>
-                </tr>
+            <td colspan="2" style="padding:5px;">
+                <div class="green" style="border-style: dashed;width:250px;margin:0 auto; position:relative;padding:20px;"<strong  class="red">ZAMÓWIENIE NA  {{ $order->date_delivery }} !</strong></div>
             </td>
         </tr>
     </table>

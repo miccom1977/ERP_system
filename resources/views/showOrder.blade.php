@@ -20,50 +20,42 @@
                                 {{Session::get('success')}}
                             </div>
                         @endif
-                        <table width="100%">
+                        <table width="100%" >
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     <label>Klient</label>
+                                </td>
+                                <td>
+                                    <label>Tektura</label>
                                 </td>
                                 <td>
                                     <label>Sztuki</label>
                                 </td>
                                 <td>
-                                    <label>Wymiar L</label>
-                                </td>
-                                <td>
-                                    <label>Wymiar Q</label>
-                                </td>
-                                <td>
-                                    <label>Wysokość</label>
+                                    <label>Wymiar</label>
                                 </td>
                                 <td>
                                     <label>Pole A / B</label>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td colspan="2">
                                     {{  $order->client->description }}
+                                </td>
+                                <td>
+                                    {{ $order->product->description }} {{ $order->product->designation }} <br> {{ $order->product->grammage }} g/m  {{ $order->product->cardboard_producer }}
                                 </td>
                                 <td>
                                     {{  $order->quantity }} szt
                                 </td>
                                 <td>
-                                    {{  $order->l_elem }} mm
-                                <td>
-                                    {{  $order->q_elem }} mm
-                                </td>
-                                <td>
-                                    {{  $order->h_elem }} mm
+                                    {{  $order->l_elem }} x {{  $order->q_elem }} x {{  $order->h_elem }}
                                 </td>
                                 <td>
                                     {{  $order->flaps_a }} x {{  $order->flaps_b }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>
-                                    <label>Tektura</label>
-                                </td>
                                 <td>
                                     <label>Data dostawy</label>
                                 </td>
@@ -73,11 +65,11 @@
                                 <td>
                                     <label>Data rozpoczęcia produkcji</label>
                                 </td>
+                                <td colspan="3">
+                                    <label>Opcje</label>
+                                </td>
                             </tr>
                             <tr>
-                                <td>
-                                    {{ $order->product->description }} {{ $order->product->designation }} <br> {{ $order->product->grammage }} g/m  {{ $order->product->cardboard_producer }}
-                                </td>
                                 <td>
                                     {{  $order->date_delivery }}
                                 </td>
@@ -87,24 +79,19 @@
                                 <td>
                                     {{  $order->date_production }}
                                 </td>
-
                                 @if (Auth::user()->role->id ==  1 )
-                                <td>
-                                    <a href="/order/{{$order->id}}/edit"><button>edytuj</button></a>
-                                </td>
-                                <td>
+                                <td colspan="3">
+                                    <a href="/order/{{$order->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
                                     <form method="POST" action="/order/{{$order->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <div class="form-group">
-                                            <input type="submit" class="danger" value="usuń">
+                                            <input type="submit" style="float:right;margin:5px 10px 5px 10px;" class="danger" value="usuń">
                                         </div>
                                     </form>
                                 </td>
                                 @else
-                                    <td>
-                                    </td>
-                                    <td>
+                                    <td colspan="3">
                                     </td>
                                 @endif
 

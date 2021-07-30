@@ -17,7 +17,7 @@
                         @endif
                         <form method="post" action="{{ route('client.store') }}">
                             @csrf
-                            <table>
+                            <table width="100%">
                                 <tr>
                                     <td>
                                         <label>Nazwa klienta</label>
