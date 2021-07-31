@@ -383,4 +383,9 @@ class OrderController extends Controller
        //echo '</pre>';
        return $distributionElements;
     }
+
+    public function createCMR($id) {
+        $pdf = PDF::loadView('cmr.cmr');
+        return $pdf->download('cmr.pdf');
+    }
 }

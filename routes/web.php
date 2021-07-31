@@ -31,5 +31,6 @@ Route::resource('/order', OrderController::class)->name('index','order');
 Route::resource('/product', ProductController::class)->name('index','product');
 Route::resource('/client', ClientController::class)->name('index','client');
 Route::get('/print/{id}', [OrderController::class, 'createPDF']);
+Route::get('/printCMR/{id}', [OrderController::class, 'createCMR']);
 Route::post('store/file', [FileUploadController::class, 'store']);
 require __DIR__.'/auth.php';
