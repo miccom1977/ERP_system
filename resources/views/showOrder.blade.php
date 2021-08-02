@@ -4,9 +4,8 @@
             {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{$order->id}}"><button>Drukuj dokumenty</button></a>
             @if ( isset($order->file->path) )
                 <a href="c://xampp/htdocs/public/{{$order->file->path}}" downolad ><button>pobierz rysunek</button></a>
+                @endif
                 <a href="/printCMR/{{$order->id}}"><button>Drukuj CMR</button></a>
-            @endif
-
         </h2>
     </x-slot>
 

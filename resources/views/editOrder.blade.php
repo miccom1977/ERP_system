@@ -182,7 +182,7 @@
                                     <input type="submit" name="send" value="Zapisz zmiany" class="btn btn-dark btn-block">
                                 </td>
                                 <td colspan="3">
-                                    @if ( !$order->file->path )
+                                    @if ( !isset($order->file->path) )
                                         <form method="POST" enctype="multipart/form-data" id="upload-file" action="{{ url('store', $order->id ) }}" >
                                             @csrf
                                             @method('POST')
