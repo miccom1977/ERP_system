@@ -79,7 +79,7 @@
                 Wykonać:
             </td>
             <td style="padding-left:10px;">
-                <strong  class="red">{{ ( $order->quantity+($order->quantity*0.05) ) }} sztuk</strong>
+                <strong  class="red">{{ round( ( $order->quantity+($order->quantity*0.05) ) ) }} sztuk</strong>
             </td>
         </tr>
         <tr>
@@ -97,8 +97,8 @@
             </td>
             <td style="padding-left:10px;">
 
-                <strong  class="red">{{ $order->l_elem_pieces }}</strong> szt.     {{ ( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
-                <strong  class="red">{{ $order->q_elem_pieces }}</strong> szt.     {{ ( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów
+                <strong  class="red">{{ $order->l_elem_pieces }}</strong> szt.     {{ round(( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów<br>
+                <strong  class="red">{{ $order->q_elem_pieces }}</strong> szt.     {{ round(( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów
             </td>
         </tr>
         <tr>
@@ -132,8 +132,8 @@
                         <td>Element</td><td>Rodzaj tektury</td><td>Gramatura</td><td>Szerokość rolki</td><td>Zadanie</td>
                     </tr>
                     @foreach ( $order->dataCardboard as $detail )
-                        <tr class="yellow" style="padding:5px;font-size:12px;">
-                            <td style="font-size:12px;">{{ $detail['detail'] }}</td><td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['task_to_do'] }}</td>
+                        <tr class="yellow" style="padding:5px;">
+                            <td>{{ $detail['detail'] }}</td><td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['task_to_do'] }}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -176,7 +176,7 @@
         <tr style="width:100px; text-align:left;">
             <td colspan="2" style="padding:10px;">
                 Zamówienie na <strong>{{ $order->quantity }}</strong> sztuk <br>
-                 Nie więcej niż <strong>{{ ( $order->quantity + ( $order->quantity*0.05) ) }}</strong> sztuk <br>
+                 Nie więcej niż <strong>{{ round(( $order->quantity + ( $order->quantity*0.05) )) }}</strong> sztuk <br>
             </td>
         </tr>
     </table>
@@ -213,7 +213,7 @@
                 Wykonać:
             </td>
             <td style="padding-left:10px;">
-                <strong  class="red">{{ ( $order->quantity+($order->quantity*0.05) ) }} sztuk</strong>
+                <strong  class="red">{{ round(( $order->quantity+($order->quantity*0.05) )) }} sztuk</strong>
             </td>
         </tr>
         <tr>
@@ -231,8 +231,8 @@
             </td>
             <td style="padding-left:10px;">
 
-                <strong>{{ $order->l_elem_pieces }}</strong> szt. {{ ( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów<br>
-                <strong>{{ $order->q_elem_pieces }}</strong> szt. {{ ( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) ) }} elementów
+                <strong>{{ $order->l_elem_pieces }}</strong> szt. {{ round(( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów<br>
+                <strong>{{ $order->q_elem_pieces }}</strong> szt. {{ round(( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów
             </td>
         </tr>
         <tr>
@@ -266,7 +266,7 @@
                         <td>Rodzaj</td><td>gramatura</td><td>szerokość rolki</td><td>zużycie</td>
                     </tr>
                     @foreach ( $order->dataCardboard as $detail )
-                        <tr class="yellow" style="padding:5px;font-size:12px;">
+                        <tr class="yellow" style="padding:5px;">
                             <td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['consumption'] }} mb. rolki</td>
                         </tr>
                     @endforeach

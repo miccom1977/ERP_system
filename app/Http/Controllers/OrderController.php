@@ -205,24 +205,24 @@ class OrderController extends Controller
             // obliczamy ile uderzeń maszyny należy wykonać
             $toDo = match(true){
                 $mustHaveL > $mustHaveQ  => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesB ) .' uderzeń a następnie ',
-                    'prodL' => $quantity * $piecesB,
-                    'prodQ' => $quantity * $piecesB,
-                    'consumptionA' => $quantity * $piecesB * $height,
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $quantity * $piecesB )) .' uderzeń a następnie ',
+                    'prodL' => round($quantity * $piecesB),
+                    'prodQ' => round($quantity * $piecesB),
+                    'consumptionA' => round($quantity * $piecesB * $height),
 
                 ],
                 $mustHaveL < $mustHaveQ => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesA ) .' uderzeń a następnie ',
-                    'prodL' => $quantity * $piecesA,
-                    'prodQ' => $quantity * $piecesA,
-                    'consumptionA' => $quantity * $piecesA * $height,
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $quantity * $piecesA )) .' uderzeń a następnie ',
+                    'prodL' => round($quantity * $piecesA),
+                    'prodQ' => round($quantity * $piecesA),
+                    'consumptionA' => round($quantity * $piecesA * $height),
 
                 ],
                 $mustHaveL == $mustHaveQ => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. ( $quantity * $piecesA ) .' uderzeń.',
-                    'prodL' => $quantity * $piecesA,
-                    'prodQ' => $quantity * $piecesA,
-                    'consumptionA' => $quantity * $piecesA * $height,
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $quantity * $piecesA )) .' uderzeń.',
+                    'prodL' => round($quantity * $piecesA),
+                    'prodQ' => round($quantity * $piecesA),
+                    'consumptionA' => round($quantity * $piecesA * $height),
 
                 ]
             };
@@ -315,7 +315,7 @@ class OrderController extends Controller
                         $distributionElements[1]['detail'] = '1 DŁUGI';
                         $distributionElements[1]['rolle_width'] = $productDataDDD->roll_width;
                         $distributionElements[1]['rolle_id'] = $productDataDDD->id;
-                        $distributionElements[1]['task_to_do'] = ' produkuj element Długi przez '. (  ($piecesA-$piecesB) * $quantity ) .' uderzeń';
+                        $distributionElements[1]['task_to_do'] = ' produkuj element Długi przez '. round((  ($piecesA-$piecesB) * $quantity )) .' uderzeń';
                         $consumptionB = round( ( ( $piecesA- $piecesB ) * $quantity ) * $height );
                     }
                     $distributionElements[1]['consumption'] = round( $consumptionB/10000 );
@@ -338,7 +338,7 @@ class OrderController extends Controller
                 $distributionElements[0]['detail'] = '1 DŁUGI';
                 $distributionElements[0]['rolle_width'] = $productDataD->roll_width;
                 $distributionElements[0]['rolle_id'] = $productDataD->id;
-                $distributionElements[0]['task_to_do'] = ' produkuj element Długi przez '. (  $piecesA * $quantity ) .' uderzeń';
+                $distributionElements[0]['task_to_do'] = ' produkuj element Długi przez '. round((  $piecesA * $quantity )) .' uderzeń';
                 $consumptionA = round( $piecesA * $quantity * $height );
             }else{
                 //echo 'nie mamy rolki na której wybijemy długi!';
@@ -355,7 +355,7 @@ class OrderController extends Controller
                 $distributionElements[1]['detail'] = '1 KRÓTKI + 1 KRÓTKI';
                 $distributionElements[1]['rolle_width'] = $productDataKK->roll_width;
                 $distributionElements[1]['rolle_id'] = $productDataKK->id;
-                $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. (  ($piecesB * $quantity ) /2 ) .' uderzeń';
+                $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. round((  ($piecesB * $quantity ) /2 )) .' uderzeń';
                 $consumptionB = round(  ($piecesB * $quantity * $height )/2 );
             }else{
                // echo 'Szukamy rolki, która wytnie nam krótki';
@@ -371,7 +371,7 @@ class OrderController extends Controller
                     $distributionElements[1]['detail'] = '1 KRÓTKI';
                     $distributionElements[1]['rolle_width'] = $productDataK->roll_width;
                     $distributionElements[1]['rolle_id'] = $productDataK->id;
-                    $distributionElements[1]['task_to_do'] = 'Produkuj element Krótki na rolce o szerokości '. $productDataK->roll_width .' przez '. ( $piecesB * $quantity ) .' uderzeń';
+                    $distributionElements[1]['task_to_do'] = 'Produkuj element Krótki na rolce o szerokości '. $productDataK->roll_width .' przez '. round(( $piecesB * $quantity )) .' uderzeń';
                     $consumptionB = round( $piecesB * $quantity * $height );
                 }
             }
