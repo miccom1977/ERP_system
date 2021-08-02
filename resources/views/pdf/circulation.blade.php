@@ -53,6 +53,12 @@
             top:300px;
             right:30px;
         }
+        .signature{
+            float:left;
+            position:absolute;
+            top:1100px;
+            right:50px;
+        }
     </style>
 </head>
 <body>
@@ -125,7 +131,7 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
-                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:20px;text-align:center;margin-top:30px;"><strong class="red">MATERIAŁ {{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><div class="bigD">{{ $order->product->designation }}</div><br>
+                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:10px;text-align:center;margin-top:20px;"><strong class="red">MATERIAŁ {{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><div class="bigD">{{ $order->product->designation }}</div><br>
                 ROZKŁAD ELEMENTÓW<br>
                 <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center; padding:10px;">
                     <tr class="yellow">
@@ -175,8 +181,18 @@
         </tr>
         <tr style="width:100px; text-align:left;">
             <td colspan="2" style="padding:10px;">
-                Zamówienie na <strong>{{ $order->quantity }}</strong> sztuk <br>
-                 Nie więcej niż <strong>{{ round(( $order->quantity + ( $order->quantity*0.05) )) }}</strong> sztuk <br>
+                <table style="width:100%;border:none;border-collapse:collapse;">
+                    <tr>
+                        <td style="border:none;width:50%">Zamówienie na <strong>{{ $order->quantity }}</strong> sztuk</td>
+                        <td style="border:1px solid black;">Opracował:</td>
+                        <td style="border:1px solid black;width:35%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="border:none;width:50%">Nie więcej niż <strong>{{ round(( $order->quantity + ( $order->quantity*0.05) )) }}</strong> sztuk</td>
+                        <td style="border:1px solid black;">Zatwierdził:</td>
+                        <td style="border:1px solid black;width:35%;"></td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>
