@@ -54,6 +54,7 @@
             .cell21{
                 font-size:6px;
                 line-height:4px;
+                float:left;
             }
             p{
                 margin:0px;
@@ -231,9 +232,9 @@ goods by road (CMR)
                             <tr>
                                 <td style="border:1px sold black;border-bottom:none;border-left:none;border-right:none;height:45px;">
                                     <span class="num">21</span><br><br><br><br>
-                                    <p style="margin-right:160px;float:left;" class="cell21">Wystawiono</p> <p style="float:none;">dnia</p><br>
-                                    <p style="margin-right:160px;float:left;" class="cell21">Ausgefertigt</p> <p style="float:none;">am</p><br>
-                                    <p style="margin-right:157px;float:left;" class="cell21">Established in</p> <p style="float:none;">on</p><br>
+                                    <p style="margin-right:160px;" class="cell21">Wystawiono</p> <p style="float:none;">dnia</p><br>
+                                    <p style="margin-right:160px;" class="cell21">Ausgefertigt</p> <p style="float:none;">am</p><br>
+                                    <p style="margin-right:157px;" class="cell21">Established in</p> <p style="float:none;">on</p><br>
                                     </span>
                                 </td>
                             </tr>
@@ -352,9 +353,9 @@ goods by road (CMR)
                                 <td style="border:1px solid black;border-top:none;border-bottom:none;border-right:none;">
                                     <span class="num">24</span>Przesyłkę otrzymano / Gut empfangen
                                     / Goods recived<br><br><br><br><br>
-                                    <p style="margin-right:60px;float:left;" class="cell21">Miejscowość</p><p>dnia</p><br>
-                                    <p style="margin-right:85px;float:left;" class="cell21">Ort</p><p>am</p><br>
-                                    <p style="margin-right:80px;float:left;" class="cell21">Place</p><p>on</p><br>
+                                    <p style="margin-right:60px;" class="cell21">Miejscowość</p><p>dnia</p><br>
+                                    <p style="margin-right:85px;" class="cell21">Ort</p><p>am</p><br>
+                                    <p style="margin-right:80px;" class="cell21">Place</p><p>on</p><br>
                                 </td>
                             </tr>
                             <tr>

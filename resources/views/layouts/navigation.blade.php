@@ -23,6 +23,9 @@
                         <x-nav-link :href="route('client')" :active="request()->routeIs('client')">
                             {{ __('text.add_new_client') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('product')" :active="request()->routeIs('product')">
+                            {{ __('text.add_new_product') }}
+                        </x-nav-link>
                     @elseif (Auth::user()->role->id ==  2 )
                         Magazyn
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">

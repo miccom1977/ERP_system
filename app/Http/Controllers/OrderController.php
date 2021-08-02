@@ -352,7 +352,7 @@ class OrderController extends Controller
             ])->orderBy('roll_width', 'ASC')->first();
             if($productDataKK){
                 //echo 'mamy rolkę na której tłuczemy dwa krótkie';
-                $distributionElements[1][detail] = '1 KRÓTKI + 1 KRÓTKI';
+                $distributionElements[1]['detail'] = '1 KRÓTKI + 1 KRÓTKI';
                 $distributionElements[1]['rolle_width'] = $productDataKK->roll_width;
                 $distributionElements[1]['rolle_id'] = $productDataKK->id;
                 $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. (  ($piecesB * $quantity ) /2 ) .' uderzeń';

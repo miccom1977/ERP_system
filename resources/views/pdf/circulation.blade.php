@@ -132,8 +132,8 @@
                         <td>Element</td><td>Rodzaj tektury</td><td>Gramatura</td><td>Szerokość rolki</td><td>Zadanie</td>
                     </tr>
                     @foreach ( $order->dataCardboard as $detail )
-                        <tr class="yellow" style="padding:5px">
-                            <td>{{ $detail['detail'] }}</td><td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['task_to_do'] }}</td>
+                        <tr class="yellow" style="padding:5px;font-size:12px;">
+                            <td style="font-size:12px;">{{ $detail['detail'] }}</td><td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['task_to_do'] }}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -170,7 +170,7 @@
         </tr>
         <tr>
             <td colspan="2"   style=" padding:5px;">
-                <div class="green" style="border-style: dashed;width:400px;margin:0 auto; position:relative;padding:20px;"><strong  class="red">ZAMÓWIENIE NA {{ $order->date_delivery }} !</strong></div>
+                <div class="green" style="border-style:dashed;width:400px;margin:0 auto; position:relative;padding:20px;text-align:center;"><strong  class="red">ZAMÓWIENIE NA {{ $order->date_delivery }} !</strong></div>
             </td>
         </tr>
         <tr style="width:100px; text-align:left;">
@@ -266,7 +266,7 @@
                         <td>Rodzaj</td><td>gramatura</td><td>szerokość rolki</td><td>zużycie</td>
                     </tr>
                     @foreach ( $order->dataCardboard as $detail )
-                        <tr class="yellow" style="padding:5px">
+                        <tr class="yellow" style="padding:5px;font-size:12px;">
                             <td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['consumption'] }} mb. rolki</td>
                         </tr>
                     @endforeach
