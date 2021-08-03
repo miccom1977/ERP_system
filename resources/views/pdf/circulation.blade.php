@@ -132,8 +132,8 @@
         <tr>
             <td colspan="2" style="text-align:center;">
                 <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:10px;text-align:center;margin-top:20px;"><strong class="red">MATERIAŁ {{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><div class="bigD">{{ $order->product->designation }}</div><br>
-                ROZKŁAD ELEMENTÓW<br>
-                <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center; padding:10px;">
+                PODZIAŁ ELEMENTÓW<br>
+                <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;">
                     <tr class="yellow">
                         <td>Element</td><td>Rodzaj tektury</td><td>Gramatura</td><td>Szerokość rolki</td><td>Zadanie</td>
                     </tr>

@@ -208,21 +208,21 @@ class OrderController extends Controller
                     'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $quantity * $piecesB )) .' uderzeń a następnie ',
                     'prodL' => round($quantity * $piecesB),
                     'prodQ' => round($quantity * $piecesB),
-                    'consumptionA' => round($quantity * $piecesB * $height),
+                    'consumptionA' => round( ( $quantity * $piecesB * $height)/1000 ),
 
                 ],
                 $mustHaveL < $mustHaveQ => [
                     'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $quantity * $piecesA )) .' uderzeń a następnie ',
                     'prodL' => round($quantity * $piecesA),
                     'prodQ' => round($quantity * $piecesA),
-                    'consumptionA' => round($quantity * $piecesA * $height),
+                    'consumptionA' => round( ( $quantity * $piecesA * $height)/1000 ),
 
                 ],
                 $mustHaveL == $mustHaveQ => [
                     'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $quantity * $piecesA )) .' uderzeń.',
                     'prodL' => round($quantity * $piecesA),
                     'prodQ' => round($quantity * $piecesA),
-                    'consumptionA' => round($quantity * $piecesA * $height),
+                    'consumptionA' => round( ( $quantity * $piecesA * $height)/1000 ),
 
                 ]
             };
@@ -258,7 +258,7 @@ class OrderController extends Controller
                     }else{
                         $toDoPlus = ' produkuj 2 x krótkie przez '. round( ( ( ( $piecesB - $piecesA ) * $quantity )/2 ) ).' uderzeń';
                     }
-                    $cardboardConsumptionB = round( ( ( ( $piecesB - $piecesA ) * $quantity )/2 ) );
+                    $cardboardConsumptionB = round( ( ( ( ( $piecesB - $piecesA ) * $quantity )/2 )* $height)/1000 );
                 }else{
                     $productDataKKK = Product::where([
                         ['roll_width', '>', ( $widthB )],
@@ -274,11 +274,11 @@ class OrderController extends Controller
                     }else{
                         $toDoPlus = ' produkuj 1 x krótki przez '. round( ( ( $piecesB - $piecesA ) * $quantity ) ).' uderzeń';
                     }
-                    $cardboardConsumptionB = round( ( ( $piecesB - $piecesA ) * $quantity ) );
+                    $cardboardConsumptionB = round( ( ( $piecesB - $piecesA ) * $quantity )/1000 );
                 }
 
                 $distributionElements[1]['task_to_do'] = $toDoPlus;
-                $distributionElements[1]['consumption'] = round($cardboardConsumptionB/10000);
+                $distributionElements[1]['consumption'] = $cardboardConsumptionB;
             }
 
             if($doD == 1 ){
@@ -299,9 +299,9 @@ class OrderController extends Controller
                     }else{
                         $toDoPlus = ' produkuj 2 x długie przez '. round( ( ( ( $piecesA - $piecesB ) * $quantity )/2 ) ).' uderzeń';
                     }
-                    $cardboardConsumptionB = round( ( ( ( $piecesA - $piecesB ) * $quantity )/2 )* $height );
+                    $cardboardConsumptionB = round( ( ( ( ( $piecesA - $piecesB ) * $quantity )/2 )* $height)/1000 );
                     $distributionElements[1]['task_to_do'] = $toDoPlus;
-                    $distributionElements[1]['consumption'] = round($cardboardConsumptionB/10000);
+                    $distributionElements[1]['consumption'] = $cardboardConsumptionB;
                 }else{
                     // klepimy po jednym długim
                     $productDataDDD = Product::where([
@@ -316,14 +316,14 @@ class OrderController extends Controller
                         $distributionElements[1]['rolle_width'] = $productDataDDD->roll_width;
                         $distributionElements[1]['rolle_id'] = $productDataDDD->id;
                         $distributionElements[1]['task_to_do'] = ' produkuj element Długi przez '. round((  ($piecesA-$piecesB) * $quantity )) .' uderzeń';
-                        $consumptionB = round( ( ( $piecesA- $piecesB ) * $quantity ) * $height );
+                        $consumptionB = round( ( ( ( $piecesA - $piecesB ) * $quantity ) * $height)/1000 );
                     }
-                    $distributionElements[1]['consumption'] = round( $consumptionB/10000 );
+                    $distributionElements[1]['consumption'] = $consumptionB;
                 }
             }
             $distributionElements[0]['task_to_do'] = $toDo['instruction'];
             $cardboardConsumptionA = $toDo['consumptionA'];
-            $distributionElements[0]['consumption'] = round( ($cardboardConsumptionA+$cardboardConsumptionB)/10000 );
+            $distributionElements[0]['consumption'] = round( $cardboardConsumptionA+$cardboardConsumptionB );
         }else{
             //echo 'szukamy rolki na której wybijemy długi';
             $productDataD = Product::where([
@@ -339,7 +339,7 @@ class OrderController extends Controller
                 $distributionElements[0]['rolle_width'] = $productDataD->roll_width;
                 $distributionElements[0]['rolle_id'] = $productDataD->id;
                 $distributionElements[0]['task_to_do'] = ' produkuj element Długi przez '. round((  $piecesA * $quantity )) .' uderzeń';
-                $consumptionA = round( $piecesA * $quantity * $height );
+                $consumptionA = round( ( $piecesA * $quantity * $height )/1000 );
             }else{
                 //echo 'nie mamy rolki na której wybijemy długi!';
             }
@@ -356,7 +356,7 @@ class OrderController extends Controller
                 $distributionElements[1]['rolle_width'] = $productDataKK->roll_width;
                 $distributionElements[1]['rolle_id'] = $productDataKK->id;
                 $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. round((  ($piecesB * $quantity ) /2 )) .' uderzeń';
-                $consumptionB = round(  ($piecesB * $quantity * $height )/2 );
+                $consumptionB = round( ( ($piecesB * $quantity * $height )/2 )/1000 );
             }else{
                // echo 'Szukamy rolki, która wytnie nam krótki';
                 $productDataK = Product::where([
@@ -372,11 +372,11 @@ class OrderController extends Controller
                     $distributionElements[1]['rolle_width'] = $productDataK->roll_width;
                     $distributionElements[1]['rolle_id'] = $productDataK->id;
                     $distributionElements[1]['task_to_do'] = 'Produkuj element Krótki na rolce o szerokości '. $productDataK->roll_width .' przez '. round(( $piecesB * $quantity )) .' uderzeń';
-                    $consumptionB = round( $piecesB * $quantity * $height );
+                    $consumptionB = round( ( $piecesB * $quantity * $height )/1000 );
                 }
             }
-            $distributionElements[0]['consumption'] = round( ($piecesA * $quantity * $height)/10000);
-            $distributionElements[1]['consumption'] =  round( $consumptionB/10000);
+            $distributionElements[0]['consumption'] = round( ( $piecesA * $quantity * $height )/1000 );
+            $distributionElements[1]['consumption'] =  round( $consumptionB );
         }
        //echo '<pre>';
        //print_r($distributionElements);
