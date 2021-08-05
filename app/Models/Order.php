@@ -25,5 +25,9 @@ class Order extends Model
     public function file(){
         return $this->belongsTo('App\Models\File');
     }
+
+    public function position(){
+        return $this->belongsTo('App\Models\OrderPosition');
+    }
 }
 

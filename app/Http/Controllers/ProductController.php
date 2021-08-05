@@ -67,7 +67,7 @@ class ProductController extends Controller
         $product->grammage = $request->grammage;
         $product->cardboard_producer = $request->cardboard_producer;
         $product->designation = $request->designation;
-        $product->count = $request->count;
+        $product->count = 0;
         $product->save();
 
         //

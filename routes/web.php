@@ -6,6 +6,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\OrderPositionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('/order', OrderController::class)->name('index','order');
+Route::resource('/orderPosition', OrderPositionController::class)->name('index','orderPosition');
 Route::resource('/product', ProductController::class)->name('index','product');
 Route::resource('/client', ClientController::class)->name('index','client');
 Route::get('/print/{id}', [OrderController::class, 'createPDF']);

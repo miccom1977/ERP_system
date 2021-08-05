@@ -57,7 +57,10 @@ class ClientController extends Controller
             'description' => 'required',
             'city' => 'required',
             'post_code' => 'required',
-            'country' => 'required'
+            'country' => 'required',
+            'street' => 'required',
+            'parcel_number' => 'required',
+            'contact_number' => 'required'
         ]);
 
         //  Store data in database
@@ -66,7 +69,9 @@ class ClientController extends Controller
         $client->city = $request->city;
         $client->post_code = $request->post_code;
         $client->country = $request->country;
-
+        $client->street = $request->street;
+        $client->parcel_number = $request->parcel_number;
+        $client->contact_number = $request->contact_number;
         $client->save();
 
         return back()->with('success', 'Klient dodany.');

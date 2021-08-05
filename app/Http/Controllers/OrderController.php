@@ -64,33 +64,16 @@ class OrderController extends Controller
         //die;
 
         $this->validate($request, [
-            'quantity' => 'required',
-            'l_elem' => 'required',
-            'q_elem' => 'required',
-            'h_elem' => 'required'
+            'client_id' => 'required',
+            'client_order_number' => 'required'
          ]);
 
         //  Store data in database
         $order = new Order;
-        $order->quantity = $request->quantity;
-        $order->l_elem = $request->l_elem;
-        $order->q_elem = $request->q_elem;
-        $order->h_elem = $request->h_elem;
         $order->client_order_number = $request->client_order_number;
-        $order->article_number = $request->article_number;
-        $order->flaps_a = $request->flaps_a;
-        $order->flaps_b = $request->flaps_b;
-        $order->division_flapsL = $request->division_flapsL;
-        $order->division_flapsQ = $request->division_flapsQ;
-        $order->l_elem_pieces = $request->l_elem_pieces;
-        $order->q_elem_pieces = $request->q_elem_pieces;
-        $order->packaging = $request->packaging;
-        $order->product_id = $request->product_id;
         $order->client_id = $request->client_id;
-        $order->pallets = $request->pallets;
-        $order->date_shipment = $request->date_shipment;
-        $order->date_production = $request->date_production;
-        $order->date_delivery = $request->date_delivery;
+        $MaxOrder = $this->orderRepository->findWith($request->client_id);
+        $order->custom_order_id = $MaxOrder->custom_order_id + 1;
         $order->save();
         //
         return back()->with('success', 'Zlecenie dodane.');

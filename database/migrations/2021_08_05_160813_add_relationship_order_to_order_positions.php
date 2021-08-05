@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRelationshipToOrders extends Migration
+class AddRelationshipOrderToOrderPositions extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddRelationshipToOrders extends Migration
      */
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
+        Schema::table('order_positions', function (Blueprint $table) {
+            $table->foreignId('order_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
@@ -26,8 +28,8 @@ class AddRelationshipToOrders extends Migration
      */
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropForeign('product_id');
+        Schema::table('order_position', function (Blueprint $table) {
+            //
         });
     }
 }

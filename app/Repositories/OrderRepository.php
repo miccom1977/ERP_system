@@ -33,5 +33,10 @@ class OrderRepository extends BaseRepository
         return $this->model->find($id);
     }
 
+    public function findWith($client_id): ?Order
+    {
+        return $this->model->where('client_id', '=', $client_id)->orderBy('custom_order_id', 'DESC')->first();
+    }
+
 
 }

@@ -14,8 +14,10 @@ class AddRelationshipToFiles extends Migration
     public function up()
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->unsignedBigInteger('order_id')->nullable();
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreignId('order_position_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

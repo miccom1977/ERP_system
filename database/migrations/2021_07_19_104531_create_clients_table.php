@@ -17,8 +17,11 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->text('description');
             $table->text('city');
+            $table->text('street');
+            $table->text('parcel_number');
             $table->text('post_code');
             $table->text('country');
+            $table->text('contact_number');
             $table->timestamps();
         });
     }

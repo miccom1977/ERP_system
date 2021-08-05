@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{$order->id}}"><button>Drukuj dokumenty</button></a>
+            {{ __('Zamówienie nr. : ') }} {{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{$order->id}}"><button>Drukuj dokumenty</button></a>
             @if ( isset($order->file->path) )
                 <a href="c://xampp/htdocs/public/{{$order->file->path}}" downolad ><button>pobierz rysunek</button></a>
                 @endif
@@ -25,16 +25,10 @@
                                     <label>Klient</label>
                                 </td>
                                 <td>
-                                    <label>Tektura</label>
+                                    <label>Numer zamówienia</label>
                                 </td>
                                 <td>
-                                    <label>Sztuki</label>
-                                </td>
-                                <td>
-                                    <label>Wymiar</label>
-                                </td>
-                                <td>
-                                    <label>Pole A / B</label>
+                                    <label>Akcja</label>
                                 </td>
                             </tr>
                             <tr>
@@ -42,58 +36,11 @@
                                     {{  $order->client->description }}
                                 </td>
                                 <td>
-                                    {{ $order->product->description }} {{ $order->product->designation }} <br> {{ $order->product->grammage }} g/m  {{ $order->product->cardboard_producer }}
+                                    {{ $order->custom_order_id }}
                                 </td>
                                 <td>
-                                    {{  $order->quantity }} szt
+                                    <a href="/orderPosition/create"><button>Dodaj pozycję</button></a>
                                 </td>
-                                <td>
-                                    {{  $order->l_elem }} x {{  $order->q_elem }} x {{  $order->h_elem }}
-                                </td>
-                                <td>
-                                    {{  $order->flaps_a }} x {{  $order->flaps_b }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Data dostawy</label>
-                                </td>
-                                <td>
-                                    <label>Data wysyłki</label>
-                                </td>
-                                <td>
-                                    <label>Data rozpoczęcia produkcji</label>
-                                </td>
-                                <td colspan="3">
-                                    <label>Opcje</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{  $order->date_delivery }}
-                                </td>
-                                <td>
-                                    {{  $order->date_shipment }}
-                                </td>
-                                <td>
-                                    {{  $order->date_production }}
-                                </td>
-                                @if (Auth::user()->role->id ==  1 )
-                                <td colspan="3">
-                                    <a href="/order/{{$order->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
-                                    <form method="POST" action="/order/{{$order->id}}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <div class="form-group">
-                                            <input type="submit" style="float:right;margin:5px 10px 5px 10px;" class="danger" value="usuń">
-                                        </div>
-                                    </form>
-                                </td>
-                                @else
-                                    <td colspan="3">
-                                    </td>
-                                @endif
-
                             </tr>
                         </table>
                     </div>

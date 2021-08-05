@@ -32,7 +32,7 @@
                                         <label>Kraj</label>
                                     </td>
                                     <td>
-                                        <label>Opcje</label>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -47,6 +47,34 @@
                                     </td>
                                     <td>
                                         <input type="text" name="country" id="country">
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Ulica</label>
+                                    </td>
+                                    <td>
+                                        <label>Numer budynku</label>
+                                    </td>
+                                    <td>
+                                        <label>Numer kontaktowy</label>
+                                    </td>
+                                    <td>
+                                        <label>Opcje</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" name="street" id="street">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="parcel_number" id="parcel_number" >
+                                    </td>
+                                    <td>
+                                        <input type="text" name="contact_number" id="contact_number" >
                                     </td>
                                     <td>
                                         <input type="submit" name="send" value="Dodaj" class="btn btn-dark btn-block">

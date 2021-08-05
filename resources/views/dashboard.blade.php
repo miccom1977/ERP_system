@@ -21,26 +21,14 @@
                                 Numer zamówienia
                             </td>
                             <td>
+                                Numer zlecenia
+                            </td>
+                            <td>
                                 Klient
-                            </td>
-                            <td>
-                                Ilość sztuk
-                            </td>
-                            <td>
-                                Tektura
-                            </td>
-                            <td>
-                                Data przyjęcia
-                            </td>
-                            <td>
-                                Data produkcji
-                            </td>
-                            <td>
-                                Data wysyłki
                             </td>
                         </tr>
                         @foreach ( $orders as $order )
-                            <tr><td><a href="/order/{{ $order->id }}}}">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</a></td><td>{{ $order->client->description }}</td><td>{{ $order->quantity }}</td><td>{{ $order->product->designation }} {{ $order->product->grammage }} g/m x {{ $order->product->roll_width }} mm</td><td>{{ date_format($order->created_at, 'Y-m-d') }}</td><td>{{ $order->date_production }}</td><td>{{ $order->date_delivery }}</td></tr>
+                            <tr><td><a href="/order/{{ $order->id }}}}">{{ $order->client_order_number }}</a></td><td>{{ $order->custom_order_id }}</td><td>{{ $order->client->description }}</td></tr>
                         @endforeach
                     </table>
                 </div>
