@@ -73,7 +73,12 @@ class OrderController extends Controller
         $order->client_order_number = $request->client_order_number;
         $order->client_id = $request->client_id;
         $MaxOrder = $this->orderRepository->findWith($request->client_id);
-        $order->custom_order_id = $MaxOrder->custom_order_id + 1;
+        if($MaxOrder){
+            $order->custom_order_id = $MaxOrder->custom_order_id + 1;
+        }else{
+            $order->custom_order_id = 1;
+        }
+
         $order->save();
         //
         return back()->with('success', 'Zlecenie dodane.');

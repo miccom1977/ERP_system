@@ -42,9 +42,9 @@ class OrderPositionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('addOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll() ] );
+        return view('addOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $this->orderRepository->find($id) ] );
     }
 
     /**

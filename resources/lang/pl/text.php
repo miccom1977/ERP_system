@@ -34,5 +34,6 @@ return [
     'edit_client' => 'Edycja klienta',
     'add_new_product' => 'Tektury',
     'edit_product' => 'Edycja produktu ',
+    'add_new_position' => 'Dodawanie nowej pozycji do zamówienia'
 
 ];

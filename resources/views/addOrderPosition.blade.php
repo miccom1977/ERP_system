@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('text.add_new_order') }}
+            {{ __('text.add_new_position') }}
         </h2>
     </x-slot>
 
@@ -16,7 +16,7 @@
                             </div>
                         @endif
                         @if (Auth::user()->role->id ==  1 )
-                        <form method="post" action="{{ route('order.store') }}">
+                        <form method="post" action="{{ route('orderPosition.store') }}">
                             @csrf
                             <table width="100%">
                                 <tr>
