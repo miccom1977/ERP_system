@@ -21,7 +21,7 @@ class OrderRepository extends BaseRepository
     }
 
     public function getAll(){
-        return $orders = Order::with('product')->get();
+        return $orders = Order::get();
     }
 
     /**

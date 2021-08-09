@@ -17,4 +17,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Cardboard');
     }
+
+    public function orderPosition()
+    {
+        return $this->belongsTo('App\Models\OrderPosition');
+    }
 }

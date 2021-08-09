@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('text.add_new_position') }}
+            {{ __('text.add_new_position') }} {{ $order->custom_order_id }}
         </h2>
     </x-slot>
 
@@ -18,6 +18,7 @@
                         @if (Auth::user()->role->id ==  1 )
                         <form method="post" action="{{ route('orderPosition.store') }}">
                             @csrf
+                            <input type="hidden" name="order_id" id="order_id" value="{{ $order->id }}">
                             <table width="100%">
                                 <tr>
                                     <td>
@@ -41,10 +42,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select name="client_id" id="client_id">
-                                            @foreach ( $clients as $client )
-                                                    <option value="{{ $client->id }}">{{ $client->description }}</option>
-                                            @endforeach
+                                        <input type="hidden" name="client_id" value="{{ $order->client->id }}"/>{{ $order->client->description }}
+                                        <input type="hidden" name="custom_order_id" value="{{ $order->custom_order_id }}"/>
                                         </select>
                                     </td>
                                     <td>

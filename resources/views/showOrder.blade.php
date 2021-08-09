@@ -39,9 +39,23 @@
                                     {{ $order->custom_order_id }}
                                 </td>
                                 <td>
-                                    <a href="/orderPosition/create"><button>Dodaj pozycję</button></a>
+                                    <a href="{{ route('orderPosition.create',[ 'id' => $order->id ] ) }}"><button>Dodaj pozycję</button></a>
                                 </td>
                             </tr>
+
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        Numer zamówienia
+                                    </td>
+                                    <td>
+                                        Numer zlecenia
+                                    </td>
+                                </tr>
+                                @foreach ( $order_positions as $single_position )
+                                    <tr><td><a href="/orderPosition/{{ $single_position->id }}}}">{{ $single_position->client_order_number }}</a></td><td>{{ $single_position->custom_order_id }}</td></tr>
+                                @endforeach
+                            </table>
                         </table>
                     </div>
                 </div>

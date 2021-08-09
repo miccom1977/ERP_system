@@ -30,9 +30,10 @@ class CreateOrderPositionsTable extends Migration
             $table->text('pallets');
             $table->text('article_number');
             $table->integer('packaging');
-            $table->date('date_addmission');
+            $table->date('date_shipment');
             $table->date('date_production');
             $table->date('date_delivery');
+            $table->integer('custom_order_id');
             $table->timestamps();
         });
     }

@@ -42,16 +42,16 @@
                                     {{  $order->client->description }}
                                 </td>
                                 <td>
-                                    {{ $order->product->description }} {{ $order->product->designation }} <br> {{ $order->product->grammage }} g/m  {{ $order->product->cardboard_producer }}
+                                    {{ $orderPosition->product->description }} {{ $orderPosition->product->designation }} <br> {{ $orderPosition->product->grammage }} g/m  {{ $orderPosition->product->cardboard_producer }}
                                 </td>
                                 <td>
-                                    {{  $order->quantity }} szt
+                                    {{  $orderPosition->quantity }} szt
                                 </td>
                                 <td>
-                                    {{  $order->l_elem }} x {{  $order->q_elem }} x {{  $order->h_elem }}
+                                    {{  $orderPosition->l_elem }} x {{  $orderPosition->q_elem }} x {{  $orderPosition->h_elem }}
                                 </td>
                                 <td>
-                                    {{  $order->flaps_a }} x {{  $order->flaps_b }}
+                                    {{  $orderPosition->flaps_a }} x {{  $orderPosition->flaps_b }}
                                 </td>
                             </tr>
                             <tr>
@@ -70,18 +70,18 @@
                             </tr>
                             <tr>
                                 <td>
-                                    {{  $order->date_delivery }}
+                                    {{  $orderPosition->date_delivery }}
                                 </td>
                                 <td>
-                                    {{  $order->date_shipment }}
+                                    {{  $orderPosition->date_shipment }}
                                 </td>
                                 <td>
-                                    {{  $order->date_production }}
+                                    {{  $orderPosition->date_production }}
                                 </td>
                                 @if (Auth::user()->role->id ==  1 )
                                 <td colspan="3">
-                                    <a href="/order/{{$order->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
-                                    <form method="POST" action="/order/{{$order->id}}">
+                                    <a href="/order/{{$orderPosition->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
+                                    <form method="POST" action="/order/{{$orderPosition->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <div class="form-group">
