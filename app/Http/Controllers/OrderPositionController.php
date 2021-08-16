@@ -108,7 +108,11 @@ class OrderPositionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $orderPosition = $this->orderPositionRepository->find($id);
+        $orderPosition->file = $this->fileRepository->find($id);
+        $order = $this->orderRepository->find($orderPosition->order_id);
+        return view('editOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orderPosition' => $orderPosition, 'order' => $order ] );
+
     }
 
     /**
@@ -120,7 +124,29 @@ class OrderPositionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $orderPosition =$this->orderPositionRepository->find($id);
+        $orderPosition->quantity = $request->quantity;
+        $orderPosition->l_elem = $request->l_elem;
+        $orderPosition->q_elem = $request->q_elem;
+        $orderPosition->h_elem = $request->h_elem;
+        $orderPosition->client_order_number = $request->client_order_number;
+        $orderPosition->article_number = $request->article_number;
+        $orderPosition->flaps_a = $request->flaps_a;
+        $orderPosition->flaps_b = $request->flaps_b;
+        $orderPosition->division_flapsL = $request->division_flapsL;
+        $orderPosition->division_flapsQ = $request->division_flapsQ;
+        $orderPosition->l_elem_pieces = $request->l_elem_pieces;
+        $orderPosition->q_elem_pieces = $request->q_elem_pieces;
+        $orderPosition->packaging = $request->packaging;
+        $orderPosition->product_id = $request->product_id;
+        $orderPosition->pallets = $request->pallets;
+        $orderPosition->date_shipment = $request->date_shipment;
+        $orderPosition->date_production = $request->date_production;
+        $orderPosition->date_delivery = $request->date_delivery;
+
+        $orderPosition->save();
         //
+        return back()->with('success', 'Zmiany zapisane.');
     }
 
     /**

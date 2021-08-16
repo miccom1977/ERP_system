@@ -18,17 +18,17 @@
                     <table width="100%">
                         <tr>
                             <td>
-                                Numer zamówienia
+                                Numer zlecenia
                             </td>
                             <td>
-                                Numer zlecenia
+                                Numer zamówienia klienta
                             </td>
                             <td>
                                 Klient
                             </td>
                         </tr>
                         @foreach ( $orders as $order )
-                            <tr><td><a href="/order/{{ $order->id }}}}">{{ $order->client_order_number }}</a></td><td>{{ $order->custom_order_id }}</td><td>{{ $order->client->description }}</td></tr>
+                            <tr><td><a href="/order/{{ $order->id }}}}">{{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}</a><td>{{ $order->client_order_number }}</a></td><td>{{ $order->client->description }}</td></tr>
                         @endforeach
                     </table>
                 </div>

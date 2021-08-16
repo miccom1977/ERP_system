@@ -36,24 +36,42 @@
                                     {{  $order->client->description }}
                                 </td>
                                 <td>
-                                    {{ $order->custom_order_id }}
+                                    {{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}
                                 </td>
                                 <td>
-                                    <a href="{{ route('orderPosition.create',[ 'id' => $order->id ] ) }}"><button>Dodaj pozycję</button></a>
+                                    <a href="{{ route('orderPosition.create',[ 'id' => $order->id ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
                                 </td>
                             </tr>
 
                             <table width="100%">
                                 <tr>
                                     <td>
-                                        Numer zamówienia
+                                        Numer produktu
                                     </td>
                                     <td>
-                                        Numer zlecenia
+                                        Ilosć sztuk
+                                    </td>
+                                    <td>
+                                        Wymiary
+                                    </td>
+                                    <td>
+                                        Status
                                     </td>
                                 </tr>
                                 @foreach ( $order_positions as $single_position )
-                                    <tr><td><a href="/orderPosition/{{ $single_position->id }}}}">{{ $single_position->client_order_number }}</a></td><td>{{ $single_position->custom_order_id }}</td></tr>
+                                    <tr><td><a href="/orderPosition/{{ $single_position->id }}}}">{{ $single_position->client_order_number }}</a></td><td>{{ $single_position->quantity }}</td><td>{{ $single_position->l_elem }} x {{ $single_position->q_elem }} x {{ $single_position->h_elem }}</td><td>
+                                        @if ( $single_position->status == 0)
+                                            Oczekuje
+                                        @elseif ( $single_position->status == 1)
+                                            Produkcja / sztancowanie
+                                        @elseif ( $single_position->status == 2)
+                                            Produkcja / składanie
+                                        @elseif ( $single_position->status == 3)
+                                            Produkcja / spakowane
+                                        @else
+                                            Wysłane do klienta
+                                        @endif
+                                    </td></tr>
                                 @endforeach
                             </table>
                         </table>

@@ -2,10 +2,10 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{$order->id}}"><button>Drukuj dokumenty</button></a>
-            @if ( isset($order->file->path) )
-                <a href="c://xampp/htdocs/public/{{$order->file->path}}" downolad ><button>pobierz rysunek</button></a>
+            @if ( isset($orderPosition->file->path) )
+                <a href="c://xampp/htdocs/public/{{$orderPosition->file->path}}" downolad ><button>pobierz rysunek</button></a>
                 @endif
-                <a href="/printCMR/{{$order->id}}"><button>Drukuj CMR</button></a>
+                <a href="/printCMR/{{$orderPosition->id}}"><button>Drukuj CMR</button></a>
         </h2>
     </x-slot>
 
@@ -80,8 +80,8 @@
                                 </td>
                                 @if (Auth::user()->role->id ==  1 )
                                 <td colspan="3">
-                                    <a href="/order/{{$orderPosition->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
-                                    <form method="POST" action="/order/{{$orderPosition->id}}">
+                                    <a href="/orderPosition/{{$orderPosition->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
+                                    <form method="POST" action="/orderPosition/{{$orderPosition->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
                                         <div class="form-group">
