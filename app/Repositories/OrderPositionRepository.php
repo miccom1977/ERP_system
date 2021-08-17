@@ -44,4 +44,9 @@ class OrderPositionRepository extends BaseRepository
     {
         return $this->model->where('order_id', '=', $order_id)->with('product')->get();
     }
+
+    public function findMax($id): int
+    {
+        return $this->model->where('order_id', '=', $id)->count();
+    }
 }

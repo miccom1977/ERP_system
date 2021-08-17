@@ -43,7 +43,7 @@
                                     <button>Zmień adres dostawy</button>
                                 </td>
                                 <td>
-                                    <a href="{{ route('orderPosition.create',[ 'id' => $order->id ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
+                                    <a href="{{ route('orderPosition.create',[ 'id' => $order->id, ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
                                 </td>
                             </tr>
                         </table>
@@ -66,7 +66,7 @@
                                 </td>
                             </tr>
                             @forelse( $order_positions as $single_position )
-                                <tr><td><a href="/orderPosition/{{ $single_position->id }}}}">{{ $single_position->article_number }}</a></td><td>{{ $single_position->quantity }}</td><td>{{ $single_position->l_elem }} x {{ $single_position->q_elem }} x {{ $single_position->h_elem }}</td><td>
+                                <tr><td><a href="/orderPosition/{{ $single_position->id }}">{{ $single_position->article_number }}</a></td><td>{{ $single_position->quantity }}</td><td>{{ $single_position->l_elem }} x {{ $single_position->q_elem }} x {{ $single_position->h_elem }}</td><td>
                                     @if ( $single_position->status == 0)
                                         Oczekuje
                                     @elseif ( $single_position->status == 1)
@@ -81,7 +81,7 @@
                                 </td></tr>
                             @empty
                                 Brak pozycji dla tego zamówienia.<br>
-                                <a href="{{ route('orderPosition.create',[ 'id' => $order->id ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
+                                <a href="{{ route('orderPosition.create',[ 'id' => $order->id, ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
                             @endforelse
                         </table>
 

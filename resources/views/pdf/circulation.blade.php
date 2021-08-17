@@ -19,8 +19,8 @@
             position: absolute;
             right: 1px;
             padding:10px;
-            top:5px;
-            height:40px;
+            top:0px;
+            height:48px;
             width:150px;
             border:1px solid black;
         }
@@ -77,7 +77,7 @@
                 Zlecenie:
             </td>
             <td style="padding-left:10px;">
-                <strong class="red">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</strong>
+                <strong class="red">{{ $order->parrentOrder->id }}/{{ date_format($order->parrentOrder->created_at, 'Y') }} @if( $order->max_position > 1 ) // {{  $order->order_place }} //@endif</strong>
             </td>
         </tr>
         <tr>
@@ -102,7 +102,6 @@
                 Element poprzeczny Q:
             </td>
             <td style="padding-left:10px;">
-
                 <strong  class="red">{{ $order->l_elem_pieces }}</strong> szt.     {{ round(( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów<br>
                 <strong  class="red">{{ $order->q_elem_pieces }}</strong> szt.     {{ round(( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów
             </td>
@@ -221,7 +220,7 @@
                 Zlecenie:
             </td>
             <td style="padding-left:10px;">
-                <strong class="red">{{ $order->id }}/{{ date_format($order->created_at, 'Y') }}</strong>
+                <strong class="red">{{ $order->parrentOrder->id }}/{{ date_format($order->parrentOrder->created_at, 'Y') }} @if( $order->max_position > 1 ) // {{  $order->order_place }} // @endif</strong>
             </td>
         </tr>
         <tr>
@@ -246,7 +245,6 @@
                 Element poprzeczny Q:
             </td>
             <td style="padding-left:10px;">
-
                 <strong>{{ $order->l_elem_pieces }}</strong> szt. {{ round(( $order->l_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów<br>
                 <strong>{{ $order->q_elem_pieces }}</strong> szt. {{ round(( $order->q_elem_pieces*  ($order->quantity+($order->quantity*0.05) ) )) }} elementów
             </td>
@@ -263,7 +261,7 @@
                <strong class="red">{{ $order->division_flapsL }}</strong><br>
             </td>
         </tr>
-        <tr style="width:100px; text-align:left;">
+        <tr>
             <td style="text-align:right;padding-right:10px;">
                 ILOŚĆ SŁUPKÓW na 1000:<br>
                 ILOŚĆ SŁUPKÓW na 500:<br>
@@ -275,9 +273,9 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align:center;">
-                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:20px;text-align:center;margin-top:30px;"><strong  class="red">MATERIAŁ {{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><div class="bigD">{{ $order->product->designation }}</div><br>
-                ZUŻYCIE TEKTURY:<br>
-                <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center; padding:10px;">
+                <div class="yellow" style="border-style: dashed;width:350px;margin:0 auto; position:relative;padding:10px;text-align:center;margin-top:20px;"><strong class="red">MATERIAŁ {{ $order->product->designation }}-{{ $order->product->grammage }} g/m, {{ $order->product->cardboard_producer }}</strong></div><div class="bigD">{{ $order->product->designation }}</div><br>
+                ZUŻYCIE TEKTURY<br>
+                <table cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;">
                     <tr class="yellow" style="padding:5px">
                         <td>Rodzaj</td><td>gramatura</td><td>szerokość rolki</td><td>zużycie</td>
                     </tr>
@@ -287,7 +285,6 @@
                         </tr>
                     @endforeach
                 </table>
-
             </td>
         </tr>
         <tr>
@@ -310,7 +307,7 @@
             <td style="padding:15px;">
                 TERMIN WYKONANIA: <strong  class="red">{{ $order->date_production }}</strong>
             </td>
-            <td  style=" padding:15px;">
+            <td  style="padding:15px;">
                 <strong>Pakować na PALETY
                 @if($order->pallets == 1)
                     ZWYKŁE
@@ -320,9 +317,9 @@
                 </strong>
             </td>
         </tr>
-        <tr>
+        <tr  style="width:100px; text-align:left;">
             <td colspan="2" style="padding:5px;">
-                <div class="green" style="border-style: dashed;width:250px;margin:0 auto; position:relative;padding:20px;"<strong  class="red">ZAMÓWIENIE NA  {{ $order->date_delivery }} !</strong></div>
+                <div class="green" style="border-style:dashed;width:400px;margin:0 auto; position:relative;padding:20px;text-align:center;"><strong  class="red">ZAMÓWIENIE NA {{ $order->date_delivery }} !</strong></div>
             </td>
         </tr>
     </table>

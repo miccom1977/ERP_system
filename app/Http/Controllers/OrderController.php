@@ -96,7 +96,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = $this->orderRepository->find($id);;
+        $order = $this->orderRepository->find($id);
         $order->file = $this->fileRepository->find($id);
         return view('showOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $order, 'order_positions' => $this->orderPositionRepository->findAll( $id ) ] );
     }
@@ -169,6 +169,7 @@ class OrderController extends Controller
         $order->dataCardboard = $dataCardboard;
         $order->cost_data = $this->costHomeWorkerRepository->findCost( ( $order->l_elem_pieces+$order->q_elem_pieces) );
         $order->file = $this->fileRepository->find($id);
+        $order->max_position = $this->orderPositionRepository->findMax($order->order_id);
         $order->parrentOrder = Order::with('client')->get()->find($order->order_id);
         //return view('pdf.circulation',['order' => $order ] );
         view()->share('order', $order);

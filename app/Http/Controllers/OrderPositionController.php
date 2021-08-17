@@ -79,7 +79,7 @@ class OrderPositionController extends Controller
         $orderP->date_delivery = $request->date_delivery;
         $orderP->order_id = $request->order_id;
         $orderP->custom_order_id = $request->custom_order_id;
-
+        $orderP->order_place = ( $this->orderPositionRepository->findMax($request->order_id) + 1 );
         $orderP->save();
         //
         return back()->with('success', 'Pozycja zamówienia zapisana.');
@@ -93,8 +93,8 @@ class OrderPositionController extends Controller
      */
     public function show($id)
     {
-        $order = $this->orderRepository->find($id);
         $orderPosition = $this->orderPositionRepository->find($id);
+        $order = $this->orderRepository->find($orderPosition->order_id);
         return view('showOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $order, 'orderPosition' => $orderPosition ] );
 
     }
