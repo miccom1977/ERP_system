@@ -20,7 +20,6 @@ class CreateOrderPositionsTable extends Migration
             $table->integer('l_elem')->default(0);
             $table->integer('q_elem')->default(0);
             $table->integer('h_elem')->default(0);
-            $table->text('client_order_number');
             $table->integer('flaps_a')->default(0);
             $table->integer('flaps_b')->default(0);
             $table->integer('l_elem_pieces')->default(0);

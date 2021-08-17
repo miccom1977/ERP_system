@@ -191,7 +191,7 @@ class OrderController extends Controller
             ['cardboard_producer', '=', $cardboard_producer]
         ])->orderBy('roll_width', 'ASC')->first();
         if( $productData ){
-            $distributionElements[0]['detail'] = '1 DŁUGI + 1 KRÓTKI';
+            $distributionElements[0]['detail'] = '1 DŁUGI<br> 1 KRÓTKI';
             $distributionElements[0]['rolle_width'] = $productData->roll_width;
             $distributionElements[0]['rolle_id'] = $productData->id;
 
@@ -345,7 +345,7 @@ class OrderController extends Controller
             ])->orderBy('roll_width', 'ASC')->first();
             if($productDataKK){
                 //echo 'mamy rolkę na której tłuczemy dwa krótkie';
-                $distributionElements[1]['detail'] = '1 KRÓTKI + 1 KRÓTKI';
+                $distributionElements[1]['detail'] = '2 x KRÓTKI';
                 $distributionElements[1]['rolle_width'] = $productDataKK->roll_width;
                 $distributionElements[1]['rolle_id'] = $productDataKK->id;
                 $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. round((  ($piecesB * $quantity ) /2 )) .' uderzeń';

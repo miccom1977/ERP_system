@@ -22,78 +22,79 @@
                         <table width="100%" >
                             <tr>
                                 <td colspan="2">
-                                    <label>Klient</label>
-                                </td>
-                                <td>
-                                    <label>Tektura</label>
-                                </td>
-                                <td>
-                                    <label>Sztuki</label>
-                                </td>
-                                <td>
-                                    <label>Wymiar</label>
-                                </td>
-                                <td>
-                                    <label>Pole A / B</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
+                                    <label>Klient</label><br>
                                     {{  $order->client->description }}
                                 </td>
                                 <td>
+                                    <label>Tektura</label><br>
                                     {{ $orderPosition->product->description }} {{ $orderPosition->product->designation }} <br> {{ $orderPosition->product->grammage }} g/m  {{ $orderPosition->product->cardboard_producer }}
                                 </td>
                                 <td>
+                                    <label>Nr. produktu</label><br>
+                                    {{  $orderPosition->article_number }}
+                                </td>
+                                <td>
+                                    <label>Sztuki</label><br>
                                     {{  $orderPosition->quantity }} szt
                                 </td>
                                 <td>
+                                    <label>Wymiar</label><br>
                                     {{  $orderPosition->l_elem }} x {{  $orderPosition->q_elem }} x {{  $orderPosition->h_elem }}
                                 </td>
                                 <td>
+                                    <label>Pole celi</label><br>
                                     {{  $orderPosition->flaps_a }} x {{  $orderPosition->flaps_b }}
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label>Data dostawy</label>
-                                </td>
-                                <td>
-                                    <label>Data wysyłki</label>
-                                </td>
-                                <td>
-                                    <label>Data rozpoczęcia produkcji</label>
-                                </td>
-                                <td colspan="3">
-                                    <label>Opcje</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
+                                    <label>Data dostawy</label><br>
                                     {{  $orderPosition->date_delivery }}
                                 </td>
                                 <td>
+                                    <label>Data wysyłki</label><br>
                                     {{  $orderPosition->date_shipment }}
                                 </td>
                                 <td>
+                                    <label>Data rozpoczęcia produkcji</label><br>
                                     {{  $orderPosition->date_production }}
                                 </td>
-                                @if (Auth::user()->role->id ==  1 )
-                                <td colspan="3">
-                                    <a href="/orderPosition/{{$orderPosition->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
-                                    <form method="POST" action="/orderPosition/{{$orderPosition->id}}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-                                        <div class="form-group">
-                                            <input type="submit" style="float:right;margin:5px 10px 5px 10px;" class="danger" value="usuń">
-                                        </div>
-                                    </form>
+                                <td>
+                                    <label>Waga<br> 1 szt. / całość</label><br>
+                                    {{ ( ( $orderPosition->l_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->l_elem_pieces ) + ( $orderPosition->q_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->q_elem_pieces ) )/ 1000000  }} g / {{ ( ( ( ( $orderPosition->l_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->l_elem_pieces ) + ( $orderPosition->q_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->q_elem_pieces ) )/ 1000000 ) * $orderPosition->quantity ) / 1000 }} kg
                                 </td>
-                                @else
-                                    <td colspan="3">
-                                    </td>
-                                @endif
-
+                                <td>
+                                    <label>Elementy</label><br>
+                                    L: {{ $orderPosition->l_elem_pieces }}<br>
+                                    Q: {{ $orderPosition->q_elem_pieces }}
+                                </td>
+                                <td>
+                                    <label>Status</label><br>
+                                    @if ( $orderPosition->status == 0)
+                                        Oczekuje
+                                    @elseif ( $orderPosition->status == 1)
+                                        Produkcja / sztancowanie
+                                    @elseif ( $orderPosition->status == 2)
+                                        Produkcja / składanie
+                                    @elseif ( $orderPosition->status == 3)
+                                        Produkcja / spakowane
+                                    @else
+                                        Wysłane do klienta
+                                    @endif
+                                </td>
+                                <td colspan="2">
+                                    <label>Opcje</label><br>
+                                    @if (Auth::user()->role->id ==  1 )
+                                        <a href="/orderPosition/{{$orderPosition->id}}/edit"><button style="float:left;margin:5px 10px 5px 10px;">edytuj</button></a>
+                                        <form method="POST" action="/orderPosition/{{$orderPosition->id}}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <div class="form-group">
+                                                <input type="submit" style="float:right;margin:5px 10px 5px 10px;" class="danger" value="usuń">
+                                            </div>
+                                        </form>
+                                    @endif
+                                </td>
                             </tr>
                         </table>
                     </div>

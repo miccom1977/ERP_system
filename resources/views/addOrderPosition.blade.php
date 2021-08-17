@@ -28,9 +28,6 @@
                                         <label>Sztuki</label>
                                     </td>
                                     <td>
-                                        <label>Numer zamówienia</label>
-                                    </td>
-                                    <td>
                                         <label>Nr. artykułu</label>
                                     </td>
                                     <td>
@@ -50,9 +47,6 @@
                                         <input type="number" class="w-28" name="quantity" id="quantity">
                                     </td>
                                     <td>
-                                        <input type="text" class="w-28" name="client_order_number" id="client_order_number">
-                                    </td>
-                                    <td>
                                         <input type="text" class="w-28" name="article_number" id="article_number">
                                     </td>
                                     <td>
@@ -63,7 +57,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="5">
                                         <hr>
                                     </td>
                                 </tr>
@@ -80,7 +74,7 @@
                                     <td>
                                         <label>Wysokość</label>
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                         <label>Pole</label>
                                     </td>
                                 </tr>
@@ -113,12 +107,12 @@
                                             <option value="591">
                                         </datalist>
                                     </td>
-                                    <td colspan="2">
+                                    <td>
                                         <input type="text" class="w-14" name="flaps_a" id="flaps_a"> x <input type="text" class="w-14" name="flaps_b" id="flaps_b">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="5">
                                         <hr>
                                     </td>
                                 </tr>
@@ -132,7 +126,7 @@
                                     <td>
                                         <label>Data rozpoczęcia produkcji</label>
                                     </td>
-                                    <td colspan="3">
+                                    <td colspan="2">
                                         <label>Podział pól<br></label>
                                     </td>
                                 </tr>
@@ -146,13 +140,13 @@
                                     <td>
                                         <input type="date" class="w-18" id="date_production" name="date_production" value="{{ now() }}" >
                                     </td>
-                                    <td  colspan="3">
+                                    <td  colspan="2">
                                         L:<input type="text" class="w-30" name="division_flapsL" id="division_flapsL"><br>
                                         Q:<input type="text" class="w-30" name="division_flapsQ" id="division_flapsQ">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="5">
                                         <hr>
                                     </td>
                                 </tr>
@@ -163,24 +157,25 @@
                                     <td>
                                         <label>Wiązać po:</label>
                                     </td>
-                                    <td colspan="4">
+                                    <td colspan="3">
                                         opcje
                                     </td>
                                 </tr>
-                                <td>
-                                    <select name="pallets" id="pallets">
-                                        <option value="1">ZWYKŁE</option>
-                                        <option value="2">EURO</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="text" class="w-30" name="packaging" id="packaging"> szt.
-                                </td>
-                                <td colspan="5">
-                                    <input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block">
-                                </td>
-                            </tr>
-                        </form>
+                                <tr>
+                                    <td>
+                                        <select name="pallets" id="pallets">
+                                            <option value="1">ZWYKŁE</option>
+                                            <option value="2">EURO</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="w-30" name="packaging" id="packaging"> szt.
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block">
+                                    </td>
+                                </tr>
+                            </form>
                         </table>
                         @endif
                     </div>

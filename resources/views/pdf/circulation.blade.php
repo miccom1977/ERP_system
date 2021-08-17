@@ -139,7 +139,7 @@
                     </tr>
                     @foreach ( $order->dataCardboard as $detail )
                         <tr class="yellow" style="padding:5px;">
-                            <td>{{ $detail['detail'] }}</td><td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['task_to_do'] }}</td>
+                            <td>{!! $detail['detail'] !!}</td><td>{{ $order->product->description }} {{ $order->product->designation }}</td><td>{{ $order->product->grammage }} g/m</td><td>{{ $detail['rolle_width'] }} mm</td><td>{{ $detail['task_to_do'] }}</td>
                         </tr>
                     @endforeach
                 </table>
@@ -183,13 +183,13 @@
             <td colspan="2" style="padding:10px;">
                 <table style="width:100%;border:none;border-collapse:collapse;">
                     <tr>
-                        <td style="border:none;width:50%">Zamówienie na <strong>{{ $order->quantity }}</strong> sztuk</td>
-                        <td style="border:1px solid black;">Opracował:</td>
-                        <td style="border:1px solid black;width:35%;"></td>
+                        <td style="border:none;width:50%;">Zamówienie na <strong>{{ $order->quantity }}</strong> sztuk</td>
+                        <td style="border:1px solid black;text-align:center;">Opracował:</td>
+                        <td style="border:1px solid black;text-align:center;width:35%;"> {{ Auth::user()->name }}</td>
                     </tr>
                     <tr>
                         <td style="border:none;width:50%">Nie więcej niż <strong>{{ round(( $order->quantity + ( $order->quantity*0.05) )) }}</strong> sztuk</td>
-                        <td style="border:1px solid black;">Zatwierdził:</td>
+                        <td style="border:1px solid black;text-align:center;">Zatwierdził:</td>
                         <td style="border:1px solid black;width:35%;"></td>
                     </tr>
                 </table>
