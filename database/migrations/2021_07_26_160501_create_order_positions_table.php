@@ -33,6 +33,7 @@ class CreateOrderPositionsTable extends Migration
             $table->date('date_production');
             $table->date('date_delivery');
             $table->integer('custom_order_id');
+            $table->integer('order_place');
             $table->timestamps();
         });
     }
