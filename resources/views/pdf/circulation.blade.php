@@ -69,7 +69,7 @@
                 <h4>
                     <span>KARTA OBIEGOWA- PRODUKCJA</span>
                 </h4>
-                <div class="titleBox yellow"> {{ $order->client->description }}<br> {{ $order->article_number }}</div>
+                <div class="titleBox yellow"> {{ $order->parrentOrder->client->description }}<br> {{ $order->article_number }}</div>
             </td>
         </tr>
         <tr>
@@ -147,7 +147,7 @@
         </tr>
         <tr>
             <td style="padding:15px;">
-                KLIENT/FIRMA: {{ $order->client->description }}
+                KLIENT/FIRMA: {{ $order->parrentOrder->client->description }}
             </td>
             <td style="padding:15px;">
                 TERMIN WYSYŁKI: <strong  class="red">{{ $order->date_shipment }}</strong>
@@ -155,7 +155,7 @@
         </tr>
         <tr>
             <td style="padding:15px;">
-                NR. ZAMÓWIENIA: {{ $order->client_order_number }}
+                NR. ZAMÓWIENIA: {{ $order->parrentOrder->client_order_number }}
             </td>
             <td style="padding:15px;">
                  WIĄZAĆ PO <strong  class="red">{{ $order->packaging }}</strong> sztuk
@@ -213,7 +213,7 @@
                 <h4>
                     <span>KARTA OBIEGOWA- MAGAZYN</span>
                 </h4>
-                <div class="titleBox yellow"> {{ $order->client->description }}<br> {{ $order->article_number }}</div>
+                <div class="titleBox yellow"> {{ $order->parrentOrder->client->description }}<br> {{ $order->article_number }}</div>
             </td>
         </tr>
         <tr>
@@ -292,7 +292,7 @@
         </tr>
         <tr>
             <td style="padding:15px;">
-                KLIENT/FIRMA: {{ $order->client->description }}
+                KLIENT/FIRMA: {{ $order->parrentOrder->client->description }}
             </td>
             <td style="padding:15px;">
                 TERMIN WYSYŁKI: <strong  class="red">{{ $order->date_shipment }}</strong>
@@ -300,7 +300,7 @@
         </tr>
         <tr>
             <td style="padding:15px;">
-                NR. ZAMÓWIENIA: {{ $order->client_order_number }}
+                NR. ZAMÓWIENIA: {{ $order->parrentOrder->client_order_number }}
             </td>
             <td style="padding:15px;">
                  WIĄZAĆ PO <strong  class="red">{{ $order->packaging }}</strong> sztuk
@@ -336,7 +336,7 @@
                 ODBIORCA:
             </td>
             <td   style=" padding:15px;"  colspan="4">
-                <strong>{{ $order->client->description }}<br>
+                <strong>{{ $order->parrentOrder->client->description }}<br>
                     {{ $order->client_order_number }}
                 </strong>
             </td>

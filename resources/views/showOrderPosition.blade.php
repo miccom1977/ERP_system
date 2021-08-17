@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{$order->id}}"><button>Drukuj dokumenty</button></a>
+            {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{ $order->id }}"><button>Drukuj dokumenty</button></a>
             @if ( isset($orderPosition->file->path) )
                 <a href="c://xampp/htdocs/public/{{$orderPosition->file->path}}" downolad ><button>pobierz rysunek</button></a>
                 @endif

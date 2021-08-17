@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Client;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\OrderPosition;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Repositories\FileRepository;
 use App\Repositories\OrderRepository;
@@ -163,11 +164,12 @@ class OrderController extends Controller
     }
 
     public function createPDF($id) {
-        $order = Order::with('product')->get()->find($id);
+        $order = OrderPosition::with('product')->get()->find($id);
         $dataCardboard = $this->calculateCardboard( $order->l_elem, $order->q_elem, $order->h_elem, $order->product->grammage, $order->product->designation, $order->product->cardboard_producer,( $order->quantity+($order->quantity*0.05) ),$order->l_elem_pieces, $order->q_elem_pieces );
         $order->dataCardboard = $dataCardboard;
         $order->cost_data = $this->costHomeWorkerRepository->findCost( ( $order->l_elem_pieces+$order->q_elem_pieces) );
         $order->file = $this->fileRepository->find($id);
+        $order->parrentOrder = Order::with('client')->get()->find($order->order_id);
         //return view('pdf.circulation',['order' => $order ] );
         view()->share('order', $order);
         $pdf = PDF::loadView('pdf.circulation', $order);
