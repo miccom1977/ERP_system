@@ -40,7 +40,7 @@
                                 <td>
                                     {{  $order->client->street }} {{  $order->client->parcel_number }}<br>
                                     {{  $order->client->post_code }} {{  $order->client->country }}<br>
-                                    <button>Zmień adres dostawy</button>
+                                    <button class="btn-submit">Zmień adres dostawy</button>
                                 </td>
                                 <td>
                                     <a href="{{ route('orderPosition.create',[ 'id' => $order->id, ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
