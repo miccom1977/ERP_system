@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('text.save_new_order') }} nr. {{ $order->id }}/{{ date_format($order->created_at, 'Y') }}, produkt nr. {{ $orderPosition->client_order_number }}
+            {{ __('text.save_new_order') }} nr. {{ $order->id }}/{{ date_format($order->created_at, 'Y') }}, produkt nr. {{ $orderPosition->article_number }}
         </h2>
     </x-slot>
 

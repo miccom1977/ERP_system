@@ -20,6 +20,11 @@
         <script src="{{ asset('js/function.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
+        @if(Session::has('success'))
+            <div class="alert alert-success">
+                {{Session::get('success')}}
+            </div>
+        @endif
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 

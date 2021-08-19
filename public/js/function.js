@@ -1,22 +1,24 @@
 $(document).ready(function() {
     $(".btn-submit").click(function(e){
         e.preventDefault();
+        var street = $("input[name='street']").val();
+        var parcel_number =$("input[name='parcel_number']").val();
+        var post_code = $("input[name='post_code']").val();
+        var country = $("input[name='country']").val();
 
-        alert("działa");
-        /*
-        var _token = $("input[name='_token']").val();
-        var email = $("#email").val();
-        var pswd = $("#pwd").val();
-        var address = $("#address").val();
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
 
         $.ajax({
-            url: "{{ route('ajax.request.store') }}",
+            url: "../addNewAddress",
             type:'POST',
-            data: {_token:_token, email:email, pswd:pswd,address:address},
+            data: { street:street, parcel_number:parcel_number, post_code:post_code,country:country},
             success: function(data) {
-              printMsg(data);
+              alert(data);
             }
         });
-        */
     });
 });
