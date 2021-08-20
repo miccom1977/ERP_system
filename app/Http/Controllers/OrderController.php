@@ -13,6 +13,7 @@ use App\Repositories\FileRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\ClientRepository;
 use App\Repositories\ProductRepository;
+use App\Repositories\DeliveryRepository;
 use App\Repositories\OrderPositionRepository;
 use App\Repositories\CostHomeWorkerRepository;
 
@@ -25,14 +26,16 @@ class OrderController extends Controller
     private $costHomeWorkerRepository;
     private $fileRepository;
     private $orderPositionRepository;
+    private $deliveryRepository;
 
-    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository, CostHomeWorkerRepository  $costHomeWorkerRepository, FileRepository $fileRepository, OrderPositionRepository $orderPositionRepository  ){
+    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository, CostHomeWorkerRepository  $costHomeWorkerRepository, FileRepository $fileRepository, OrderPositionRepository $orderPositionRepository, DeliveryRepository $deliveryRepository  ){
         $this->clientRepository = $clientRepository;
         $this->productRepository = $productRepository;
         $this->orderRepository = $orderRepository;
         $this->costHomeWorkerRepository = $costHomeWorkerRepository;
         $this->fileRepository = $fileRepository;
         $this->orderPositionRepository = $orderPositionRepository;
+        $this->deliveryRepository = $deliveryRepository;
     }
 
 
@@ -98,6 +101,14 @@ class OrderController extends Controller
     {
         $order = $this->orderRepository->find($id);
         $order->file = $this->fileRepository->find($id);
+        if($order->new_address == 1){
+            $address = $this->deliveryRepository->findWith($order->id);
+            $order->client->street = $address->street;
+            $order->client->country = $address->country;
+            $order->client->city = $address->city;
+            $order->client->post_code = $address->post_code;
+            $order->client->parcel_number = $address->parcel_number;
+        }
         return view('showOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $order, 'order_positions' => $this->orderPositionRepository->findAll( $id ) ] );
     }
 
@@ -109,7 +120,7 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        $order = $this->orderRepository->find($id);;
+        $order = $this->orderRepository->find($id);
         $order->file = $this->fileRepository->find($id);
         return view('editOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $order ] );
 

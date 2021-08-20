@@ -38,15 +38,24 @@
                                     {{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}
                                 </td>
                                 <td>
-                                    <input type="text" name="city" value="{{  $order->client->city }}"/>
-                                    <input type="text" name="street" value="{{  $order->client->street }}"/> <input type="text" name="parcel_number" value="{{  $order->client->parcel_number }}"/><br>
-                                    <input type="text" name="post_code" value="{{  $order->client->post_code }}"/> <input type="text" name="country" value="{{  $order->client->country }}"/><br>
-                                    <input type="hidden" name="client_id" value="{{  $order->client->id }}"/>
-                                    <input type="hidden" name="order_id" value="{{  $order->id }}"/>
-                                    <button class="btn-submit">Zmień adres dostawy</button>
+                                    @if (Auth::user()->role->id ==  1 )
+                                        <input type="text" name="city" value="{{  $order->client->city }}"/>
+                                        <input type="text" name="street" value="{{  $order->client->street }}"/> <input type="text" name="parcel_number" value="{{  $order->client->parcel_number }}"/><br>
+                                        <input type="text" name="post_code" value="{{  $order->client->post_code }}"/> <input type="text" name="country" value="{{  $order->client->country }}"/><br>
+                                        <input type="hidden" name="client_id" value="{{  $order->client->id }}"/>
+                                        <input type="hidden" name="order_id" value="{{  $order->id }}"/>
+                                        <button class="btn-submit">Zmień adres dostawy</button>
+                                    @else
+                                        {{ $order->client->street }} {{  $order->client->parcel_number }}<br>
+                                        {{  $order->client->post_code }} {{  $order->client->city }}<br> {{  $order->client->country }}<br>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('orderPosition.create',[ 'id' => $order->id, ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
+                                    @if (Auth::user()->role->id ==  1 )
+                                        <a href="{{ route('orderPosition.create',[ 'id' => $order->id, ] ) }}"><button>Dodaj produkt do tego zamówienia</button></a>
+                                    @else
+                                        Brak
+                                    @endif
                                 </td>
                             </tr>
                         </table>

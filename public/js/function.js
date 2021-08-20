@@ -5,6 +5,9 @@ $(document).ready(function() {
         var parcel_number =$("input[name='parcel_number']").val();
         var post_code = $("input[name='post_code']").val();
         var country = $("input[name='country']").val();
+        var client_id = $("input[name='client_id']").val();
+        var order_id = $("input[name='order_id']").val();
+        var city = $("input[name='city']").val();
 
         $.ajaxSetup({
             headers: {
@@ -15,7 +18,7 @@ $(document).ready(function() {
         $.ajax({
             url: "../addNewAddress",
             type:'POST',
-            data: { street:street, parcel_number:parcel_number, post_code:post_code,country:country},
+            data: { street:street, parcel_number:parcel_number, post_code:post_code,country:country,client_id:client_id,order_id:order_id,city:city},
             success: function(data) {
               alert(data);
             }

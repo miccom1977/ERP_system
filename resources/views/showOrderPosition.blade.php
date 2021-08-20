@@ -1,11 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }} <a href="/print/{{ $orderPosition->id }}"><button>Drukuj dokumenty</button></a>
-            @if ( isset($orderPosition->file->path) )
-                <a href="c://xampp/htdocs/public/{{$orderPosition->file->path}}" downolad ><button>pobierz rysunek</button></a>
+            {{ __('Zamówienie nr. : ') }} {{ $order->id }}/{{ date_format($order->created_at, 'Y') }}
+            @if (Auth::user()->role->id == 1 )
+                <a href="/print/{{ $orderPosition->id }}"><button>Drukuj dokumenty</button></a>
+                @if ( isset($orderPosition->file->path) )
+                    <a href="c://xampp/htdocs/public/{{$orderPosition->file->path}}" downolad ><button>pobierz rysunek</button></a>
                 @endif
-                <a href="/printCMR/{{$orderPosition->id}}"><button>Drukuj CMR</button></a>
+            @endif
+            <a href="/printCMR/{{$orderPosition->id}}"><button>Drukuj CMR</button></a>
         </h2>
     </x-slot>
 
@@ -61,7 +64,7 @@
                                 </td>
                                 <td>
                                     <label>Waga<br> 1 szt. / całość</label><br>
-                                    {{ ( ( $orderPosition->l_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->l_elem_pieces ) + ( $orderPosition->q_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->q_elem_pieces ) )/ 1000000  }} g / {{ ( ( ( ( $orderPosition->l_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->l_elem_pieces ) + ( $orderPosition->q_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->q_elem_pieces ) )/ 1000000 ) * $orderPosition->quantity ) / 1000 }} kg
+                                    {{ round(( ( $orderPosition->l_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->l_elem_pieces ) + ( $orderPosition->q_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->q_elem_pieces ) )/ 1000000)  }} g / {{ round(( ( ( ( $orderPosition->l_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->l_elem_pieces ) + ( $orderPosition->q_elem * $orderPosition->h_elem * $orderPosition->product->grammage * $orderPosition->q_elem_pieces ) )/ 1000000 ) * $orderPosition->quantity ) / 1000) }} kg
                                 </td>
                                 <td>
                                     <label>Elementy</label><br>
@@ -70,16 +73,15 @@
                                 </td>
                                 <td>
                                     <label>Status</label><br>
-                                    @if ( $orderPosition->status == 0)
-                                        Oczekuje
-                                    @elseif ( $orderPosition->status == 1)
-                                        Produkcja / sztancowanie
-                                    @elseif ( $orderPosition->status == 2)
-                                        Produkcja / składanie
-                                    @elseif ( $orderPosition->status == 3)
-                                        Produkcja / spakowane
-                                    @else
-                                        Wysłane do klienta
+                                    <select name="status" id="status">
+                                        <option value="0" {{ $orderPosition->status == 0 ? 'selected' : '' }}>Oczekuje</option>
+                                        <option value="1" {{ $orderPosition->status == 1 ? 'selected' : '' }}>Produkcja / sztancowanie</option>
+                                        <option value="2" {{ $orderPosition->status == 2 ? 'selected' : '' }}>Produkcja / składanie</option>
+                                        <option value="3" {{ $orderPosition->status == 3 ? 'selected' : '' }}>Produkcja / spakowane</option>
+                                        <option value="4" {{ $orderPosition->status == 4 ? 'selected' : '' }}>Wysłane do klienta</option>
+                                    </select><br>
+                                    @if (Auth::user()->role->id ==  1 OR Auth::user()->role->id ==  2)
+                                    <button>Zmień status</button>
                                     @endif
                                 </td>
                                 <td colspan="2">
