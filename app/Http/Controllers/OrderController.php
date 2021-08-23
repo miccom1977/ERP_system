@@ -101,6 +101,7 @@ class OrderController extends Controller
     {
         $order = $this->orderRepository->find($id);
         $order->file = $this->fileRepository->find($id);
+        $order->orderPositions = $this->orderPositionRepository->findAll( $id );
         if($order->new_address == 1){
             $address = $this->deliveryRepository->findWith($order->id);
             $order->client->street = $address->street;
@@ -109,7 +110,8 @@ class OrderController extends Controller
             $order->client->post_code = $address->post_code;
             $order->client->parcel_number = $address->parcel_number;
         }
-        return view('showOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $order, 'order_positions' => $this->orderPositionRepository->findAll( $id ) ] );
+
+        return view('showOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $order ] );
     }
 
     /**
@@ -392,5 +394,20 @@ class OrderController extends Controller
     public function createCMR($id) {
         $pdf = PDF::loadView('cmr.cmr');
         return $pdf->download('cmr.pdf');
+    }
+
+
+    public function editStatus(Request $request) {
+        $order = $this->orderPositionRepository->find($request->oneDetail);
+        $order->status = $request->twoDetail;
+        $order->save();
+        return 'Status zlecenia zaktualizowano';
+    }
+
+
+    public function getAll()
+    {
+        $orders = $this->orderRepository->getAll();
+        return view('dashboard',['orders' => $orders ] );
     }
 }

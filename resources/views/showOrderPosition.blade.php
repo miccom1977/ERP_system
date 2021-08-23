@@ -81,7 +81,7 @@
                                         <option value="4" {{ $orderPosition->status == 4 ? 'selected' : '' }}>Wysłane do klienta</option>
                                     </select><br>
                                     @if (Auth::user()->role->id ==  1 OR Auth::user()->role->id ==  2)
-                                    <button>Zmień status</button>
+                                    <button class="editStatus" var="{{ $orderPosition->id }}">Zmień status</button>
                                     @endif
                                 </td>
                                 <td colspan="2">

@@ -27,7 +27,7 @@ class Order extends Model
     }
 
     public function position(){
-        return $this->belongsTo('App\Models\OrderPosition');
+        return $this->hasMany('App\Models\OrderPosition');
     }
 }
 

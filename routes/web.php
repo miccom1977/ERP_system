@@ -24,10 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    $orders = Order::all();
-    return view('dashboard', ['orders' => $orders ]);
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [OrderController::class, 'getAll'])->middleware(['auth'])->name('dashboard');
 
 Route::resource('/order', OrderController::class)->name('index','order');
 Route::resource('/orderPosition', OrderPositionController::class)->name('index','orderPosition');
@@ -37,4 +34,5 @@ Route::get('/print/{id}', [OrderController::class, 'createPDF']);
 Route::get('/printCMR/{id}', [OrderController::class, 'createCMR']);
 Route::post('store/file', [FileUploadController::class, 'store']);
 Route::post('addNewAddress', [DeliveryController::class, 'addNewAddress'])->name('addNewAddress');
+Route::post('editStatus', [OrderController::class, 'editStatus'])->name('editStatus');
 require __DIR__.'/auth.php';
