@@ -77,7 +77,7 @@
                                     Status
                                 </td>
                             </tr>
-                            @forelse( $order->position as $single_position )
+                            @forelse( $order->orderPositions as $single_position )
                                 <tr><td><a href="/orderPosition/{{ $single_position->id }}">{{ $single_position->article_number }}</a></td><td>{{ $single_position->quantity }}</td><td>{{ $single_position->l_elem }} x {{ $single_position->q_elem }} x {{ $single_position->h_elem }}</td><td>
                                     @if ( $single_position->status == 0)
                                         Oczekuje

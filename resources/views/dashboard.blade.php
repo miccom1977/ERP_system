@@ -32,20 +32,20 @@
                         </tr>
                         @foreach ( $orders as $order )
                             <tr><td><a href="/order/{{ $order->id }}">{{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}</a><td>{{ $order->client_order_number }}</a></td><td>
-                                @forelse ( $order->position as $singleOrderPosition)
+                                @forelse ( $order->orderPositions as $singleOrderPosition)
                                     art. <a href="/orderPosition/{{ $singleOrderPosition->id }}">{{ $singleOrderPosition->article_number }}</a> | status:
-                                         @if ( $singleOrderPosition->status == 0)
-                                            Oczekuje<br>
-                                            Produkcję rozpocząć: {{ $singleOrderPosition->date_production }}
+                                        @if ( $singleOrderPosition->status == 0)
+                                            Oczekuje |
+                                            Produkcję rozpocząć: <strong @if($singleOrderPosition->date_production > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_production }}</strong>
                                         @elseif ( $singleOrderPosition->status == 1)
                                             Produkcja / sztancowanie |
-                                            Składanie rozpocząć: {{ $singleOrderPosition->date_production }}
+                                            Składanie rozpocząć: <strong @if($singleOrderPosition->date_production > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_production }}</strong>
                                         @elseif ( $singleOrderPosition->status == 2)
                                             Produkcja / składanie |
-                                            Spakować do: {{ $singleOrderPosition->date_shipment }}
+                                            Spakować do: <strong @if($singleOrderPosition->date_shipment > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_shipment }}</strong>
                                         @elseif ( $singleOrderPosition->status == 3)
                                             Produkcja / spakowane |
-                                            Wysłać dnia: {{ $singleOrderPosition->date_shipment }}
+                                            Wysłać dnia: <strong @if($singleOrderPosition->date_shipment > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_shipment }}</strong>
                                         @else
                                             Wysłane do klienta
                                         @endif

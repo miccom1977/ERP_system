@@ -26,7 +26,7 @@ class Order extends Model
         return $this->belongsTo('App\Models\File');
     }
 
-    public function position(){
+    public function orderPositions(){
         return $this->hasMany('App\Models\OrderPosition');
     }
 }
