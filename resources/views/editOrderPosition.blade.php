@@ -192,6 +192,7 @@
                                                     <div class="form-group">
                                                         <input type="file" name="file" placeholder="Choose file" id="file">
                                                         <input type="hidden" name="order_position_id" value="{{ $orderPosition->id }}">
+                                                        <input type="hidden" name="article_number" value="{{ $orderPosition->article_number }}">
                                                         @error('file')
                                                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                                         @enderror

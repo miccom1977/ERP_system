@@ -5,10 +5,9 @@
             @if (Auth::user()->role->id == 1 )
                 <a href="/print/{{ $orderPosition->id }}"><button>Drukuj dokumenty</button></a>
                 @if ( isset($orderPosition->file->path) )
-                    <a href="c://xampp/htdocs/public/{{$orderPosition->file->path}}" downolad ><button>pobierz rysunek</button></a>
+                    <a href="/download/{{$orderPosition->id}}"><button>pobierz rysunek</button></a>
                 @endif
             @endif
-            <a href="/printCMR/{{$orderPosition->id}}"><button>Drukuj CMR</button></a>
         </h2>
     </x-slot>
 

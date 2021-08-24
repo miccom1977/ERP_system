@@ -28,4 +28,13 @@ class FileRepository extends BaseRepository
     {
         return $cost = File::where('order_position_id','=', $id)->first();
     }
+
+    /**
+    * @param $id
+    * @return Model
+    */
+    public function findWith($id): ?File
+    {
+        return $file = File::where('article_number','=', $article_number)->first();
+    }
 }

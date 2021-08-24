@@ -17,6 +17,7 @@ class CreateFilesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('path');
+            $table->string('article_number');
             $table->timestamps();
         });
     }

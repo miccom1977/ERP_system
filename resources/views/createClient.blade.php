@@ -20,63 +20,37 @@
                             <table width="100%">
                                 <tr>
                                     <td>
-                                        <label>Nazwa klienta</label>
-                                    </td>
-                                    <td>
-                                        <label>Miasto</label>
-                                    </td>
-                                    <td>
-                                        <label>Kod pocztowy</label>
-                                    </td>
-                                    <td>
-                                        <label>Kraj</label>
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                        <label>Nazwa klienta</label><br>
                                         <input type="text" name="description" id="description">
                                     </td>
                                     <td>
-                                        <input type="text" name="city" id="city" >
+                                        <label>Miasto</label><br>
+                                        <input type="text" name="city" id="city">
                                     </td>
                                     <td>
-                                        <input type="text" name="post_code" id="post_code" >
+                                        <label>Kod pocztowy</label><br>
+                                        <input type="text" name="post_code" id="post_code">
                                     </td>
                                     <td>
+                                        <label>Kraj</label><br>
                                         <input type="text" name="country" id="country">
                                     </td>
-                                    <td>
-
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label>Ulica</label>
-                                    </td>
-                                    <td>
-                                        <label>Numer budynku</label>
-                                    </td>
-                                    <td>
-                                        <label>Numer kontaktowy</label>
-                                    </td>
-                                    <td>
-                                        <label>Opcje</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                        <label>Ulica</label><br>
                                         <input type="text" name="street" id="street">
                                     </td>
                                     <td>
+                                        <label>Numer budynku</label><br>
                                         <input type="text" name="parcel_number" id="parcel_number" >
                                     </td>
                                     <td>
+                                        <label>Numer kontaktowy</label><br>
                                         <input type="text" name="contact_number" id="contact_number" >
                                     </td>
                                     <td>
+                                        <label>Opcje</label><br>
                                         <input type="submit" name="send" value="Dodaj" class="btn btn-dark btn-block">
                                     </td>
                                 </tr>

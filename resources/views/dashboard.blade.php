@@ -33,7 +33,23 @@
                         @foreach ( $orders as $order )
                             <tr><td><a href="/order/{{ $order->id }}">{{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}</a><td>{{ $order->client_order_number }}</a></td><td>
                                 @forelse ( $order->position as $singleOrderPosition)
-                                    {{ $singleOrderPosition->id }}: {{ $singleOrderPosition->date_delivery }}
+                                    art. <a href="/orderPosition/{{ $singleOrderPosition->id }}">{{ $singleOrderPosition->article_number }}</a> | status:
+                                         @if ( $singleOrderPosition->status == 0)
+                                            Oczekuje<br>
+                                            Produkcję rozpocząć: {{ $singleOrderPosition->date_production }}
+                                        @elseif ( $singleOrderPosition->status == 1)
+                                            Produkcja / sztancowanie |
+                                            Składanie rozpocząć: {{ $singleOrderPosition->date_production }}
+                                        @elseif ( $singleOrderPosition->status == 2)
+                                            Produkcja / składanie |
+                                            Spakować do: {{ $singleOrderPosition->date_shipment }}
+                                        @elseif ( $singleOrderPosition->status == 3)
+                                            Produkcja / spakowane |
+                                            Wysłać dnia: {{ $singleOrderPosition->date_shipment }}
+                                        @else
+                                            Wysłane do klienta
+                                        @endif
+                                        <br>
                                 @empty
                                     Brak pozycji dla tego zamówienia
                                 @endforelse

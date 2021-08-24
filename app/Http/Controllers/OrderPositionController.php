@@ -81,8 +81,15 @@ class OrderPositionController extends Controller
         $orderP->custom_order_id = $request->custom_order_id;
         $orderP->order_place = ( $this->orderPositionRepository->findMax($request->order_id) + 1 );
         $orderP->save();
-        //
-        return back()->with('success', 'Pozycja zamówienia zapisana.');
+
+
+        $file = $this->fileRepository->find($request->article_number);
+        $fileInfo = 'Przejdż do edycji artykułu i dodaj rysunek!';
+        if($file){
+            $fileInfo = 'Rysunek mamy już w bazie';
+        }
+
+        return back()->with('success', 'Pozycja zamówienia zapisana.'. $fileInfo );
     }
 
     /**
@@ -108,7 +115,6 @@ class OrderPositionController extends Controller
     public function edit($id)
     {
         $orderPosition = $this->orderPositionRepository->find($id);
-        $orderPosition->file = $this->fileRepository->find($id);
         $order = $this->orderRepository->find($orderPosition->order_id);
         return view('editOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orderPosition' => $orderPosition, 'order' => $order ] );
 

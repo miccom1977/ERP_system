@@ -35,5 +35,6 @@ return [
     'edit_product' => 'Edycja produktu ',
     'add_new_position' => 'Dodawanie nowej pozycji do zamówienia',
     'add_new_client' => 'Dodawanie nowego klienta',
+    'save_new_order' => 'Zamówienie'
 
 ];

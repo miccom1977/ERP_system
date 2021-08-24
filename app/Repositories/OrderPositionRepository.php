@@ -32,17 +32,17 @@ class OrderPositionRepository extends BaseRepository
     */
     public function find($id): ?OrderPosition
     {
-        return $this->model->with('product')->with('client')->find($id);
+        return $this->model->with('product')->with('file')->find($id);
     }
 
     public function findWith($client_id): ?OrderPosition
     {
-        return $this->model->where('client_id', '=', $client_id)->orderBy('custom_order_id', 'DESC')->first();
+        return $this->model->where('client_id', '=', $client_id)->with('file')->orderBy('custom_order_id', 'DESC')->first();
     }
 
     public function findAll($order_id)
     {
-        return $this->model->where('order_id', '=', $order_id)->with('product')->get();
+        return $this->model->where('order_id', '=', $order_id)->with('product')->with('file')->get();
     }
 
     public function findMax($id): int

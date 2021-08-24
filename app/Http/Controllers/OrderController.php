@@ -101,7 +101,6 @@ class OrderController extends Controller
     {
         $order = $this->orderRepository->find($id);
         $order->file = $this->fileRepository->find($id);
-        $order->orderPositions = $this->orderPositionRepository->findAll( $id );
         if($order->new_address == 1){
             $address = $this->deliveryRepository->findWith($order->id);
             $order->client->street = $address->street;

@@ -13,11 +13,11 @@ class OrderPosition extends Model
         return $this->belongsTo('App\Models\Product');
     }
 
-    public function client(){
-        return $this->belongsTo('App\Models\Client');
-    }
-
     public function order(){
         return $this->belongsTo('App\Models\Order');
+    }
+
+    public function file(){
+        return $this->hasOne('App\Models\File');
     }
 }

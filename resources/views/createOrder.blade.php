@@ -16,35 +16,26 @@
                             </div>
                         @endif
                         @if (Auth::user()->role->id ==  1 )
-                        <form method="post" action="{{ route('order.store') }}">
-                            @csrf
-                            <table width="100%">
-                                <tr>
-                                    <td>
-                                        <label>Klient</label>
-                                    </td>
-                                    <td>
-                                        <label>Numer zamówienia</label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <select name="client_id" id="client_id">
-                                            @foreach ( $clients as $client )
-                                                    <option value="{{ $client->id }}">{{ $client->description }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="w-28" name="client_order_number" id="client_order_number">
-                                    </td>
-                                    <td>
-                                        <input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block">
-                                    </td>
-                                </tr>
-                            </tr>
-                        </form>
-                        </table>
+                            <form method="post" action="{{ route('order.store') }}">
+                                @csrf
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <label>Klient</label><br>
+                                            <select name="client_id" id="client_id">
+                                                @foreach ( $clients as $client )
+                                                        <option value="{{ $client->id }}">{{ $client->description }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <label>Numer zamówienia</label><br>
+                                            <input type="text" class="w-28" name="client_order_number" id="client_order_number">
+                                        </td>
+                                        <td><input type="submit" name="send" value="Dodaj zamówienie" class="btn btn-dark btn-block"></td>
+                                    </tr>
+                                </table>
+                            </form>
                         @endif
                     </div>
                 </div>
