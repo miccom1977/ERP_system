@@ -60,6 +60,13 @@
                 margin:0px;
                 padding:0px;
             }
+            .descData{
+                font-size: 10px;
+            }
+            .divData{
+                width:100%;
+                text-align:center;
+            }
         </style>
     </head>
     <body>
@@ -69,8 +76,18 @@
                             Copy for sender<br><br><br>
             <table>
                 <tr>
-                    <td colspan="2" style="height:65px;">
-                        <span class="num">1</span>Nadawca ( Nazwisko lub nazwa, adres, kraj )
+                    <td colspan="2" style="height:65px;padding-left:15px;">
+                        <span class="num">1</span>Nadawca ( Nazwisko lub nazwa, adres, kraj )<br>
+                        Absender (Name, Anschrift, Land)<br>
+                        Sender (name, address, country)<br><br>
+                        <div class="divData">
+                            <span class="descData">
+                                Maro-Pack Anna Jochim<br>
+                                ul. Towarowa 10<br>
+                                43-100 Tychy<br>
+                                Polska
+                            </span>
+                        </div>
                     </td>
                     <td colspan="2">
                         MIĘDZYNARODOWY SAMOCHODOWY LIST PRZEWOZOWY<br>
@@ -79,21 +96,28 @@
                         <div style="margin:0 auto; position:relative;width:70px;height:40px;top:-20px;"><img src="https://www.maro-pack.pl/assets/images/cmr.jpg"/></div>
                         <span style="padding-left:70px;float:none;">NR:</span><br><br>
                         Niniejszy przewóz podlega postanowieniom konwencji o umowie międzynarodowej przewozu
-drogowego towarów (CMR) bez względu na jakąkolwiek przeciwną klauzulę.<br>
-Diese Beförderung unterliegt trotz einer gegenteiligen Abmachung den Bestimmungen des
-Übereinkommens über den Beförderungsvertrag
-im internationalen Strassengüterverkehr (CMR)<br>
-This carriage is subject notwithstanding any
-clause to the contrary, to the Convention on
-the Contract for the international Carriage of
-goods by road (CMR)
+                        drogowego towarów (CMR) bez względu na jakąkolwiek przeciwną klauzulę.<br>
+                        Diese Beförderung unterliegt trotz einer gegenteiligen Abmachung den Bestimmungen des
+                        Übereinkommens über den Beförderungsvertrag
+                        im internationalen Strassengüterverkehr (CMR)<br>
+                        This carriage is subject notwithstanding any
+                        clause to the contrary, to the Convention on
+                        the Contract for the international Carriage of
+                        goods by road (CMR)
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2"  style="height:65px;">
                         <span class="num">2</span>Odbiorca ( Nazwisko lub nazwa, adres, kraj )<br>
                                                     Absender (Name, Anschrift, Land)<br>
-                                                    Sender (name, address, country)
+                                                    Sender (name, address, country)<br>
+                                                    <div class="divData">
+                                                        <span class="descData">{{ $order->client->description }}<br>
+                                                            {{ $order->client->street }} {{ $order->client->parcel_number }}<br>
+                                                            {{ $order->client->post_code }} {{ $order->client->city }}<br>
+                                                            {{ $order->client->country }}
+                                                        </span>
+                                                    </div>
                     </td>
                     <td colspan="2" style="border:2px solid black;border-bottom:none;">
                         <span class="num">16</span>Przewoźnik (nazwisko lub nazwa, adres, kraj)<br>

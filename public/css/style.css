@@ -35,3 +35,9 @@ table, th, td {
     color:yellow;
     padding:2px 5px 2px 5px;
 }
+#formCMR{
+    display:none;
+    margin:0 auto;
+    width:400px;
+
+}

@@ -21,7 +21,7 @@ class OrderRepository extends BaseRepository
     }
 
     public function getAll(){
-        return $orders = Order::with('orderPositions')->get();
+        return $orders = Order::with('orderPositions')->with('client')->get();
     }
 
     /**
@@ -30,12 +30,12 @@ class OrderRepository extends BaseRepository
     */
     public function find($id): ?Order
     {
-        return $this->model->find($id);
+        return $this->model->with('orderPositions')->with('client')->find($id);
     }
 
     public function findWith($client_id): ?Order
     {
-        return $this->model->where('client_id', '=', $client_id)->orderBy('custom_order_id', 'DESC')->first();
+        return $this->model->with('orderPositions')->with('client')->where('client_id', '=', $client_id)->orderBy('custom_order_id', 'DESC')->first();
     }
 
 

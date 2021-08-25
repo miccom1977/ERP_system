@@ -20,20 +20,20 @@ use App\Http\Controllers\OrderPositionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::view('/', 'welcome');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [OrderController::class, 'getAll'])->middleware(['auth'])->name('dashboard');
+    Route::resource('/order', OrderController::class)->name('index','order');
+    Route::resource('/orderPosition', OrderPositionController::class)->name('index','orderPosition');
+    Route::resource('/product', ProductController::class)->name('index','product');
+    Route::resource('/client', ClientController::class)->name('index','client');
+    Route::get('/print/{id}', [OrderController::class, 'createPDF']);
+    Route::get('/printCMR/{id}', [OrderController::class, 'createCMR']);
+    Route::post('store/file', [FileUploadController::class, 'store']);
+    Route::post('addNewAddress', [DeliveryController::class, 'addNewAddress'])->name('addNewAddress');
+    Route::post('editStatus', [OrderController::class, 'editStatus'])->name('editStatus');
+    Route::get ('/download/{id}', [DownloadFileController::class,'index'])->name('file.download.index');
+
 });
-
-Route::get('/dashboard', [OrderController::class, 'getAll'])->middleware(['auth'])->name('dashboard');
-Route::resource('/order', OrderController::class)->name('index','order');
-Route::resource('/orderPosition', OrderPositionController::class)->name('index','orderPosition');
-Route::resource('/product', ProductController::class)->name('index','product');
-Route::resource('/client', ClientController::class)->name('index','client');
-Route::get('/print/{id}', [OrderController::class, 'createPDF']);
-Route::get('/printCMR/{id}', [OrderController::class, 'createCMR']);
-Route::post('store/file', [FileUploadController::class, 'store']);
-Route::post('addNewAddress', [DeliveryController::class, 'addNewAddress'])->name('addNewAddress');
-Route::post('editStatus', [OrderController::class, 'editStatus'])->name('editStatus');
-Route::get ('/download/{id}', [DownloadFileController::class,'index'])->name('file.download.index');
 require __DIR__.'/auth.php';

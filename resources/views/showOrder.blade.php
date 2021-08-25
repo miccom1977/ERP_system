@@ -1,10 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Zamówienie nr. : ') }} {{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}  <a href="/printCMR/{{$order->id}}"><button>Drukuj CMR</button></a>
+            {{ __('Zamówienie nr. : ') }} {{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}  <button class="printCMR" var="{{$order->id}}">drukuj CMR</button><a href="/printCMR/{{$order->id}}"><button>Drukuj CMR</button></a>
         </h2>
     </x-slot>
-
+    <div id="formCMR">
+        form CMR<br>
+        Dodaj przewożnika, ilośc palet i wagę
+    </div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

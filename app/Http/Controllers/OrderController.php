@@ -391,8 +391,8 @@ class OrderController extends Controller
     }
 
     public function createCMR($id) {
-        $pdf = PDF::loadView('cmr.cmr');
-        return $pdf->download('cmr.pdf');
+        $pdf = PDF::loadView('cmr.cmr', ['order' => $this->orderRepository->find($id)]);
+        return $pdf->download('cmr_'.$id.'.pdf');
     }
 
 
