@@ -28,7 +28,7 @@
                                         <label>Sztuki</label>
                                     </td>
                                     <td>
-                                        <label>Numer zamówienia</label>
+
                                     </td>
                                     <td>
                                         <label>Nr. artykułu</label>
@@ -52,7 +52,7 @@
                                         <input type="number" class="w-28" name="quantity" id="quantity" value="{{ $orderPosition->quantity }}">
                                     </td>
                                     <td>
-                                        <input type="text" class="w-28" name="client_order_number" id="client_order_number"  value="{{ $orderPosition->client_order_number }}">
+
                                     </td>
                                     <td>
                                         <input type="text" class="w-28" name="article_number" id="article_number" value="{{ $orderPosition->article_number }}">

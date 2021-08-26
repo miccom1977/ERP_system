@@ -77,7 +77,7 @@
                 Zlecenie:
             </td>
             <td style="padding-left:10px;">
-                <strong class="red">{{ $order->parrentOrder->id }}/{{ date_format($order->parrentOrder->created_at, 'Y') }} @if( $order->max_position > 1 ) // {{  $order->order_place }} //@endif</strong>
+                <strong class="red">{{ $order->parrentOrder->custom_order_id }}/{{ date_format($order->parrentOrder->created_at, 'Y') }} @if( $order->max_position > 1 ) // {{  $order->order_place }} //@endif</strong>
             </td>
         </tr>
         <tr>
@@ -115,7 +115,7 @@
             <td style="padding-left:10px;">
                 <br>
                 <strong class="red">{{ $order->division_flapsL }}</strong><br>
-               <strong class="red">{{ $order->division_flapsL }}</strong><br>
+               <strong class="red">{{ $order->division_flapsQ }}</strong><br>
             </td>
         </tr>
         <tr>
@@ -196,14 +196,76 @@
         </tr>
     </table>
 
+    <div class="page-break"></div>
 
+    <table  cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;font-size:12px;">
+        <tr>
+            <td  style=" padding:15px;" colspan="4">
+                ARTYKUŁ: <strong>{{ $order->article_number }}</strong>
+            </td>
+            <td  style=" padding:15px;"  colspan="4">
+                ZLECENIE: <strong> {{ ( $order->parrentOrder->custom_order_id ) }}/{{ date_format($order->parrentOrder->created_at, 'Y') }}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Data/godzina
+            </td>
+            <td>
+                Grubość materiału
+            </td>
+            <td>
+                Długość elementu
+            </td>
+            <td>
+                Wysokość elementu
+            </td>
+            <td>
+                Podział pól
+            </td>
+            <td>
+                Jakość cięć
+            </td>
+            <td>
+                Podpis<br>
+                kontrolującego
+            </td>
+            <td style="width:150px;">
+               Uwagi
+            </td>
+        </tr>
+        @for ($i = 1; $i < 32; $i++)
+        <tr>
+            <td  style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+        </tr>
+        @endfor
+    </table>
 
 
     <div class="page-break"></div>
-
-
-
-
 
     <table width="100%" border="1"  cellspacing="0" cellpadding="0" >
         <tr>
@@ -220,7 +282,7 @@
                 Zlecenie:
             </td>
             <td style="padding-left:10px;">
-                <strong class="red">{{ $order->parrentOrder->id }}/{{ date_format($order->parrentOrder->created_at, 'Y') }} @if( $order->max_position > 1 ) // {{  $order->order_place }} // @endif</strong>
+                <strong class="red">{{ $order->parrentOrder->custom_order_id }}/{{ date_format($order->parrentOrder->created_at, 'Y') }} @if( $order->max_position > 1 ) // {{  $order->order_place }} // @endif</strong>
             </td>
         </tr>
         <tr>
@@ -258,7 +320,7 @@
             <td style="padding-left:10px;">
                 <br>
                 <strong class="red">{{ $order->division_flapsL }}</strong><br>
-               <strong class="red">{{ $order->division_flapsL }}</strong><br>
+               <strong class="red">{{ $order->division_flapsQ }}</strong><br>
             </td>
         </tr>
         <tr>
@@ -322,6 +384,29 @@
                 <div class="green" style="border-style:dashed;width:400px;margin:0 auto; position:relative;padding:20px;text-align:center;"><strong  class="red">ZAMÓWIENIE NA {{ $order->date_delivery }} !</strong></div>
             </td>
         </tr>
+    </table><br><br>
+    <table  width="100%" border="1"  cellspacing="0" cellpadding="0">
+        <tr  style="width:100px; text-align:center;">
+            <td style="padding:5px;" colspan="2">
+                <strong>MAGAZYN - PAKOWANIE</strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;">
+                SZTUK W PACZCE:
+            </td>
+            <td style="padding:5px;">
+                PACZEK W WARSTWIE:
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px;">
+                WARSTW W KARTONIE:
+            </td>
+            <td style="padding:5px;">
+                KARTONÓW W ZAMÓWIENIU:
+            </td>
+        </tr>
     </table>
 
 
@@ -329,28 +414,63 @@
 
     <table  cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;">
         <tr>
-            <td  style=" padding:15px;" colspan="3">
-                ODBIORCA:
+            <td  style=" padding:15px;" colspan="4">
+                KONTROLA KRATOWNIC
             </td>
-            <td   style=" padding:15px;"  colspan="4">
+        </tr>
+        <tr>
+            <td style="padding:15px;">
+                Data
+            </td>
+            <td style="padding:15px;">
+                Nazwisko
+            </td>
+            <td style="padding:15px;">
+                Ilość w paczce
+            </td>
+            <td style="padding:15px;">
+                Podpis<br> magazyniera
+            </td>
+        </tr>
+        @for ($i = 1; $i < 30; $i++)
+        <tr>
+            <td  style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+            <td style="height:28px;">
+
+            </td>
+        </tr>
+        @endfor
+    </table>
+
+
+    <div class="page-break"></div>
+
+    <table  cellspacing="0" cellpadding="0" border="1" style="width: 100%;text-align:center;">
+        <tr>
+            <td  style=" padding:15px;" colspan="7">
+                ODBIORCA:
                 <strong>{{ $order->parrentOrder->client->description }}<br>
                     {{ $order->client_order_number }}
                 </strong>
             </td>
         </tr>
         <tr>
-            <td  style=" padding:15px;"  colspan="3">
+            <td  style=" padding:15px;"  colspan="7">
                 ILOŚĆ ELEMENTÓW:
-            </td>
-            <td   style=" padding:15px;"  colspan="4">
                 <strong> {{ ( $order->q_elem_pieces + $order->l_elem_pieces) }}</strong>
             </td>
         </tr>
         <tr>
-            <td  style=" padding:15px;"  colspan="3">
+            <td  style=" padding:15px;"  colspan="7">
                 CENA ZA 1000 szt. :
-            </td>
-            <td   style=" padding:15px;"  colspan="4">
                 <strong> {{ $order->cost_data->cost }} złotych</strong>
             </td>
         </tr>
@@ -377,7 +497,7 @@
                 Odebrał
             </td>
         </tr>
-        @for ($i = 1; $i < 26; $i++)
+        @for ($i = 1; $i < 27; $i++)
         <tr>
             <td  style="height:28px;">
 

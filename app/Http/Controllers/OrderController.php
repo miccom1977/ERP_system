@@ -186,8 +186,8 @@ class OrderController extends Controller
         //return view('pdf.circulation',['order' => $order ] );
         view()->share('order', $order);
         $pdf = PDF::loadView('pdf.circulation', $order);
-        $pdf->save('C://xampp/htdocs/public/files/uploaded/karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
-        return $pdf->download('karta_obiegowa_'.$order->id.'_'. date_format($order->created_at, 'Y') .'.pdf');
+        $pdf->save('C://xampp/htdocs/public/files/uploaded/karta_obiegowa_'.$order->parrentOrder->custom_order_id.'_'.$order->order_place.'_'. date_format($order->created_at, 'Y') .'.pdf');
+        return $pdf->download('karta_obiegowa_'.$order->parrentOrder->custom_order_id.'_'.$order->order_place.'_'. date_format($order->created_at, 'Y') .'.pdf');
     }
 
     public function calculateCardboard( $widthA, $widthB, $height, $grammage, $designation, $cardboard_producer, $quantity, $piecesA, $piecesB )

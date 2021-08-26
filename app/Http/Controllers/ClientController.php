@@ -111,8 +111,11 @@ class ClientController extends Controller
         $client =$this->clientRepository->find($id);
         $client->description = $request->description;
         $client->city = $request->city;
+        $client->street = $request->street;
+        $client->parcel_number = $request->parcel_number;
         $client->post_code = $request->post_code;
         $client->country = $request->country;
+        $client->contact_number = $request->contact_number;
         $client->save();
         //
         return back()->with('success', 'Zmiany zapisane.');

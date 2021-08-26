@@ -36,16 +36,16 @@
                                     art. <a href="/orderPosition/{{ $singleOrderPosition->id }}">{{ $singleOrderPosition->article_number }}</a> | status:
                                         @if ( $singleOrderPosition->status == 0)
                                             Oczekuje |
-                                            Produkcję rozpocząć: <strong @if($singleOrderPosition->date_production > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_production }}</strong>
+                                            Produkcję rozpocząć: <strong @if($singleOrderPosition->date_production < now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_production }}</strong>
                                         @elseif ( $singleOrderPosition->status == 1)
                                             Produkcja / sztancowanie |
-                                            Składanie rozpocząć: <strong @if($singleOrderPosition->date_production > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_production }}</strong>
+                                            Składanie rozpocząć: <strong @if($singleOrderPosition->date_production < now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_production }}</strong>
                                         @elseif ( $singleOrderPosition->status == 2)
                                             Produkcja / składanie |
-                                            Spakować do: <strong @if($singleOrderPosition->date_shipment > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_shipment }}</strong>
+                                            Spakować do: <strong @if($singleOrderPosition->date_shipment < now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_shipment }}</strong>
                                         @elseif ( $singleOrderPosition->status == 3)
                                             Produkcja / spakowane |
-                                            Wysłać dnia: <strong @if($singleOrderPosition->date_shipment > now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_shipment }}</strong>
+                                            Wysłać dnia: <strong @if($singleOrderPosition->date_shipment < now()->subDays(1)->format('Y-m-d') ) class="alert" @endif > {{ $singleOrderPosition->date_shipment }}</strong>
                                         @else
                                             Wysłane do klienta
                                         @endif

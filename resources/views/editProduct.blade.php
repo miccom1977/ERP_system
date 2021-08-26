@@ -49,10 +49,10 @@
                                             <input type="text" name="description" id="description" value="{{ $product->description }}">
                                         </td>
                                         <td>
-                                            <input type="number" class="w-20" name="grammage" id="grammage" value="{{ $product->grammage }}">
+                                            <input type="number" class="w-20" name="roll_width" id="roll_width" value="{{ $product->roll_width }}">
                                         </td>
                                         <td>
-                                            <input type="number" class="w-20" name="roll_width" id="roll_width" value="{{ $product->roll_width }}">
+                                            <input type="number" class="w-20" name="grammage" id="grammage" value="{{ $product->grammage }}">
                                         </td>
                                         <td>
                                             <select name="designation" class="w-22" id="designation">
@@ -67,6 +67,7 @@
                                                 <option value="Maro-Pack" {{ $product->cardboard_producer == "Maro-Pack" ? 'selected' : '' }}>Maro-Pack</option>
                                                 <option value="Jade-Pack" {{ $product->cardboard_producer == "Jade-Pack" ? 'selected' : '' }}>Jade-Pack</option>
                                                 <option value="Albertin" {{ $product->cardboard_producer == "Albertin" ? 'selected' : '' }}>Albertin</option>
+                                                <option value="DS-Smith" {{ $product->cardboard_producer == "DS-Smith" ? 'selected' : '' }}>DS-Smith</option>
                                             </select>
                                         </td>
                                         <td>
@@ -126,6 +127,7 @@
                                                     <option value="Maro-Pack" {{ $product->cardboard_producer == "Maro-Pack" ? 'selected' : '' }}>Maro-Pack</option>
                                                     <option value="Jade-Pack" {{ $product->cardboard_producer == "Jade-Pack" ? 'selected' : '' }}>Jade-Pack</option>
                                                     <option value="Albertin" {{ $product->cardboard_producer == "Albertin" ? 'selected' : '' }}>Albertin</option>
+                                                    <option value="DS-Smith" {{ $product->cardboard_producer == "DS-Smith" ? 'selected' : '' }}>DS-Smith</option>
                                                 </select>
                                             </td>
                                             <td>

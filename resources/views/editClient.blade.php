@@ -60,6 +60,14 @@
                                 </tr>
                                 <tr>
                                     <td>
+                                        <label>Kontakt</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="contact_number" id="contact_number"  value="{{ $client->contact_number }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <label>Opcje</label>
                                     </td>
                                     <td>

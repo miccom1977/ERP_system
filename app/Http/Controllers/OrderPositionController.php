@@ -134,7 +134,6 @@ class OrderPositionController extends Controller
         $orderPosition->l_elem = $request->l_elem;
         $orderPosition->q_elem = $request->q_elem;
         $orderPosition->h_elem = $request->h_elem;
-        $orderPosition->client_order_number = $request->client_order_number;
         $orderPosition->article_number = $request->article_number;
         $orderPosition->flaps_a = $request->flaps_a;
         $orderPosition->flaps_b = $request->flaps_b;

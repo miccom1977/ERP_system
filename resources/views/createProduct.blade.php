@@ -77,6 +77,8 @@
                                             <datalist id="defaultNumbersProducer">
                                                 <option value="Maro-Pack">
                                                 <option value="Jade-Pack">
+                                                <option value="Albertin">
+                                                <option value="DS-Smith">
                                             </datalist>
                                         </td>
                                         <td>
