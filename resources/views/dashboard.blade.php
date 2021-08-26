@@ -18,6 +18,9 @@
                     <table width="100%">
                         <tr>
                             <td>
+                                Klient
+                            </td>
+                            <td>
                                 Numer zlecenia
                             </td>
                             <td>
@@ -26,12 +29,9 @@
                             <td>
                                 Pozycje w zamówieniu
                             </td>
-                            <td>
-                                Klient
-                            </td>
                         </tr>
                         @foreach ( $orders as $order )
-                            <tr><td><a href="/order/{{ $order->id }}">{{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}</a><td>{{ $order->client_order_number }}</a></td><td>
+                            <tr><td>{{ $order->client->description }}</td><td><a href="/order/{{ $order->id }}">{{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}</a><td>{{ $order->client_order_number }}</a></td><td>
                                 @forelse ( $order->orderPositions as $singleOrderPosition)
                                     art. <a href="/orderPosition/{{ $singleOrderPosition->id }}">{{ $singleOrderPosition->article_number }}</a> | status:
                                         @if ( $singleOrderPosition->status == 0)
@@ -53,7 +53,7 @@
                                 @empty
                                     Brak pozycji dla tego zamówienia
                                 @endforelse
-                            </td><td>{{ $order->client->description }}</td></tr>
+                            </td></tr>
                         @endforeach
                     </table>
                 </div>

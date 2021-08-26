@@ -1,12 +1,55 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Zamówienie nr. : ') }} {{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}  <button class="printCMR" var="{{$order->id}}">drukuj CMR</button><a href="/printCMR/{{$order->id}}"><button>Drukuj CMR</button></a>
+            {{ __('Zamówienie nr. : ') }} {{ $order->custom_order_id }}/{{ date_format($order->created_at, 'Y') }}  <button class="printCMR" var="{{$order->id}}">Przygotuj CMR</button>
         </h2>
     </x-slot>
-    <div id="formCMR">
-        form CMR<br>
-        Dodaj przewożnika, ilośc palet i wagę
+    <div id="windowInfo">
+        <div id="formCMR">
+            <div class="close">x</div>
+            Aby wydrukować dokument CMR Wypełnij poniższe dane.<br>
+            <table width="100%">
+                <tr>
+                    <td colspan="2">PRZEWOŻNIK</td>
+                </tr>
+                <tr>
+                    <td>Nazwa</td>
+                    <td><input type="text" name="courierName"/></td>
+                </tr>
+                <tr>
+                    <td>Adres</td>
+                    <td><input type="text" name="courierAddress"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">KIEROWCA</td>
+                </tr>
+                <tr>
+                    <td>Imię</td>
+                    <td><input type="text" name="driverName"/></td>
+                </tr>
+                <tr>
+                    <td>Nazwisko</td>
+                    <td><input type="text" name="driverSername"/></td>
+                </tr>
+                <tr>
+                    <td>Rejestracja samochodu</td>
+                    <td><input type="text" name="carPlate"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">ŁADUNEK</td>
+                </tr>
+                <tr>
+                    <td>Ilość palet</td>
+                    <td><input type="text" name="countPallets"/></td>
+                </tr>
+                <tr>
+                    <td>Waga całości</td>
+                    <td><input type="text" name="totalWeight"/></td>
+                </tr>
+            </table><br>
+            <a href="/printCMR/{{$order->id}}"><button>Drukuj dokument CMR</button></a>
+            <br>
+        </div>
     </div>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

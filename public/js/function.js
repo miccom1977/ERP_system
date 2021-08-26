@@ -45,9 +45,35 @@ $(document).ready(function() {
         });
     });
 
-    $("#printCMR").click(function(e){
+    $(".printCMR").click(function(e){
         e.preventDefault();
         $('#formCMR').css('display','block');
+        $('#windowInfo').css('display','block');
+        /*
+        e.preventDefault();
+        var oneDetail = $(this).attr('var');
+        var twoDetail = $( "#status option:selected" ).val();
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+
+        $.ajax({
+            url: "../editStatus",
+            type:'POST',
+            data: { oneDetail:oneDetail, twoDetail:twoDetail },
+            success: function(data) {
+              alert(data);
+            }
+        });
+        */
+    });
+
+    $(".close").click(function(e){
+        e.preventDefault();
+        $('#formCMR').css('display','none');
+        $('#windowInfo').css('display','none');
         /*
         e.preventDefault();
         var oneDetail = $(this).attr('var');
