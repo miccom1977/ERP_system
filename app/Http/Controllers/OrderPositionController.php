@@ -94,7 +94,7 @@ class OrderPositionController extends Controller
      * @param  int  $orderPosition
      * @return \Illuminate\Http\Response
      */
-    public function update(OrderPositionRequest $request, OrderPosition $orderPosition)
+    public function update(Request $request, OrderPosition $orderPosition)
     {
         dd($request->all());
         $orderPosition->update($request->all());
