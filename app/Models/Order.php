@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Order extends Model
 {
     use HasFactory;
+<<<<<<< HEAD
     protected $fillable = ['client_order_number', 'custom_order_id', 'client_id'];
+=======
+    protected $fillable = ['quantity', 'l_elem', 'q_elem', 'h_elem', 'client_id'];
+>>>>>>> c6a660c93b0a837af0482aeccd2f807511b43258
 
     public function product(){
         return $this->belongsTo('App\Models\Product');

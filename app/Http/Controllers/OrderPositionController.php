@@ -49,7 +49,11 @@ class OrderPositionController extends Controller
      * @param  \Illuminate\Http\OrderPositionRequest  $request
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function store(OrderPositionRequest $request )
+=======
+    public function store(OrderPositionRequest $request)
+>>>>>>> c6a660c93b0a837af0482aeccd2f807511b43258
     {
         $orderP = OrderPosition::create($request->all());
         $orderP->order_place = ( $this->orderPositionRepository->findMax($request->order_id) + 1 );
@@ -94,7 +98,10 @@ class OrderPositionController extends Controller
      */
     public function update(OrderPositionRequest $request, OrderPosition $orderPosition)
     {
+<<<<<<< HEAD
         dd($request->all());
+=======
+>>>>>>> c6a660c93b0a837af0482aeccd2f807511b43258
         $orderPosition->update($request->all());
         return back()->with('success', 'Zmiany zapisane.');
     }
