@@ -95,7 +95,7 @@ class OrderPositionController extends Controller
      */
     public function update(OrderPositionRequest $request, OrderPosition $orderPosition)
     {
-        dd($request->validated());
+        dd($request->all());
         $orderPosition->update($request->all());
         return back()->with('success', 'Zmiany zapisane.');
     }
