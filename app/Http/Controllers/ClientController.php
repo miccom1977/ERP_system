@@ -3,25 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use Illuminate\Http\Request;
-use App\Repositories\OrderRepository;
-use App\Repositories\ClientRepository;
-use App\Repositories\ProductRepository;
+use App\Http\Requests\ClientRequest;
 
 class ClientController extends Controller
 {
-    private $clientRepository;
-    private $productRepository;
-    private $orderRepository;
-
-    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository ){
-        $this->clientRepository = $clientRepository;
-        $this->productRepository = $productRepository;
-        $this->orderRepository = $orderRepository;
-
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return view('createClient',['clients' => $this->clientRepository->getAll() ] );
+        return view('createClient',['clients' => Client::All() ] );
     }
 
     /**
@@ -39,41 +24,18 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('createClient',['clients' => $this->clientRepository->getAll() ] );
+        return view('createClient',['clients' => Client::All() ] );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ClientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //dd($request);
-        //die;
-
-        $this->validate($request, [
-            'description' => 'required',
-            'city' => 'required',
-            'post_code' => 'required',
-            'country' => 'required',
-            'street' => 'required',
-            'parcel_number' => 'required',
-            'contact_number' => 'required'
-        ]);
-
-        //  Store data in database
-        $client = new Client;
-        $client->description = $request->description;
-        $client->city = $request->city;
-        $client->post_code = $request->post_code;
-        $client->country = $request->country;
-        $client->street = $request->street;
-        $client->parcel_number = $request->parcel_number;
-        $client->contact_number = $request->contact_number;
-        $client->save();
-
+        $client = Client::create($request->all());
         return back()->with('success', 'Klient dodany.');
     }
 
@@ -91,45 +53,35 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Client $client)
     {
-        return view('editClient',['client' => $this->clientRepository->find($id) ] );
+        return view('editClient',['client' => $client ] );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\ClientRequest  $request
+     * @param  int  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClientRequest $request, Client $client)
     {
-        $client =$this->clientRepository->find($id);
-        $client->description = $request->description;
-        $client->city = $request->city;
-        $client->street = $request->street;
-        $client->parcel_number = $request->parcel_number;
-        $client->post_code = $request->post_code;
-        $client->country = $request->country;
-        $client->contact_number = $request->contact_number;
-        $client->save();
-        //
+        $client->update($request->all());
         return back()->with('success', 'Zmiany zapisane.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        $client = $this->clientRepository->find($id);
         $client->delete();
         return redirect('/dashboard')->with('success', 'Klient został usunięty.');
     }

@@ -9,6 +9,15 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'description',
+        'roll_width',
+        'grammage',
+        'designation',
+        'count',
+        'cardboard_producer',
+    ];
+
     public function client(){
         return $this->belongsTo('App\Models\Client');
     }

@@ -9,6 +9,30 @@ class OrderPosition extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'quantity',
+        'l_elem',
+        'q_elem',
+        'h_elem',
+        'article_number',
+        'flaps_a',
+        'flaps_b',
+        'division_flapsL',
+        'division_flapsQ',
+        'l_elem_pieces',
+        'q_elem_pieces',
+        'packaging',
+        'product_id',
+        'pallets',
+        'date_shipment',
+        'date_production',
+        'date_delivery',
+        'order_id',
+        'custom_order_id',
+    ];
+
+
+
     public function product(){
         return $this->belongsTo('App\Models\Product');
     }

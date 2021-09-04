@@ -82,6 +82,7 @@
                                             </datalist>
                                         </td>
                                         <td>
+                                            <input type="hidden" name="count" value="0">
                                             <input type="submit" name="send" value="Dodaj" class="btn btn-dark btn-block">
                                         </td>
                                     </tr>

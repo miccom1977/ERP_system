@@ -2,29 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\Client;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\OrderPosition;
 use App\Repositories\FileRepository;
-use App\Repositories\OrderRepository;
-use App\Repositories\ClientRepository;
-use App\Repositories\ProductRepository;
+use App\Http\Requests\OrderPositionRequest;
 use App\Repositories\OrderPositionRepository;
-use App\Repositories\CostHomeWorkerRepository;
 
 class OrderPositionController extends Controller
 {
-    private $clientRepository;
-    private $productRepository;
-    private $orderRepository;
-    private $costHomeWorkerRepository;
     private $fileRepository;
     private $orderPositionRepository;
 
-    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository, CostHomeWorkerRepository  $costHomeWorkerRepository, FileRepository $fileRepository, OrderPositionRepository $orderPositionRepository ){
-        $this->clientRepository = $clientRepository;
-        $this->productRepository = $productRepository;
-        $this->orderRepository = $orderRepository;
-        $this->costHomeWorkerRepository = $costHomeWorkerRepository;
+    public function __construct( FileRepository $fileRepository, OrderPositionRepository $orderPositionRepository ){
         $this->fileRepository = $fileRepository;
         $this->orderPositionRepository = $orderPositionRepository;
     }
@@ -38,7 +30,7 @@ class OrderPositionController extends Controller
      */
     public function index()
     {
-        return view('createOrder',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orders' => $this->orderRepository->getAll() ] );
+        return view('createOrder',['clients' => Client::All(), 'products' => Product::All(), 'orders' => Order::All() ] );
     }
 
     /**
@@ -48,7 +40,7 @@ class OrderPositionController extends Controller
      */
     public function create( Request $request )
     {
-        return view('addOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $this->orderRepository->find( $request->id ), 'order_positions' => $this->orderPositionRepository->findAll( $request->id ) ] );
+        return view('addOrderPosition',['clients' => Client::All(), 'products' => Product::All(), 'order' => Order::find( $request->id ) ] );
     }
 
     /**
@@ -57,7 +49,7 @@ class OrderPositionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderPositionRequest $request)
     {
         $orderP =new OrderPosition;
         $orderP->quantity = $request->quantity;
@@ -95,29 +87,23 @@ class OrderPositionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $orderPosition
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(OrderPosition $orderPosition)
     {
-        $orderPosition = $this->orderPositionRepository->find($id);
-        $order = $this->orderRepository->find($orderPosition->order_id);
-        return view('showOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'order' => $order, 'orderPosition' => $orderPosition ] );
-
+        return view('showOrderPosition',['clients' => Client::All(), 'products' => Product::All(), 'order' => Order::find($orderPosition->order_id), 'orderPosition' => $orderPosition ] );
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $orderPosition
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(OrderPosition $orderPosition)
     {
-        $orderPosition = $this->orderPositionRepository->find($id);
-        $order = $this->orderRepository->find($orderPosition->order_id);
-        return view('editOrderPosition',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orderPosition' => $orderPosition, 'order' => $order ] );
-
+        return view('editOrderPosition',['clients' => Client::All(), 'products' => Product::All(), 'orderPosition' => $orderPosition, 'order' => Order::find($orderPosition->order_id) ] );
     }
 
     /**
@@ -127,29 +113,9 @@ class OrderPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OrderPositionRequest $request, OrderPosition $orderPosition)
     {
-        $orderPosition =$this->orderPositionRepository->find($id);
-        $orderPosition->quantity = $request->quantity;
-        $orderPosition->l_elem = $request->l_elem;
-        $orderPosition->q_elem = $request->q_elem;
-        $orderPosition->h_elem = $request->h_elem;
-        $orderPosition->article_number = $request->article_number;
-        $orderPosition->flaps_a = $request->flaps_a;
-        $orderPosition->flaps_b = $request->flaps_b;
-        $orderPosition->division_flapsL = $request->division_flapsL;
-        $orderPosition->division_flapsQ = $request->division_flapsQ;
-        $orderPosition->l_elem_pieces = $request->l_elem_pieces;
-        $orderPosition->q_elem_pieces = $request->q_elem_pieces;
-        $orderPosition->packaging = $request->packaging;
-        $orderPosition->product_id = $request->product_id;
-        $orderPosition->pallets = $request->pallets;
-        $orderPosition->date_shipment = $request->date_shipment;
-        $orderPosition->date_production = $request->date_production;
-        $orderPosition->date_delivery = $request->date_delivery;
-
-        $orderPosition->save();
-        //
+        $orderPosition->update($request->all());
         return back()->with('success', 'Zmiany zapisane.');
     }
 
