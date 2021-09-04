@@ -29,7 +29,6 @@ class OrderPosition extends Model
         'date_delivery',
         'order_id',
         'custom_order_id',
-        'status',
     ];
 
 
