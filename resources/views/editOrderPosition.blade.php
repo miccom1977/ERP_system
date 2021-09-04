@@ -17,8 +17,8 @@
                             </div>
                         @endif
                         <form method="POST" action="{{ route('orderPosition.update', $orderPosition->id ) }}">
-                            @method('PUT')
                             @csrf
+                            @method('PUT')
                             <table width="100%" style="border:none;">
                                 <tr>
                                     <td>

@@ -2,25 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Repositories\OrderRepository;
-use App\Repositories\ClientRepository;
-use App\Repositories\ProductRepository;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
-    private $clientRepository;
-    private $productRepository;
-    private $orderRepository;
-
-    public function __construct( ClientRepository $clientRepository, ProductRepository $productRepository, OrderRepository $orderRepository ){
-        $this->clientRepository = $clientRepository;
-        $this->productRepository = $productRepository;
-        $this->orderRepository = $orderRepository;
-
-    }
-
 
     /**
      * Display a listing of the resource.
@@ -29,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('createProduct',['clients' => $this->clientRepository->getAll(), 'products' => $this->productRepository->getAll(), 'orders' => $this->orderRepository->getAll() ] );
+        return view('createProduct',['products' => Product::all() ] );
     }
 
     /**
@@ -45,32 +32,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store( ProductRequest $request)
     {
-        //dd($request);
-        //die;
-
-        $this->validate($request, [
-            'description' => 'required',
-            'roll_width' => 'required',
-            'grammage' => 'required',
-            'designation' => 'required'
-         ]);
-
-        //  Store data in database
-        $product = new Product;
-        $product->description = $request->description;
-        $product->roll_width = $request->roll_width;
-        $product->grammage = $request->grammage;
-        $product->cardboard_producer = $request->cardboard_producer;
-        $product->designation = $request->designation;
-        $product->count = 0;
-        $product->save();
-
-        //
+        $product = Product::create($request->all());
         return back()->with('success', 'Product dodany.');
     }
 
@@ -88,43 +55,35 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        return view('editProduct',['clients' => $this->clientRepository->getAll(), 'product' => $this->productRepository->find($id) ] );
+        return view('editProduct',['clients' => Client::all(), 'product' => $product ] );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\ProductRequest  $request
+     * @param  int  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update( ProductRequest $request, Product $product)
     {
-        $product =$this->productRepository->find($id);
-        $product->description = $request->description;
-        $product->roll_width = $request->roll_width;
-        $product->grammage = $request->grammage;
-        $product->cardboard_producer = $request->cardboard_producer;
-        $product->designation = $request->designation;
-        $product->count = $request->count;
-        $product->save();
+        $product->update($request->all());
         return back()->with('success', 'Zmiany zapisane.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = $this->productRepository->find($id);
         $product->delete();
         return redirect('/dashboard')->with('success', 'Produkt usunięty.');
     }
