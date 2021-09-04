@@ -42,7 +42,15 @@ class OrderPositionRequest extends FormRequest
             'date_production' => 'required',
             'date_delivery' => 'required',
             'order_id' => 'required',
+<<<<<<< HEAD
             'custom_order_id' => 'required'
+=======
+<<<<<<< HEAD
+            'custom_order_id' => 'required'
+=======
+            'custom_order_id' => 'required',
+>>>>>>> c6a660c93b0a837af0482aeccd2f807511b43258
+>>>>>>> c01b3678c9996e39fa458395616c0a10fa1e4a03
         ];
     }
 }
