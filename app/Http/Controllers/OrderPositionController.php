@@ -50,7 +50,8 @@ class OrderPositionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store(OrderPositionRequest $request)
+     public function store(OrderPositionRequest $request )
+
     {
         $orderP = OrderPosition::create($request->all());
         $orderP->order_place = ( $this->orderPositionRepository->findMax($request->order_id) + 1 );
