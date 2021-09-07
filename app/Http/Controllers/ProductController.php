@@ -37,7 +37,7 @@ class ProductController extends Controller
      */
     public function store( ProductRequest $request)
     {
-        $product = Product::create($request->all());
+        Product::create($request->all());
         return back()->with('success', 'Product dodany.');
     }
 

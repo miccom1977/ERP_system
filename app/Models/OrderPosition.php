@@ -31,8 +31,6 @@ class OrderPosition extends Model
         'custom_order_id',
     ];
 
-
-
     public function product(){
         return $this->belongsTo('App\Models\Product');
     }
