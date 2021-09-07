@@ -34,4 +34,16 @@ class ProductRequest extends FormRequest
             'cardboard_producer' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'description.required' => 'Dodaj opis papieru',
+            'roll_width.required' => 'Dodaj szerokość rolki',
+            'grammage.required' => 'Dodaj gramaturę papieru',
+            'designation.required' => 'Dodaj literowe oznaczenie papieru',
+            'count.required' => 'Dodaj ilość sztuk',
+            'cardboard_producer.required' => 'Dodaj prducenta papieru',
+        ];
+    }
 }

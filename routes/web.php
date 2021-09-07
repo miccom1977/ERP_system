@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Support\Facades\Route;
 use App\Services\OrderPositionService;
 use App\Http\Controllers\OrderController;
@@ -30,10 +30,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/product', ProductController::class)->name('index','product');
     Route::resource('/client', ClientController::class)->name('index','client');
     Route::get('/print/{id}', [OrderPositionService::class, 'createPDF']);
-    Route::get('/printCMR/{id}', [OrderController::class, 'createCMR']);
+    Route::get('/printCMR/{id}', [OrderService::class, 'createCMR']);
     Route::post('store/file', [FileUploadController::class, 'store']);
     Route::post('addNewAddress', [DeliveryController::class, 'addNewAddress'])->name('addNewAddress');
-    Route::post('editStatus', [OrderController::class, 'editStatus'])->name('editStatus');
+    Route::post('editStatus', [OrderPositionService::class, 'editStatus'])->name('editStatus');
     Route::get ('/download/{id}', [DownloadFileController::class,'index'])->name('file.download.index');
 
 });

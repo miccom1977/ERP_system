@@ -21,19 +21,14 @@ class OrderPositionService {
         $this->orderPositionRepository = $orderPositionRepository;
     }
 
-    public function calculateCardboard(OrderPosition $orderPosition )
+    public function calculateCardboard( OrderPosition $orderPosition )
     {
         $distributionElements = [];
-        $mustHaveL = $orderPosition->quantity * $orderPosition->piecesA;
-        $mustHaveQ = $orderPosition->quantity * $orderPosition->piecesB;
+        $quantityPlusBonus = round($orderPosition->quantity + ($orderPosition->quantity * 0.05 ) );
+        $mustHaveL =  $quantityPlusBonus * $orderPosition->l_elem_pieces;
+        $mustHaveQ =  $quantityPlusBonus * $orderPosition->q_elem_pieces;
         $cardboardConsumptionA = $cardboardConsumptionB = 0;
-
-        $productData = Product::where([
-            ['roll_width', '>', ( $orderPosition->widthA+$orderPosition->widthB )],
-            ['grammage', '=', $orderPosition->product->grammage],
-            ['designation', '=', $orderPosition->product->designation],
-            ['cardboard_producer', '=', $orderPosition->product->cardboard_producer]
-        ])->orderBy('roll_width', 'ASC')->first();
+        $productData = $this->findRolle(( $orderPosition->l_elem+$orderPosition->q_elem ), $orderPosition->product);
         if( $productData ){
             $distributionElements[0]['detail'] = '1 DŁUGI<br> 1 KRÓTKI';
             $distributionElements[0]['rolle_width'] = $productData->roll_width;
@@ -42,24 +37,24 @@ class OrderPositionService {
             // obliczamy ile uderzeń maszyny należy wykonać
             $toDo = match(true){
                 $mustHaveL > $mustHaveQ  => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $orderPosition->quantity * $orderPosition->piecesB )) .' uderzeń a następnie ',
-                    'prodL' => round($orderPosition->quantity * $orderPosition->piecesB),
-                    'prodQ' => round($orderPosition->quantity * $orderPosition->piecesB),
-                    'consumptionA' => round( ( $orderPosition->quantity * $orderPosition->piecesB * $orderPosition->height)/1000 ),
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round((  $quantityPlusBonus * $orderPosition->q_elem_pieces )) .' uderzeń a następnie ',
+                    'prodL' => round( $quantityPlusBonus * $orderPosition->q_elem_pieces),
+                    'prodQ' => round( $quantityPlusBonus * $orderPosition->q_elem_pieces),
+                    'consumptionA' => round( (  $quantityPlusBonus * $orderPosition->q_elem_pieces * $orderPosition->h_elem)/1000 ),
 
                 ],
                 $mustHaveL < $mustHaveQ => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $orderPosition->quantity * $orderPosition->piecesA )) .' uderzeń a następnie ',
-                    'prodL' => round($orderPosition->quantity * $orderPosition->piecesA),
-                    'prodQ' => round($orderPosition->quantity * $orderPosition->piecesA),
-                    'consumptionA' => round( ( $orderPosition->quantity * $orderPosition->piecesA * $orderPosition->height)/1000 ),
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round((  $quantityPlusBonus * $orderPosition->l_elem_pieces )) .' uderzeń a następnie ',
+                    'prodL' => round( $quantityPlusBonus * $orderPosition->l_elem_pieces),
+                    'prodQ' => round( $quantityPlusBonus * $orderPosition->l_elem_pieces),
+                    'consumptionA' => round( (  $quantityPlusBonus * $orderPosition->l_elem_pieces * $orderPosition->h_elem)/1000 ),
 
                 ],
                 $mustHaveL == $mustHaveQ => [
-                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round(( $orderPosition->quantity * $orderPosition->piecesA )) .' uderzeń.',
-                    'prodL' => round($orderPosition->quantity * $orderPosition->piecesA),
-                    'prodQ' => round($orderPosition->quantity * $orderPosition->piecesA),
-                    'consumptionA' => round( ( $orderPosition->quantity * $orderPosition->piecesA * $orderPosition->height)/1000 ),
+                    'instruction' => 'Produkuj element Długi i Krótki, wykonaj '. round((  $quantityPlusBonus * $orderPosition->l_elem_pieces )) .' uderzeń.',
+                    'prodL' => round( $quantityPlusBonus * $orderPosition->l_elem_pieces),
+                    'prodQ' => round( $quantityPlusBonus * $orderPosition->l_elem_pieces),
+                    'consumptionA' => round( (  $quantityPlusBonus * $orderPosition->l_elem_pieces * $orderPosition->h_elem)/1000 ),
 
                 ]
             };
@@ -79,39 +74,30 @@ class OrderPositionService {
 
             if($doK == 1 ){
                 //zmieniamy papier na taki, którym będzie mozna trzaskać dwa krókie
-                $productDataKK = Product::where([
-                    ['roll_width', '>', ( $orderPosition->widthB*2 )],
-                    ['grammage', '=', $orderPosition->product->grammage],
-                    ['designation', '=', $orderPosition->product->designation],
-                    ['cardboard_producer', '=', $orderPosition->product->cardboard_producer]
-                ])->orderBy('roll_width', 'ASC')->first();
+                $productDataKK = $this->findRolle(( $orderPosition->q_elem*2 ), $orderPosition->product);
+
                 if($productDataKK){
                     //mamy tekturę gdzie klepiemy 2x krótkie
                     $distributionElements[1]['detail'] = '2 x KRÓTKI';
                     $distributionElements[1]['rolle_width'] = $productDataKK->roll_width;
                     $distributionElements[1]['rolle_id'] = $productDataKK->id;
                     if( $productData->roll_width !=  $productDataKK->roll_width ){
-                        $toDoPlus = 'zmień rolkę na rolkę o szerokości '. $productDataKK->roll_width .' i produkuj 2 x krótkie przez '. round( ( ( ( $orderPosition->piecesB - $orderPosition->piecesA ) * $orderPosition->quantity )/2 ) ).' uderzeń';
+                        $toDoPlus = 'zmień rolkę na rolkę o szerokości '. $productDataKK->roll_width .' i produkuj 2 x krótkie przez '. round( ( ( ( $orderPosition->q_elem_pieces - $orderPosition->l_elem_pieces ) *  $quantityPlusBonus )/2 ) ).' uderzeń';
                     }else{
-                        $toDoPlus = ' produkuj 2 x krótkie przez '. round( ( ( ( $orderPosition->piecesB - $orderPosition->piecesA ) * $orderPosition->quantity )/2 ) ).' uderzeń';
+                        $toDoPlus = ' produkuj 2 x krótkie przez '. round( ( ( ( $orderPosition->q_elem_pieces - $orderPosition->l_elem_pieces ) *  $quantityPlusBonus )/2 ) ).' uderzeń';
                     }
-                    $cardboardConsumptionB = round( ( ( ( ( $orderPosition->piecesB - $orderPosition->piecesA ) * $orderPosition->quantity )/2 )* $orderPosition->height)/1000 );
+                    $cardboardConsumptionB = round( ( ( ( ( $orderPosition->q_elem_pieces - $orderPosition->l_elem_pieces ) *  $quantityPlusBonus )/2 )* $orderPosition->h_elem)/1000 );
                 }else{
-                    $productDataKKK = Product::where([
-                        ['roll_width', '>', ( $orderPosition->widthB )],
-                        ['grammage', '=', $orderPosition->grammage],
-                        ['designation', '=', $orderPosition->designation],
-                        ['cardboard_producer', '=', $orderPosition->cardboard_producer]
-                    ])->orderBy('roll_width', 'ASC')->first();
+                    $productDataKKK = $this->findRolle( $orderPosition->q_elem, $orderPosition->product);
                     $distributionElements[1]['detail'] = '1 x KRÓTKI';
                     $distributionElements[1]['rolle_width'] = $productDataKKK->roll_width;
                     $distributionElements[1]['rolle_id'] = $productDataKKK->id;
                     if( $productData->roll_width !=  $productDataKKK->roll_width ){
-                        $toDoPlus = 'zmień rolkę na rolkę o szerokości '. $productDataKKK->roll_width .' i produkuj 1 x krótki przez '. round( ( ( $orderPosition->piecesB - $orderPosition->piecesA ) * $orderPosition->quantity ) ).' uderzeń';
+                        $toDoPlus = 'zmień rolkę na rolkę o szerokości '. $productDataKKK->roll_width .' i produkuj 1 x krótki przez '. round( ( ( $orderPosition->q_elem_pieces - $orderPosition->l_elem_pieces ) *  $quantityPlusBonus ) ).' uderzeń';
                     }else{
-                        $toDoPlus = ' produkuj 1 x krótki przez '. round( ( ( $orderPosition->piecesB - $orderPosition->piecesA ) * $orderPosition->quantity ) ).' uderzeń';
+                        $toDoPlus = ' produkuj 1 x krótki przez '. round( ( ( $orderPosition->q_elem_pieces - $orderPosition->l_elem_pieces ) *  $quantityPlusBonus ) ).' uderzeń';
                     }
-                    $cardboardConsumptionB = round( ( ( $orderPosition->piecesB - $orderPosition->piecesA ) * $orderPosition->quantity )/1000 );
+                    $cardboardConsumptionB = round( ( ( $orderPosition->q_elem_pieces - $orderPosition->l_elem_pieces ) *  $quantityPlusBonus )/1000 );
                 }
 
                 $distributionElements[1]['task_to_do'] = $toDoPlus;
@@ -120,40 +106,30 @@ class OrderPositionService {
 
             if($doD == 1 ){
                 //zmieniamy papier na taki, którym będzie mozna trzaskać dwa długie
-                $productDataDD = Product::where([
-                    ['roll_width', '>', ( $orderPosition->widthA*2 )],
-                    ['grammage', '=', $orderPosition->product->grammage],
-                    ['designation', '=', $orderPosition->product->designation],
-                    ['cardboard_producer', '=', $orderPosition->product->cardboard_producer]
-                ])->orderBy('roll_width', 'ASC')->first();
+                $productDataDD = $this->findRolle( ( $orderPosition->l_elem*2 ), $orderPosition->product);
                 if( $productDataDD ){
                     $distributionElements[1]['detail'] = '2 x DŁUGI';
                     $distributionElements[1]['rolle_width'] = $productDataDD->roll_width;
                     $distributionElements[1]['rolle_id'] = $productDataDD->id;
 
                     if( $productData->roll_width !=  $productDataDD->roll_width ){
-                        $toDoPlus = ' zmień rolkę na rolkę o szerokości '. $productDataDD->roll_width .' i produkuj 2 x długie przez '. round( ( ( ( $orderPosition->piecesA - $orderPosition->piecesB ) * $orderPosition->quantity )/2 ) ) .' uderzeń';
+                        $toDoPlus = ' zmień rolkę na rolkę o szerokości '. $productDataDD->roll_width .' i produkuj 2 x długie przez '. round( ( ( ( $orderPosition->l_elem_pieces - $orderPosition->q_elem_pieces ) *  $quantityPlusBonus )/2 ) ) .' uderzeń';
                     }else{
-                        $toDoPlus = ' produkuj 2 x długie przez '. round( ( ( ( $orderPosition->piecesA - $orderPosition->piecesB ) * $orderPosition->quantity )/2 ) ).' uderzeń';
+                        $toDoPlus = ' produkuj 2 x długie przez '. round( ( ( ( $orderPosition->l_elem_pieces - $orderPosition->q_elem_pieces ) *  $quantityPlusBonus )/2 ) ).' uderzeń';
                     }
-                    $cardboardConsumptionB = round( ( ( ( ( $orderPosition->piecesA - $orderPosition->piecesB ) * $orderPosition->quantity )/2 )* $orderPosition->height)/1000 );
+                    $cardboardConsumptionB = round( ( ( ( ( $orderPosition->l_elem_pieces - $orderPosition->q_elem_pieces ) *  $quantityPlusBonus )/2 )* $orderPosition->h_elem)/1000 );
                     $distributionElements[1]['task_to_do'] = $toDoPlus;
                     $distributionElements[1]['consumption'] = $cardboardConsumptionB;
                 }else{
                     // klepimy po jednym długim
-                    $productDataDDD = Product::where([
-                        ['roll_width', '>', ( $orderPosition->widthA )],
-                        ['grammage', '=', $orderPosition->product->grammage],
-                        ['designation', '=', $orderPosition->product->designation],
-                        ['cardboard_producer', '=', $orderPosition->product->cardboard_producer]
-                    ])->orderBy('roll_width', 'ASC')->first();
+                    $productDataDDD = $this->findRolle( $orderPosition->l_elem, $orderPosition->product);
                     if($productDataDDD){
                         // produkujemy po jednym długim
                         $distributionElements[1]['detail'] = '1 DŁUGI';
                         $distributionElements[1]['rolle_width'] = $productDataDDD->roll_width;
                         $distributionElements[1]['rolle_id'] = $productDataDDD->id;
-                        $distributionElements[1]['task_to_do'] = ' produkuj element Długi przez '. round((  ($orderPosition->piecesA-$orderPosition->piecesB) * $orderPosition->quantity )) .' uderzeń';
-                        $consumptionB = round( ( ( ( $orderPosition->piecesA - $orderPosition->piecesB ) * $orderPosition->quantity ) * $orderPosition->height)/1000 );
+                        $distributionElements[1]['task_to_do'] = ' produkuj element Długi przez '. round((  ($orderPosition->l_elem_pieces-$orderPosition->q_elem_pieces) *  $quantityPlusBonus )) .' uderzeń';
+                        $consumptionB = round( ( ( ( $orderPosition->l_elem_pieces - $orderPosition->q_elem_pieces ) *  $quantityPlusBonus ) * $orderPosition->h_elem)/1000 );
                     }
                     $distributionElements[1]['consumption'] = $consumptionB;
                 }
@@ -163,61 +139,44 @@ class OrderPositionService {
             $distributionElements[0]['consumption'] = round( $cardboardConsumptionA+$cardboardConsumptionB );
         }else{
             //echo 'szukamy rolki na której wybijemy długi';
-            $productDataD = Product::where([
-                ['roll_width', '>', $orderPosition->widthA ],
-                ['grammage', '=', $orderPosition->product->grammage],
-                ['designation', '=', $orderPosition->product->designation],
-                ['cardboard_producer', '=', $orderPosition->product->cardboard_producer]
-            ])->orderBy('roll_width', 'ASC')->first();
+            $productDataD = $this->findRolle( $orderPosition->l_elem, $orderPosition->product);
 
             if($productDataD){
                 //echo 'mamy rolkę na której tłuczemy długi';
                 $distributionElements[0]['detail'] = '1 DŁUGI';
                 $distributionElements[0]['rolle_width'] = $productDataD->roll_width;
                 $distributionElements[0]['rolle_id'] = $productDataD->id;
-                $distributionElements[0]['task_to_do'] = ' produkuj element Długi przez '. round((  $orderPosition->piecesA * $orderPosition->quantity )) .' uderzeń';
-                $consumptionA = round( ( $orderPosition->piecesA * $orderPosition->quantity * $orderPosition->height )/1000 );
+                $distributionElements[0]['task_to_do'] = ' produkuj element Długi przez '. round((  $orderPosition->l_elem_pieces *  $quantityPlusBonus )) .' uderzeń';
+                $consumptionA = round( ( $orderPosition->l_elem_pieces *  $quantityPlusBonus * $orderPosition->h_elem )/1000 );
             }else{
                 //echo 'nie mamy rolki na której wybijemy długi!';
             }
             //echo 'szukamy rolki która wybije nam dwa krótkie';
-            $productDataKK = Product::where([
-                ['roll_width', '>', ($orderPosition->widthB*2) ],
-                ['grammage', '=', $orderPosition->product->grammage],
-                ['designation', '=', $orderPosition->product->designation],
-                ['cardboard_producer', '=', $orderPosition->product->cardboard_producer]
-            ])->orderBy('roll_width', 'ASC')->first();
+            $productDataKK = $this->findRolle( ($orderPosition->q_elem*2), $orderPosition->product);
             if($productDataKK){
                 //echo 'mamy rolkę na której tłuczemy dwa krótkie';
                 $distributionElements[1]['detail'] = '2 x KRÓTKI';
                 $distributionElements[1]['rolle_width'] = $productDataKK->roll_width;
                 $distributionElements[1]['rolle_id'] = $productDataKK->id;
-                $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. round((  ($orderPosition->piecesB * $orderPosition->quantity ) /2 )) .' uderzeń';
-                $consumptionB = round( ( ($orderPosition->piecesB * $orderPosition->quantity * $orderPosition->height )/2 )/1000 );
+                $distributionElements[1]['task_to_do'] = 'Produkuj dwa Krótkie przez '. round((  ($orderPosition->q_elem_pieces *  $quantityPlusBonus ) /2 )) .' uderzeń';
+                $consumptionB = round( ( ($orderPosition->q_elem_pieces *  $quantityPlusBonus * $orderPosition->h_elem )/2 )/1000 );
             }else{
                // echo 'Szukamy rolki, która wytnie nam krótki';
-                $productDataK = Product::where([
-                    ['roll_width', '>', $orderPosition->widthB ],
-                    ['grammage', '=', $orderPosition->product->grammage],
-                    ['designation', '=', $orderPosition->product->designation],
-                    ['cardboard_producer', '=', $orderPosition->product->cardboard_producer]
-                ])->orderBy('roll_width', 'ASC')->first();
+                $productDataK = $this->findRolle( $orderPosition->q_elem, $orderPosition->product);
 
                 if($productDataK){
                     //echo 'mamy rolkę na której tłuczemy krótki';
                     $distributionElements[1]['detail'] = '1 KRÓTKI';
                     $distributionElements[1]['rolle_width'] = $productDataK->roll_width;
                     $distributionElements[1]['rolle_id'] = $productDataK->id;
-                    $distributionElements[1]['task_to_do'] = 'Produkuj element Krótki na rolce o szerokości '. $productDataK->roll_width .' przez '. round(( $orderPosition->piecesB * $orderPosition->quantity )) .' uderzeń';
-                    $consumptionB = round( ( $orderPosition->piecesB * $orderPosition->quantity * $orderPosition->height )/1000 );
+                    $distributionElements[1]['task_to_do'] = 'Produkuj element Krótki na rolce o szerokości '. $productDataK->roll_width .' przez '. round(( $orderPosition->q_elem_pieces *  $quantityPlusBonus )) .' uderzeń';
+                    $consumptionB = round( ( $orderPosition->q_elem_pieces *  $quantityPlusBonus * $orderPosition->h_elem )/1000 );
                 }
             }
-            $distributionElements[0]['consumption'] = round( ( $orderPosition->piecesA * $orderPosition->quantity * $orderPosition->height )/1000 );
+            $distributionElements[0]['consumption'] = round( ( $orderPosition->l_elem_pieces *  $quantityPlusBonus * $orderPosition->h_elem )/1000 );
             $distributionElements[1]['consumption'] =  round( $consumptionB );
         }
-       //echo '<pre>';
-       //print_r($distributionElements);
-       //echo '</pre>';
+
        return $distributionElements;
     }
 
@@ -225,7 +184,7 @@ class OrderPositionService {
     public function createPDF($orderPosition) {
         //dd($orderPosition);
         $orderPosition = OrderPosition::with('product')->get()->find($orderPosition);
-        $orderPosition->dataCardboard =$this->calculateCardboard($orderPosition);
+        $orderPosition->dataCardboard = $this->calculateCardboard($orderPosition);
         $orderPosition->cost_data = $this->costHomeWorkerRepository->findCost( ( $orderPosition->l_elem_pieces+$orderPosition->q_elem_pieces) );
         $orderPosition->max_position = $this->orderPositionRepository->findMax($orderPosition->order_id);
         $orderPosition->parrentOrder = Order::find($orderPosition->order_id);
@@ -235,14 +194,8 @@ class OrderPositionService {
         return $pdf->download('karta_obiegowa_'.$orderPosition->parrentOrder->custom_order_id.'_'.$orderPosition->order_place.'_'. date_format($orderPosition->created_at, 'Y') .'.pdf');
     }
 
-    public function createCMR($id) {
-        $pdf = PDF::loadView('cmr.cmr', ['order' => $this->orderRepository->find($id)]);
-        return $pdf->download('cmr_'.$id.'.pdf');
-    }
-
-
     public function editStatus(Request $request) {
-        $order = $this->orderPositionRepository->find($request->oneDetail);
+        $order = OrderPosition::find($request->oneDetail);
         $order->status = $request->twoDetail;
         $order->save();
         return 'Status zlecenia zaktualizowano';
@@ -252,6 +205,17 @@ class OrderPositionService {
     public function getAll()
     {
         return view('dashboard',['orders' => Order::All() ] );
+    }
+
+    public function findRolle($rollWidth, Product $product ){
+        $productData = Product::where([
+            ['roll_width', '>', $rollWidth ],
+            ['grammage', '=', $product->grammage],
+            ['designation', '=', $product->designation],
+            ['cardboard_producer', '=', $product->cardboard_producer]
+        ])->orderBy('roll_width', 'ASC')->first();
+
+        return $productData;
     }
 
 }

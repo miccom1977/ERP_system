@@ -35,4 +35,17 @@ class ClientRequest extends FormRequest
             'contact_number' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'description.reuired' => 'Podaj Nazwę firmy.',
+            'city.required' => 'Podaj siedzibę firmy ( miasto ).',
+            'post_code.required' => 'Podaj kod pocztowy.',
+            'country.required' => 'Podaj kraj.',
+            'street.required' => 'Podaj ulicę.',
+            'parcel_number.required' => 'Podaj numer domu / mieszkania.',
+            'contact_number.required' => 'Podaj telefoniczny numer kotaktowy.',
+        ];
+    }
 }

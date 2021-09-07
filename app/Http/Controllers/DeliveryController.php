@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Delivery;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Validator;
 use App\Repositories\OrderRepository;
 use App\Repositories\DeliveryRepository;
 
@@ -37,7 +36,10 @@ class DeliveryController extends Controller
             $delivery->parcel_number = $request->parcel_number;
             $delivery->country = $request->country;
             $delivery->city = $request->city;
+            $delivery->client_id = $request->client_id;
+            $delivery->order_id = $request->order_id;
             $delivery->save();
+
         }else{
             $address = new Delivery;
             $address->street = $request->street;
@@ -46,7 +48,10 @@ class DeliveryController extends Controller
             $address->country = $request->country;
             $address->order_id = $request->order_id;
             $address->city = $request->city;
+            $address->client_id = $request->client_id;
+            $address->order_id = $request->order_id;
             $address->save();
+
         }
 
         $order =$this->orderRepository->find($request->order_id);

@@ -10,7 +10,7 @@ class FileUploadController extends Controller
     public function store(Request $request)
     {
             $request->validate([
-            'file' => 'required|mimes:csv,txt,jpg, jpeg,xlx,xls,pdf|max:2048'
+
             ]);
 
             $fileModel = new File;

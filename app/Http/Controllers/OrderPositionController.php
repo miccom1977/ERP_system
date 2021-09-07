@@ -96,7 +96,7 @@ class OrderPositionController extends Controller
      */
     public function update(Request $request, OrderPosition $orderPosition)
     {
-        //dd($request->all());
+
         $orderPosition->update($request->all());
         return back()->with('success', 'Zmiany zapisane.');
     }
@@ -104,11 +104,12 @@ class OrderPositionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int  $orderPosition
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(OrderPosition $orderPosition)
     {
-        //
+        $orderPosition->delete();
+        return redirect('/dashboard')->with('success', 'Pozycja zamówienia usunięta.');
     }
 }

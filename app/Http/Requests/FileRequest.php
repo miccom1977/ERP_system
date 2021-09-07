@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrderRequest extends FormRequest
+class FileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class OrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,16 +24,16 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id' => 'required',
-            'client_order_number' => 'required'
+            'file' => 'required|mimes:csv,txt,jpg,jpeg,xlx,xls,pdf|max:2048'
         ];
     }
 
     public function messages()
     {
         return [
-            'client_id.required' => 'Podaj ID klienta',
-            'client_order_number.required' => 'Podaj numer zamówienia Klienta',
+            'file.required' => 'Dodaj plik',
+            'file.mimes' => 'Dodany plik musi być plikem csv, txt, jpg, jpeg, xlx, xls, pdf ',
+            'file.max' => 'Dodany plik miże mieć max 2048 kb',
         ];
     }
 }

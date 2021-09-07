@@ -45,4 +45,30 @@ class OrderPositionRequest extends FormRequest
             'custom_order_id' => 'required'
         ];
     }
+
+
+    public function messages()
+    {
+        return [
+            'quantity.required' => 'Podaj ilość sztuk',
+            'l_elem.required' => 'Podaj szerokość elementu długiego L',
+            'q_elem.required' => 'Podaj szerokość elementu krótkiego Q',
+            'h_elem.required' => 'Podaj wysokość kratownicy',
+            'article_number.required' => 'Podaj numer artykułu',
+            'flaps_a.required' => 'Podaj ilość elementów długich L',
+            'flaps_b.required' => 'Podaj ilość elementów krótkich Q',
+            'division_flapsL.required' => 'Podaj szerokość celi',
+            'division_flapsQ.required' => 'Podaj długość celi',
+            'l_elem_pieces.required' => 'Podaj ilość elementów długich L',
+            'q_elem_pieces.required' => 'Podaj ilość elementów krótkich Q',
+            'packaging.required' => 'Podaj po ile kratownic pakować w paczkę',
+            'product_id.required' => 'Podaj ID produktu',
+            'pallets.required' => 'Podaj na jakie palety pakować',
+            'date_shipment.required' => 'Podaj datę wysyłki do klienta',
+            'date_production.required' => 'Podaj datę rozpoczęcia produkcji',
+            'date_delivery.required' => 'Podaj datę dostawy do klienta',
+            'order_id.required' => 'Podaj numer ID zlecenia',
+            'custom_order_id.required' => 'Podaj numer zamówienia klienta',
+        ];
+    }
 }
