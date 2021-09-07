@@ -1,15 +1,13 @@
 <?php
 
-use App\Services\OrderService;
+use App\Services\{
+    OrderService,OrderPositionService,
+};
 use Illuminate\Support\Facades\Route;
-use App\Services\OrderPositionService;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\DeliveryController;
-use App\Http\Controllers\FileUploadController;
-use App\Http\Controllers\DownloadFileController;
-use App\Http\Controllers\OrderPositionController;
+use App\Http\Controllers\{
+    OrderController,ClientController,ProductController,DeliveryController,FileUploadController,DownloadFileController,OrderPositionController,
+};
+
 
 /*
 |--------------------------------------------------------------------------
