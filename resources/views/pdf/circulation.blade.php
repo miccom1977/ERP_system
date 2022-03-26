@@ -15,50 +15,6 @@
         .center{
             text-align: center;
         }
-        .titleBox{
-            position: absolute;
-            right: 1px;
-            padding:10px;
-            top:0px;
-            height:48px;
-            width:150px;
-            border:1px solid black;
-        }
-        .bgLogo{
-            position: fixed;
-            left: 20px;
-            top:5px;
-            width:70px;
-            height:61px;
-        }
-        .yellow{
-            background:yellow;
-        }
-        .green{
-            background: lightgreen;
-        }
-        .page-break {
-            page-break-after: always;
-        }
-        .red{
-            color:red;
-            font-family: "DejaVu Sans";
-            font-size:16px;
-        }
-        .bigD{
-            color:red;
-            font-family: "DejaVu Sans";
-            font-size:80px;
-            position:absolute;
-            top:300px;
-            right:30px;
-        }
-        .signature{
-            float:left;
-            position:absolute;
-            top:1100px;
-            right:50px;
-        }
     </style>
 </head>
 <body>
